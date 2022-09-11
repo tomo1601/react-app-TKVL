@@ -1,14 +1,23 @@
 import LoginForm from '../components/auth/LoginForm'
 import RegisterForm from '../components/auth/RegisterForm'
 
-const Auth = (authRoute) =>{
-    return (
+const Auth = ({authRoute}) =>{
+
+    let body
+    body = (
         <>
-            Đăng nhập để tiếp tục
-            {authRoute==='login'&& <LoginForm/>}
-            {authRoute==='register'&&<RegisterForm/>}
+            
+            {authRoute==='login' && <LoginForm/>}
+            {authRoute==='register' && <RegisterForm/>}
         
         </>
+    )
+
+
+    return (
+       <div>
+        {body}
+       </div>
     )
 }
 
