@@ -1,5 +1,5 @@
-import LoginForm from '../components/auth/LoginForm'
-import RegisterForm from '../components/auth/RegisterForm'
+import UserLoginForm from '../components/auth/UserLoginForm'
+import UserRegisterForm from '../components/auth/UserRegisterForm'
 
 const Auth = ({authRoute}) =>{
 
@@ -7,8 +7,8 @@ const Auth = ({authRoute}) =>{
     body = (
         <>
             
-            {authRoute==='login' && <LoginForm/>}
-            {authRoute==='register' && <RegisterForm/>}
+            {authRoute==='userlogin' && <UserLoginForm/>}
+            {authRoute==='userregister' && <UserRegisterForm/>}
         
         </>
     )

@@ -1,10 +1,12 @@
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
+import { Link } from 'react-router-dom'
 
 
-const LoginForm =() =>{
+const UserLoginForm =() =>{
 
     let body
+
     body = (
         <>
         <div className="grid login-grid main login-box">
@@ -13,39 +15,38 @@ const LoginForm =() =>{
                 <div className='login-social'></div>
                 <span className='ute-login-sml-text'>Please enter your email and password</span>
             </div>
-            <Form>
+            <Form className='my-4' id='form-login'>
                 <Form.Group>
-                    <Form.Control type='text' placeholder='Username' name='username' required/>
+                    <Form.Label>Username</Form.Label>
+                    <Form.Control type='text' placeholder='' name='username' required/>
                 </Form.Group>
                 <Form.Group>
-                    <Form.Control type='password' placeholder='Password' name='password' required/>
+                    <Form.Label>Password</Form.Label>
+                    <Form.Control type='password' placeholder='' name='password' required/>
                 </Form.Group>
-                <Button variant='success' type='submit'>Login</Button>
+                <Button className='mt-2' variant='success' type='submit'>Login</Button>
 
             </Form>
-            
-        </div>
-        <div className='grid text-right terms mt-3'>
-            {/*<p class="login__footer-text login__footer-term">Thỏa Thuận Sử Dụng</p>
-            <span class="separator">|</span>
-            <p class="login__footer-text">Quy Định Bảo Mật</p>
-            */}
+            <p> Don't have an account?  
+                <Link to={'/user/register'}>
+                    Register
+                </Link>
+            </p>
         </div>
         </>
     )
+
     return (
         <>
         {/*Header,logo*/}
         <div className="utew-login-top-header">
             <div>
-
+                {/*picture*/}
             </div>
         </div>
         {/*Form login*/}
         {body}
-    
-        
         </>
     )
 }
-export default LoginForm
+export default UserLoginForm

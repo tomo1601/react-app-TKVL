@@ -9,8 +9,8 @@ function App() {
     <Router>
       <Switch>
         <Route exact path='/' component={Landing}/>
-        <Route exact path='/login' render={props => <Auth {...props} authRoute='login'/>}/>
-        <Route exact path='/register' render={props => <Auth {...props} authRoute='register'/>}/>
+        <Route exact path='/user/login' render={props => <Auth {...props} authRoute='userlogin'/>}/>
+        <Route exact path='/user/register' render={props => <Auth {...props} authRoute='userregister'/>}/>
       </Switch>
     </Router>
   );

@@ -169,3 +169,17 @@ button.post-button.btn:active {
   color: #555555;
   text-align: center;
 }
+#form-login {
+	width: 100%;
+}
+.form-field {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+}
