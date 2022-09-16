@@ -1,9 +1,18 @@
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 import {Link} from 'react-router-dom'
+import Select from 'react-select';
 
-const UserRegisterForm =() =>{
+const EmployerRegisterForm =() =>{
     let body
+    const techCompanies = [
+        { label: "Apple", value: 1 },
+        { label: "Facebook", value: 2 },
+        { label: "Netflix", value: 3 },
+        { label: "Tesla", value: 4 },
+        { label: "Amazon", value: 5 },
+        { label: "Alphabet", value: 6 },
+      ];
     
     body = (
         <>
@@ -11,7 +20,7 @@ const UserRegisterForm =() =>{
             <div className='ute-title'>
                 <h3>Sign up to continue!</h3>
                 <div className='login-social'></div>
-                <span className='ute-login-sml-text'>Please enter your information</span>
+                <span className='ute-login-sml-text'>Please enter your business information</span>
             </div>
             <Form className='my-4' id='form-login'>
                 <Form.Group>
@@ -25,6 +34,10 @@ const UserRegisterForm =() =>{
                 <Form.Group>
                     <Form.Label>Addess </Form.Label>
                     <Form.Control type='password' placeholder='' name='Addess' required/>
+                </Form.Group>
+                <Form.Group>
+                    <Form.Label>Field </Form.Label>
+                    <Select options={ techCompanies } />
                 </Form.Group>
                 <Form.Group>
                     <Form.Label>Email</Form.Label>
@@ -42,17 +55,17 @@ const UserRegisterForm =() =>{
 
             </Form>
             <p> Aready have an account?
-                <Link to='/user/login'>
+                <Link to='/employer/login'>
                     Login
                 </Link>
             </p>
-            <Link to='/employer/register'>
-                <Button variant='info' >Create an employer account</Button>
+            <Link to='/user/register'>
+                <Button variant='info' >Create an employee account</Button>
             </Link>
         </div>
         </>
     )
-
+    
     return (
         <>
         {/*Header,logo*/}
@@ -68,4 +81,4 @@ const UserRegisterForm =() =>{
         </>
     )
 }
-export default UserRegisterForm
+export default EmployerRegisterForm

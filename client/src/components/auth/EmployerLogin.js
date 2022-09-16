@@ -2,7 +2,7 @@ import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 import {Link} from 'react-router-dom'
 
-const UserLoginForm =() =>{
+const EmployLoginForm =() =>{
 
     let body
     
@@ -24,14 +24,15 @@ const UserLoginForm =() =>{
                     <Form.Control type='password' placeholder='' name='password' required/>
                 </Form.Group>
                 <Button className='mt-2' variant='success' type='submit'>Login</Button>
+
             </Form>
             <p> Don't have an account?  
-                <Link to='/user/register'>
+                <Link to='/employer/register'>
                     Register
                 </Link>
             </p>
-            <Link to='/employer/login'>
-                <Button variant='info' >Login with Employer account</Button>
+            <Link to='/user/login'>
+                <Button variant='info' >Login with Employee account</Button>
             </Link>
         </div>
         </>
@@ -50,4 +51,4 @@ const UserLoginForm =() =>{
         </>
     )
 }
-export default UserLoginForm
+export default EmployLoginForm
