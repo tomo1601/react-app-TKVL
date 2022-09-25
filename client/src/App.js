@@ -5,6 +5,8 @@ import Auth from './views/Auth'
 import AdminLanding from './components/layout/AdminLanding'
 import AdminPage from './components/auth/AdminPage'
 import AuthContextProvider from './contexts/AuthContext';
+import DashBoard from './views/DashBoard';
+import ProtectedRoute from './components/routing/ProtectedRoute';
 
 function App() {
   return (
@@ -18,6 +20,7 @@ function App() {
           <Route exact path='/employer/register' render={props => <Auth {...props} authRoute='employer-register'/>}/>
           <Route exact path='/admin' component={AdminLanding}/>
           <Route exact path='/admin/login' component={AdminPage}/>
+          <ProtectedRoute exact path='/dashboard' component={DashBoard}/>
         </Switch>
       </Router>
     </AuthContextProvider>

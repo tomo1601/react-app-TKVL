@@ -3,15 +3,19 @@ import Form from 'react-bootstrap/Form'
 import {Link} from 'react-router-dom'
 import { useState, useContext } from 'react'
 import { AuthContext } from '../../contexts/AuthContext'
+import AlertMessage from '../layout/AlertMessage'
 
 const UserLoginForm =() =>{
-
+    //context
     const {loginUser} = useContext(AuthContext)
-
+  
+    //local state
     const [userLoginForm, setUserLoginForm] = useState({
         username: '',
         password: ''
     })
+
+    const [alert, setAlert] =useState(null)
 
     const {username, password} = userLoginForm
     const onChangeUserLoginForm = event => setUserLoginForm({
@@ -22,12 +26,13 @@ const UserLoginForm =() =>{
         event.preventDefault()
         try {
             const userLoginData = await loginUser(userLoginForm)
-            console.log(userLoginData)
+            if(!userLoginData.success){
+                setAlert({type: 'danger', message: userLoginData.message})
+                setTimeout(()=> setAlert(null), 10000)
+            }
         }
         catch (error){
-            console.log('1')
             console.log(error)
-            console.log('2')
         }
     }
 
@@ -42,6 +47,7 @@ const UserLoginForm =() =>{
                 <span className='ute-login-sml-text'>Please enter your email and password</span>
             </div>
             <Form className='my-4' id='form-login' onSubmit={userLogin}>
+            <AlertMessage info={alert} />
                 <Form.Group>
                     <Form.Label>Username</Form.Label>
                     <Form.Control 
