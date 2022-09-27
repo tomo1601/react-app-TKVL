@@ -1,7 +1,8 @@
 import './App.css';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
 import Landing from './components/layout/Landing'
-import Auth from './views/Auth'
+import AuthUser from './views/AuthUser'
+import AuthEmployer from './views/AuthEmployer'
 import AdminLanding from './components/layout/AdminLanding'
 import AdminPage from './components/auth/AdminPage'
 import AuthContextProvider from './contexts/AuthContext';
@@ -14,10 +15,10 @@ function App() {
       <Router>
         <Switch>
           <Route exact path='/' component={Landing}/>
-          <Route exact path='/user/login' render={props => <Auth {...props} authRoute='user-login'/>}/>
-          <Route exact path='/user/register' render={props => <Auth {...props} authRoute='user-register'/>}/>
-          <Route exact path='/employer/login' render={props => <Auth {...props} authRoute='employer-login'/>}/>
-          <Route exact path='/employer/register' render={props => <Auth {...props} authRoute='employer-register'/>}/>
+          <Route exact path='/user/login' render={props => <AuthUser {...props} authRoute='user-login'/>}/>
+          <Route exact path='/user/register' render={props => <AuthUser {...props} authRoute='user-register'/>}/>
+          <Route exact path='/employer/login' render={props => <AuthEmployer {...props} authRoute='employer-login'/>}/>
+          <Route exact path='/employer/register' render={props => <AuthEmployer {...props} authRoute='employer-register'/>}/>
           <Route exact path='/admin' component={AdminLanding}/>
           <Route exact path='/admin/login' component={AdminPage}/>
           <ProtectedRoute exact path='/dashboard' component={DashBoard}/>

@@ -17,10 +17,11 @@ const UserRegisterForm =() =>{
         password: '',
         name:'',
         phone:'',
-        address:''
+        address:'',
+        confirmpassword:''
     })
    
-    const {email, password,name,phone,address} = userRegisterForm
+    const {email, password,name,phone,address,confirmpassword} = userRegisterForm
     const onChangeUserRegisterForm = event => setUserRegisterForm({
         ...userRegisterForm, [event.target.name]:event.target.value
     })
@@ -123,6 +124,8 @@ const UserRegisterForm =() =>{
                     placeholder='' 
                     name='confirmpassword' 
                     required
+                    value ={confirmpassword}
+                    onChange = {onChangeUserRegisterForm}
                     />
                 </Form.Group>
                 <Button className='mt-2' variant='success' type='submit'>Register</Button>

@@ -10,7 +10,9 @@ const AuthContextProvider = ({children}) =>{
     const [authState, dispatch] = useReducer(AuthReducer, {
         authloading: true,
         isAuthenticated: false,
-        user: null
+        user: null,
+        isUser: false,
+        isEmployer:false
     })
 
     // auth user
@@ -27,13 +29,14 @@ const AuthContextProvider = ({children}) =>{
                 "Authorization": `Bearer ${recentToken}`
                 }}) 
             if(response.data.message !== 'You need authenticate first to access this api'){
-                dispatch({type: 'SET_AUTH', payload:{isAuthenticated: true, user: response.data}})
+                dispatch({type: 'SET_AUTH', payload:{isAuthenticated: true, user: response.data, isUser: true, isEmployer: false}})
             }
+            
         } 
         catch(error) {
             localStorage.removeItem(LOCAL_STORAGE_TOKEN_NAME)
             SetAuthToken(null)
-            dispatch({type: 'SET_AUTH', payload:{isAuthenticated: false, user: null}})
+            dispatch({type: 'SET_AUTH', payload:{isAuthenticated: false, user: null, isUser: false, isEmployer: false}})
         }
     }
 
