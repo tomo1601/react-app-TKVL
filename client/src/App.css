@@ -204,6 +204,10 @@ button.post-button.btn:active {
   text-decoration: none;
   color: #fff;
   font-size: 24px;
+   
+}
+.link-to-dashboard-24:hover {
+  color: rgb(240, 236, 165);
 }
 .link-to-dashboard-20 {
   text-decoration: none;

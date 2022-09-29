@@ -5,13 +5,15 @@ import AuthUser from './views/AuthUser'
 import AuthEmployer from './views/AuthEmployer'
 import AdminLanding from './components/layout/AdminLanding'
 import AdminPage from './components/auth/AdminPage'
-import AuthContextProvider from './contexts/AuthContext';
-import DashBoard from './views/DashBoard';
-import ProtectedRoute from './components/routing/ProtectedRoute';
+import AuthContextProvider from './contexts/AuthContext'
+import PostContextProvider from './contexts/PostContext'
+import DashBoard from './views/DashBoard'
+import ProtectedRoute from './components/routing/ProtectedRoute'
 
 function App() {
   return (
     <AuthContextProvider>
+      <PostContextProvider>
       <Router>
         <Switch>
           <Route exact path='/' component={Landing}/>
@@ -24,6 +26,7 @@ function App() {
           <ProtectedRoute exact path='/dashboard' component={DashBoard}/>
         </Switch>
       </Router>
+      </PostContextProvider>
     </AuthContextProvider>
     
   );

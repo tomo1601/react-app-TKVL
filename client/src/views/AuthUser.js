@@ -9,7 +9,7 @@ import Spiner from 'react-bootstrap/Spinner'
 
 const AuthUser = ({authRoute}) =>{
 
-    const {authState: {authLoading, isAuthenticated}} = useContext(AuthContext)
+    const {authState: {authLoading, isAuthenticated, isUser}} = useContext(AuthContext)
 
     let body
 
@@ -19,7 +19,7 @@ const AuthUser = ({authRoute}) =>{
             <Spiner animation = 'border' variant = 'info'/>
         </div>
     )
-    else if(isAuthenticated ) 
+    else if(isAuthenticated && isUser) 
         return <Redirect to ='/dashboard'/>
     else  
     body = (

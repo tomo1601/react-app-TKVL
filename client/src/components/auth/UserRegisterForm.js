@@ -31,15 +31,21 @@ const UserRegisterForm =() =>{
     
     const userRegister = async event =>{
         event.preventDefault()
-        try {
-            const userResgisterData = await registerUser(userRegisterForm)
-            if(!userResgisterData.success){
-                setAlert({type: 'danger', message: userResgisterData.message})
+        if (confirmpassword!==password){
+            setAlert({type: 'danger', message: 'You must re-enter the correct confirmation password'})
                 setTimeout(()=> setAlert(null), 10000)
-            }
         }
-        catch (error){
-            console.log(error)
+        else {
+            try {
+                const userResgisterData = await registerUser(userRegisterForm)
+                if(!userResgisterData.success){
+                    setAlert({type: 'danger', message: userResgisterData.message})
+                    setTimeout(()=> setAlert(null), 10000)
+                }
+            }
+            catch (error){
+                console.log(error)
+            }
         }
     }
 

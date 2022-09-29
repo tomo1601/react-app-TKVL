@@ -2,7 +2,7 @@ import EmployerLoginForm from '../components/auth/EmployerLogin'
 import EmployerRegisterForm from '../components/auth/EmployerRegister'
 import { AuthContext } from '../contexts/AuthContext'
 import { useContext } from 'react'
-
+import { Redirect } from 'react-router-dom'
 
 
 
@@ -13,12 +13,7 @@ const AuthEmployer = ({authRoute}) =>{
     let body
 
     if(isAuthenticated && isEmployer) 
-        body = (
-            <>
-                {authRoute==='employer-register' && <EmployerRegisterForm/>}
-                
-            </>
-        )
+        return <Redirect to ='/dashboard'/>
     else  
     body = (
         <>
