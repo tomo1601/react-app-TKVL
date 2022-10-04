@@ -5,7 +5,7 @@ import Badge from 'react-bootstrap/Badge'
 import Button from 'react-bootstrap/Button'
 
 
-const SinglePost = ({post: {id, title, description, createDate, recruit, expirationDate, employer, city, field, salary, salaryType }}) => {
+const SinglePost = ({post: {id, title, description, createDate, recruit, field }}) => {
     
     <Card className='shadow' border= 'warning'>
         
@@ -15,12 +15,10 @@ const SinglePost = ({post: {id, title, description, createDate, recruit, expirat
                     <Col>
                         <p className='post-title'>{title}</p>
                         <Badge pill variant='warning'>
-                            hello
+                            {title}
                         </Badge>
                     </Col>
-                    <Col className='text-right'>
-                        <Button>Hollll</Button>
-                    </Col>
+                    
 
                 </Row>
             </Card.Title>
