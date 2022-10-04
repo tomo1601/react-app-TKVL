@@ -89,8 +89,8 @@ const EmployLoginForm =() =>{
         <>
         {/*Header,logo*/}
         <div className="utew-login-top-header">
-            <div>
-                {/*picture*/}
+            <div className='logo-box-login'>
+                <Link className='link-to-dashboard-36' to='/dashboard'>EMPLOYER</Link>
             </div>
         </div>
         {/*Form login*/}

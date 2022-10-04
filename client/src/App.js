@@ -9,6 +9,9 @@ import AuthContextProvider from './contexts/AuthContext'
 import PostContextProvider from './contexts/PostContext'
 import DashBoard from './views/DashBoard'
 import ProtectedRoute from './components/routing/ProtectedRoute'
+import Profile from './components/posts/users/Profile';
+import EmpProfile from './components/posts/employer/EmpProfile'
+import EmpPost from './components/posts/employer/EmpPost';
 
 function App() {
   return (
@@ -24,6 +27,10 @@ function App() {
           <Route exact path='/admin' component={AdminLanding}/>
           <Route exact path='/admin/login' component={AdminPage}/>
           <ProtectedRoute exact path='/dashboard' component={DashBoard}/>
+          <ProtectedRoute exact path='/profile' component={Profile}/>
+          <ProtectedRoute exact path='/employer/profile' component={EmpProfile}/>
+          <ProtectedRoute exact path='/employer/posts' component={EmpPost}/>
+          
         </Switch>
       </Router>
       </PostContextProvider>

@@ -153,8 +153,8 @@ const UserRegisterForm =() =>{
         <>
         {/*Header,logo*/}
         <div className="utew-login-top-header">
-            <div>
-
+            <div className='logo-box-login'>
+                <Link className='link-to-dashboard-36' to='/dashboard'>EMPLOYEE</Link>
             </div>
         </div>
         {/*Form login*/}

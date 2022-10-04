@@ -26,21 +26,18 @@ const NavbarMenu = () => {
         <Navbar.Toggle aria-controls='basic-navbar-nar' />
         <Navbar.Collapse id='basic-navbar-nar'>
           <Nav className='mr-auto'>
-            <Nav.Link className='font-weigth-border text-white' to='/dashboard' as={Link}>
+            <Nav.Link className='font-weigth-border link-to-dashboard-20' to='/dashboard' as={Link}>
               Home
             </Nav.Link>
-            <Nav.Link className='font-weigth-border text-white' to='/dashboard' as={Link}>
+            <Nav.Link className='font-weigth-border link-to-dashboard-20' to='/dashboard' as={Link}>
               Job
             </Nav.Link>
-            <Nav.Link className='font-weigth-border text-white' to='/dashboard' as={Link}>
-              Company
-            </Nav.Link>
-            <Nav.Link className='font-weigth-border text-white' to='/dashboard' as={Link}>
+            <Nav.Link className='font-weigth-border link-to-dashboard-20' to='/profile' as={Link}>
               Profile
             </Nav.Link>
           </Nav>
           <Nav className='sc-geuGuN cpxZcn rightNavigation-homepage'>
-            <Nav.Link className='font-weigth-border text-white' disabled >
+            <Nav.Link className='font-weigth-border link-to-dashboard-20' to='/employer/login' as={Link} >
               EMPLOYER
             </Nav.Link>
             <Button variant='secondary' className='font-weigth-border text-white' onClick={logout}>
@@ -64,21 +61,21 @@ const NavbarMenu = () => {
         <Navbar.Toggle aria-controls='basic-navbar-nar' />
         <Navbar.Collapse id='basic-navbar-nar'>
           <Nav className='mr-auto'>
-            <Nav.Link className='font-weigth-border text-white' to='/dashboard' as={Link}>
+            <Nav.Link className='font-weigth-border link-to-dashboard-20' to='/dashboard' as={Link}>
               Home
             </Nav.Link>
-            <Nav.Link className='font-weigth-border text-white' to='/dashboard' as={Link}>
+            <Nav.Link className='font-weigth-border link-to-dashboard-20' to='/employer/posts' as={Link}>
               Job
             </Nav.Link>
-            <Nav.Link className='font-weigth-border text-white' to='/dashboard' as={Link}>
+            <Nav.Link className='font-weigth-border link-to-dashboard-20' to='dashboard' as={Link}>
               Company
             </Nav.Link>
-            <Nav.Link className='font-weigth-border text-white' to='/dashboard' as={Link}>
+            <Nav.Link className='font-weigth-border link-to-dashboard-20' to='/employer/profile' as={Link}>
               Profile
             </Nav.Link>
           </Nav>
           <Nav className='sc-geuGuN cpxZcn rightNavigation-homepage'>
-            <Nav.Link className='font-weigth-border text-white' disabled >
+            <Nav.Link className='font-weigth-border link-to-dashboard-20' to='/user/login' as={Link} >
               Employee
             </Nav.Link>
             <Button variant='secondary' className='font-weigth-border text-white' onClick={logout}>
