@@ -17,6 +17,20 @@ const Profile = () => {
   const [update, setUpdate] = useState(false)
   const {authState:{user:{email, phone, birth, city, gender, address, name, profiles }}} =useContext(AuthContext)
 
+  let proDefault = profiles =>{
+    var i
+    const proLenght = profiles.lenght
+    for(i = 0; i< proLenght; i++)
+    {
+      if(profiles[i].default) return profiles[i]
+    }
+    return 'null'
+  }
+  
+  console.log(proDefault)
+
+
+
   body = (
     <div className='ContactInfoView_viewSectionWrapper__SEvGW'>
       <Form className='native-grid'>
@@ -61,6 +75,19 @@ const Profile = () => {
             <div className='undefined row'>
               <span className='undefined col-4'>City:</span>
               <div className='col-8 text-truncate fw-6'>{city}</div>
+            </div>
+          </Col>
+          <Col className='col-12 col-lg-6'>
+            <div className='undefined row'>
+              <span className='undefined col-4'>Resume:</span>
+              <div className='col-8 text-truncate fw-6'>
+                {
+                  proDefault.name
+                  
+
+                }
+              
+              </div>
             </div>
           </Col>
         </Row>
