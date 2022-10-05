@@ -452,22 +452,87 @@ ul {
   position: relative;
 }
 
-.user-info {
-  display: flex;
+.ContactInformation_contactInformationComponent__XmtOM {
+  font-size: 14px;
   position: relative;
-  padding: 24px 20px;
 }
 
-.user-info .EditIcon {
-  position: absolute;
+.ContactInformation_editIcon__nzify {
   opacity: 0;
-  z-index: 1;
+  position: absolute;
+  top: 24px;
+  right: 20px;
+  transition: opacity .3s;
+  cursor: pointer;
 }
 
-.EditIcon {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  transition: all .3s;
+svg {
+  overflow: hidden;
+}
+
+img, svg {
+  vertical-align: middle;
+}
+
+h2.ContactInformation_blockTitle__yHeZl {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 0;
+  padding-top: 24px;
+  padding-left: 20px;
+}
+
+.ContactInfoView_viewSectionWrapper__SEvGW {
+  padding: 24px 20px;
   cursor: pointer;
+}
+
+.ContactInfoView_viewSectionWrapper__SEvGW .native-grid .row {
+  padding: 12px 0;
+  border-top: 1px solid #eee;
+}
+
+.native-grid .row {
+  display: grid;
+  grid-gap: 0 24px;
+  gap: 0 24px;
+  grid-template-columns: repeat(12,1fr);
+}
+
+.native-grid .row .col-lg-6 {
+  grid-column: span 6;
+}
+
+.native-grid .row .col-12 {
+  grid-column: span 12;
+}
+
+.ContactInfoView_viewSectionWrapper__SEvGW .native-grid .row .row {
+  padding: 0;
+  border-top: 0;
+}
+
+.native-grid .row {
+  display: grid;
+  grid-gap: 0 24px;
+  gap: 0 24px;
+  grid-template-columns: repeat(12,1fr);
+}
+
+.native-grid .row .col-4 {
+  grid-column: span 4;
+}
+
+.native-grid .row .col-8 {
+  grid-column: span 8;
+}
+
+.text-truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.fw-6 {
+  font-weight: 600;
 }

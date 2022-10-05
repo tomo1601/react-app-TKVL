@@ -18,19 +18,25 @@ const DashBoard = () => {
 
   const {postState: {posts, postLoading}, getPosts} = useContext(PostContext)
   const {authState:{isUser, isEmployer}} =useContext(AuthContext)
-
+  
 
   
 
   const [searchForm, setSearchForm] = useState({
-    field: "",
     title: "",
     location: ""
   })
-
-  const { field, title, location } = searchForm
+  const { title, location } = searchForm
   const onChangeSearchForm = event =>
     setSearchForm({ ...searchForm, [event.target.name]: event.target.value})
+
+    
+  const [field, setField] = useState({field: ""})
+  const selectedValue = e =>{
+    setField(e.value);
+  }
+
+  
 
   useEffect(()=> {getPosts()}, [])
 
@@ -114,9 +120,8 @@ const DashBoard = () => {
                 <Select 
                   placeholder='Field' 
                   options={ JOBFIELD }
-                  onChange={(e)=>setSearchForm({...searchForm, field: JOBFIELD.value})}
+                  onChange={selectedValue}
                 />
-                {console.log(JOBFIELD[2].value)}
               </Col>
             </Row>
           </Form>
