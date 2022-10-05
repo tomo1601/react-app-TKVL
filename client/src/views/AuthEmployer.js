@@ -3,16 +3,23 @@ import EmployerRegisterForm from '../components/auth/EmployerRegister'
 import { AuthContext } from '../contexts/AuthContext'
 import { useContext } from 'react'
 import { Redirect } from 'react-router-dom'
+import Spiner from 'react-bootstrap/Spinner'
 
 
 
 const AuthEmployer = ({authRoute}) =>{
 
-    const {authState: {isAuthenticated, isEmployer}} = useContext(AuthContext)
+    const {authState: {authLoading,isAuthenticated, isEmployer}} = useContext(AuthContext)
 
     let body
 
-    if(isAuthenticated && isEmployer) 
+    if (authLoading)
+    body = (
+        <div className='d-flex justify-content-center mt-2'>
+            <Spiner animation = 'border' variant = 'info'/>
+        </div>
+    )
+    else if(isAuthenticated && isEmployer) 
         return <Redirect to ='/dashboard'/>
     else  
     body = (

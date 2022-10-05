@@ -17,7 +17,7 @@ import { JOBFIELD, CITYLOCATION } from '../contexts/constants'
 const DashBoard = () => {
 
   const {postState: {posts, postLoading}, getPosts} = useContext(PostContext)
-  const {authState:{isUser, isEmployer}} =useContext(AuthContext)
+  //const {authState:{isUser, isEmployer}} =useContext(AuthContext)
   
 
   

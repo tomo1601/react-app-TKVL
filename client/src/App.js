@@ -12,11 +12,14 @@ import ProtectedRoute from './components/routing/ProtectedRoute'
 import Profile from './components/posts/users/Profile';
 import EmpProfile from './components/posts/employer/EmpProfile'
 import EmpPost from './components/posts/employer/EmpPost';
+import EmployerPostContextProvider from './contexts/EmployerPostContext';
 
 function App() {
   return (
     <AuthContextProvider>
       <PostContextProvider>
+      <EmployerPostContextProvider>
+
       <Router>
         <Switch>
           <Route exact path='/' component={Landing}/>
@@ -33,6 +36,7 @@ function App() {
           
         </Switch>
       </Router>
+      </EmployerPostContextProvider>
       </PostContextProvider>
     </AuthContextProvider>
     

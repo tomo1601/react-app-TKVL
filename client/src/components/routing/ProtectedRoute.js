@@ -7,8 +7,9 @@ import NavbarMenu from "../layout/NavbarMenu";
 
 const ProtectedRoute =({component: Component, ...rest}) => {
 
-    const {authState: {authLoading, isAuthenticated}} = useContext(AuthContext)
-    if(authLoading){
+    const {authState: {authloading, isAuthenticated}} = useContext(AuthContext)
+
+    if(authloading){
         return (
             <div className='spiner-container'>
                 <Spinner animation = 'border' variant = 'info'/>
@@ -23,6 +24,7 @@ const ProtectedRoute =({component: Component, ...rest}) => {
             <Component {...rest} {...props}/>
             </>
             ):(<Redirect to='/user/login'/>) } />
+ //       isAuthenticated ?<><NavbarMenu> </NavbarMenu> <Component/></> : <Redirect to={'/user/login'}/>
     )
 }
 

@@ -1,12 +1,10 @@
-import axios from "axios";
+import axios from 'axios'
 
-const SetAuthToken = token =>{
+const setAuthToken = token =>{
     if(token){
-        axios.defaults.headers.common['Authortization'] = `Beaner ${token}`
-    }
-    else {
-        delete  axios.defaults.headers.common['Authortization']
+        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
+    }else{
+        delete axios.defaults.headers.common["Authorization"]
     }
 }
-
-export default SetAuthToken
+export default setAuthToken
