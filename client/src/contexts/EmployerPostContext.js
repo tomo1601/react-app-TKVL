@@ -29,7 +29,7 @@ const EmployerPostContextProvider = ({ children }) => {
   // get employer post
   const getEmployerPosts = async () => {
     try {
-      const response = await axios.get(`${apiUrl}/employer/post`);
+      const response = await axios.get(`${apiUrl}/employer/post?expirationDate=2001-01-01&page=1&limit=12`);
       if (response.data.success) {
         dispatch({ type: POSTS_LOADED_SUCCESS, payload: response.data.data });
       }
