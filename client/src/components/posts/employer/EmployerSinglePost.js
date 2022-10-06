@@ -30,8 +30,9 @@ const EmployerSinglePost = ({
           width="40px"
           height="30px"
           style={{ marginRight: "10px" }}
+          alt = 'img.png'
         />
-        {salary} {salaryType != "NONE" ? salaryType : ""}
+        {salary} {salaryType !== "NONE" ? salaryType : ""}
       </Card.Text>
       <Row>
         {adminAceptedEmail ? (
