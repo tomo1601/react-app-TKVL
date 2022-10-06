@@ -9,7 +9,7 @@ import { AuthContext } from "../../contexts/AuthContext";
 
 const NavbarMenu = () => {
 
-  const {authState: {isAuthenticated, isUser, isEmployer}, logoutSection} = useContext(AuthContext)
+  const {authState: {isAuthenticated, isUser, isEmployer, isAdmin}, logoutSection} = useContext(AuthContext)
   
   const logout =() => logoutSection()
   
@@ -78,6 +78,38 @@ const NavbarMenu = () => {
             <Nav.Link className='font-weigth-border link-to-dashboard-20' to='/user/login' as={Link} >
               Employee
             </Nav.Link>
+            <Button variant='secondary' className='font-weigth-border text-white' onClick={logout}>
+              <img src={logoutIcon} alt='img' width='32' height='32' className='mr-2'/>
+              Logout
+            </Button>
+          </Nav>
+        </Navbar.Collapse>
+      
+      </Navbar>
+    )
+  }else if(isAuthenticated && isAdmin){
+    body = (
+      <Navbar expand = 'lg' bg ='primary' variant='dark' className='sc-fjqEFS cOCOrx menu-homepage'>
+        <Navbar.Brand className='font-weigth-border text-white'>
+          <Link className='link-to-dashboard-24' to='/dashboard'>
+            Predictive Resume
+          </Link>
+        </Navbar.Brand>
+        <Navbar.Toggle aria-controls='basic-navbar-nar' />
+        <Navbar.Collapse id='basic-navbar-nar'>
+          <Nav className='mr-auto'>
+            <Nav.Link className='font-weigth-border link-to-dashboard-20' to='/dashboard' as={Link}>
+              Home
+            </Nav.Link>
+            <Nav.Link className='font-weigth-border link-to-dashboard-20' to='/admin/posts' as={Link}>
+              Accept Job
+            </Nav.Link>
+      
+            <Nav.Link className='font-weigth-border link-to-dashboard-20' to='/admin/profile' as={Link}>
+              Profile
+            </Nav.Link>
+          </Nav>
+          <Nav className='sc-geuGuN cpxZcn rightNavigation-homepage'>
             <Button variant='secondary' className='font-weigth-border text-white' onClick={logout}>
               <img src={logoutIcon} alt='img' width='32' height='32' className='mr-2'/>
               Logout

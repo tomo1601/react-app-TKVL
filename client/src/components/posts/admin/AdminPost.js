@@ -5,30 +5,22 @@ import Card from "react-bootstrap/Card";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Spiner from "react-bootstrap/Spinner";
-import Button from "react-bootstrap/esm/Button";
-import addIcon from "../../../assets/plus-circle-fill.svg";
-import AddPostModal from "../../AddPostsModal";
-import OverlayTrigger from "react-bootstrap/OverlayTrigger";
-import Tooltip from "react-bootstrap/Tooltip";
 import Toast from "react-bootstrap/Toast";
 import { MDBRadio, MDBBtnGroup } from "mdb-react-ui-kit";
-import EmployerSinglePost from "./EmployerSinglePost";
-import CVSubmitModal from "../../CVSubmitModal";
+import AdminSinglePost from "./AdminSinglePost";
 
-const EmpPost = () => {
+const AdminPost = () => {
   const {
     postState: { posts, postLoading },
-    getEmployerPosts,
-    setShowAddPostModal,
-    setShowCVSubmitModal,
+    getAdminPosts,
     showToast: { show, message, type },
     setShowToast,
-    deletePost,
-    cvSubmit
+    adminDeletePost,
+    acceptPost
   } = useContext(EmployerPostContext);
 
   useEffect(() => {
-    getEmployerPosts(true);
+    getAdminPosts(true);
   }, []);
   let body = null;
 
@@ -66,7 +58,7 @@ const EmpPost = () => {
               wrapperTag="span"
               label="Accepted"
               onClick={() => {
-                getEmployerPosts(true);
+                getAdminPosts(true);
               }}
             />
             <MDBRadio
@@ -78,7 +70,7 @@ const EmpPost = () => {
               wrapperTag="span"
               label="Unaccepted"
               onClick={() => {
-                getEmployerPosts(false);
+                getAdminPosts(false);
               }}
             />
           </MDBBtnGroup>
@@ -86,23 +78,11 @@ const EmpPost = () => {
         <Row className="row-cols-1 row-cols-md-3 g-4 mx-auto mt-3 container main-row">
           {posts.map((post) => (
             <Col key={post.id} className="my-2 ">
-              <EmployerSinglePost post={post} deletePost={deletePost} cvSubmit={cvSubmit} setShowCVSubmitModal={setShowCVSubmitModal}/>
+              <AdminSinglePost post={post} adminDeletePost={adminDeletePost} acceptPost={acceptPost}/>
             </Col>
           ))}
         </Row>
-        <AddPostModal />
-        <CVSubmitModal/>
-        <OverlayTrigger
-          placement="left"
-          overlay={<Tooltip>Add category</Tooltip>}
-        >
-          <Button
-            className="btn-floating"
-            onClick={setShowAddPostModal.bind(this, true)}
-          >
-            <img src={addIcon} alt="add post" width="60" height="60" />
-          </Button>
-        </OverlayTrigger>
+     
         <Toast
           show={show}
           style={{ position: "fixed", top: "20%", right: "10px" }}
@@ -126,4 +106,4 @@ const EmpPost = () => {
   return body;
 };
 
-export default EmpPost;
+export default AdminPost;

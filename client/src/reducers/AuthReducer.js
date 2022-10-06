@@ -1,5 +1,5 @@
 export const AuthReducer = (state, action) => {
-    const { type, payload: { isAuthenticated, user, isUser, isEmployer, profile, CV } } = action
+    const { type, payload: { isAuthenticated, user, isUser, isAdmin, isEmployer, profile, CV } } = action
 
     switch (type) {
         case 'SET_AUTH':
@@ -9,7 +9,8 @@ export const AuthReducer = (state, action) => {
                 isAuthenticated,
                 user,
                 isUser,
-                isEmployer
+                isEmployer,
+                isAdmin,
             }
         case 'PROFILE_LOAD_SUCCESS':
             return {
