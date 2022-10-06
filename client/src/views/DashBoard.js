@@ -119,7 +119,7 @@ const DashBoard = () => {
               <Col className="col-5">
                 <Select 
                   placeholder='Field' 
-                  options={ JOBFIELD }
+                  options ={ JOBFIELD }
                   onChange={selectedValue}
                 />
               </Col>

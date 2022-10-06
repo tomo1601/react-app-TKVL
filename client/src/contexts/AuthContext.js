@@ -1,116 +1,167 @@
-import { createContext, useReducer, useEffect } from "react"
+import { createContext, useReducer, useEffect, useState } from "react"
 import axios from 'axios'
 import { AuthReducer } from "../reducers/AuthReducer"
-import { apiUrl, LOCAL_STORAGE_TOKEN_NAME,USER_ROLE } from "./constants"
+import { apiUrl, LOCAL_STORAGE_TOKEN_NAME, USER_ROLE } from "./constants"
 import SetAuthToken from "../utlis/SetAuthToken"
 
 export const AuthContext = createContext()
 
-const AuthContextProvider = ({children}) =>{
+const AuthContextProvider = ({ children }) => {
     const [authState, dispatch] = useReducer(AuthReducer, {
         authloading: true,
         isAuthenticated: false,
         user: null,
         isUser: false,
-        isEmployer:false
+        isEmployer: false
     })
 
+    const [showToast, setShowToast] = useState({
+        show: false,
+        message: '',
+        type: null
+    })
     // auth user
-    const loadUser = async (user)=>{
-        if(user === undefined)
+    const loadUser = async (user) => {
+        if (user === undefined)
             user = localStorage[USER_ROLE]
-        if(localStorage[LOCAL_STORAGE_TOKEN_NAME]){
-            SetAuthToken(localStorage[LOCAL_STORAGE_TOKEN_NAME]) 
+        if (localStorage[LOCAL_STORAGE_TOKEN_NAME]) {
+            SetAuthToken(localStorage[LOCAL_STORAGE_TOKEN_NAME])
         }
         try {
             const recentToken = localStorage[LOCAL_STORAGE_TOKEN_NAME]
-            if(recentToken !== undefined){
-                const response = await axios.get(`${apiUrl}/${user}`,{
+            if (recentToken !== undefined) {
+                const response = await axios.get(`${apiUrl}/${user}`, {
                     headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${recentToken}`
-                    }}) 
-                dispatch({type: 'SET_AUTH', payload:{isAuthenticated: true, user: response.data, isUser: user === 'user' ? true : false, isEmployer: user === 'employer' ? true : false}})
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${recentToken}`
+                    }
+                })
+                dispatch({ type: 'SET_AUTH', payload: { isAuthenticated: true, user: response.data, isUser: user === 'user' ? true : false, isEmployer: user === 'employer' ? true : false } })
             }
             else {
                 localStorage.removeItem(LOCAL_STORAGE_TOKEN_NAME)
                 SetAuthToken(null)
-                dispatch({type: 'SET_AUTH', payload:{isAuthenticated: false, user: null, isUser: false, isEmployer: false}})
+                dispatch({ type: 'SET_AUTH', payload: { isAuthenticated: false, user: null, isUser: false, isEmployer: false } })
             }
-            
-        } 
-        catch(error) {
+
+        }
+        catch (error) {
             console.log(error)
             localStorage.removeItem(LOCAL_STORAGE_TOKEN_NAME)
             SetAuthToken(null)
-            dispatch({type: 'SET_AUTH', payload:{isAuthenticated: false, user: null, isUser: false, isEmployer: false}})
+            dispatch({ type: 'SET_AUTH', payload: { isAuthenticated: false, user: null, isUser: false, isEmployer: false } })
         }
     }
 
-    useEffect(()=> {loadUser()},[])
+    useEffect(() => { loadUser() }, [])
 
     // Login user
-    const loginUser = async userForm =>{
+    const loginUser = async userForm => {
         try {
             const response = await axios.post(`${apiUrl}/user/login`, userForm)
-            if(response.data.success)
-            localStorage.setItem(LOCAL_STORAGE_TOKEN_NAME, response.data.token)
-            localStorage.setItem(USER_ROLE,'user')
+            if (response.data.success)
+                localStorage.setItem(LOCAL_STORAGE_TOKEN_NAME, response.data.token)
+            localStorage.setItem(USER_ROLE, 'user')
             await loadUser('user')
             return response.data
         }
-        catch (error){
+        catch (error) {
             if (error.response.data) return error.response.data
-            else return {success: false, message: error.message}
+            else return { success: false, message: error.message }
         }
     }
 
-    
+
     // Register user
-    const registerUser = async userForm =>{
+    const registerUser = async userForm => {
         try {
             console.log(userForm)
             const response = await axios.post(`${apiUrl}/user/singup`, userForm)
             console.log('không vượt qua đây')
-            if(response.data.success)
-            localStorage.setItem(LOCAL_STORAGE_TOKEN_NAME, response.data.token)
-            localStorage.setItem(USER_ROLE,'user')
+            if (response.data.success)
+                localStorage.setItem(LOCAL_STORAGE_TOKEN_NAME, response.data.token)
+            localStorage.setItem(USER_ROLE, 'user')
             return response.data
         }
-        catch (error){
-            if (error.response.data){
+        catch (error) {
+            if (error.response.data) {
                 return error.response.data
-            } 
-            else return {success: false, message: error.message}
+            }
+            else return { success: false, message: error.message }
         }
     }
 
     // Login employer
-    const loginEmployer = async userForm =>{
+    const loginEmployer = async userForm => {
         try {
             const response = await axios.post(`${apiUrl}/employer/login`, userForm)
-            if(response.data.success){
+            if (response.data.success) {
                 localStorage.setItem(LOCAL_STORAGE_TOKEN_NAME, response.data.token)
-                localStorage.setItem(USER_ROLE,'employer')
-                dispatch({type: 'SET_AUTH', payload:{isAuthenticated: true, user: response.data, isUser: false, isEmployer: true}})
+                localStorage.setItem(USER_ROLE, 'employer')
+                dispatch({ type: 'SET_AUTH', payload: { isAuthenticated: true, user: response.data, isUser: false, isEmployer: true } })
             }
-        
+
             await loadUser('employer')
             return response.data
         }
-        catch (error){
+        catch (error) {
             if (error.response.data) return error.response.data
-            else return {success: false, message: error.message}
+            else return { success: false, message: error.message }
         }
     }
 
     const logoutSection = () => {
-        
+
         localStorage.removeItem(LOCAL_STORAGE_TOKEN_NAME)
-        dispatch({type: 'SET_AUTH', payload:{isAuthenticated: false, user: null, isUser: false, isEmployer: false}})
+        dispatch({ type: 'SET_AUTH', payload: { isAuthenticated: false, user: null, isUser: false, isEmployer: false } })
+    }
+
+    const updateUserProfile = async (profile) => {
+        try {
+            const response = await axios.put(`${apiUrl}/user`, profile, {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                }
+            })
+            if (response.data.success) {
+                dispatch({
+                    type: "PROFILE_LOAD_SUCCESS",
+                    payload: { profile: response.data }
+                })
+            }
+            return response.data
+        } catch (error) {
+            console.log(error.message)
+        }
+    }
+
+    const uploadUserCV = async (CV) => {
+        const recentToken = localStorage[LOCAL_STORAGE_TOKEN_NAME]
+        try {
+            const response = await axios.post(`${apiUrl}/user/cv`, CV, {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                    "Authorization": `Bearer ${recentToken}`
+                }
+            })
+            if (response.data.success) {
+                dispatch({
+                    type: "CV_UPLOAD_SUCCESS",
+                    payload: { profile: response.data }
+                })
+            }
+            return response.data
+        } catch (error) {
+            console.log(error.message)
+        }
     }
     //conxtext data
-    const authContextData = {loginUser, registerUser, loginEmployer,logoutSection, authState}
+    const authContextData = {
+        loginUser, registerUser,
+        loginEmployer, logoutSection, updateUserProfile,
+        showToast, setShowToast, uploadUserCV,
+        authState
+    }
 
     //return 
     return (

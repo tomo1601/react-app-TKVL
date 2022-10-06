@@ -9,10 +9,11 @@ import AuthContextProvider from './contexts/AuthContext'
 import PostContextProvider from './contexts/PostContext'
 import DashBoard from './views/DashBoard'
 import ProtectedRoute from './components/routing/ProtectedRoute'
-import Profile from './components/posts/users/Profile';
+import Profile from './components/posts/users/UserProfile';
 import EmpProfile from './components/posts/employer/EmpProfile'
 import EmpPost from './components/posts/employer/EmpPost';
 import EmployerPostContextProvider from './contexts/EmployerPostContext';
+import PostDetail from './components/posts/PostDetail'
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
           <ProtectedRoute exact path='/profile' component={Profile}/>
           <ProtectedRoute exact path='/employer/profile' component={EmpProfile}/>
           <ProtectedRoute exact path='/employer/posts' component={EmpPost}/>
+          <ProtectedRoute exact path='/postDetail/:id' component={PostDetail} />
           
         </Switch>
       </Router>
