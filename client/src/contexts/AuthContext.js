@@ -1,4 +1,4 @@
-import { createContext, useReducer, useEffect } from "react";
+import { createContext, useReducer, useEffect, useState } from "react";
 import axios from "axios";
 import { AuthReducer } from "../reducers/AuthReducer";
 import { apiUrl, LOCAL_STORAGE_TOKEN_NAME, USER_ROLE } from "./constants";
@@ -16,6 +16,11 @@ const AuthContextProvider = ({ children }) => {
     isAdmin: false,
   });
 
+  const [showToast, setShowToast] = useState({
+    show: false,
+    message: '',
+    type: null
+  })
   // auth user
   const loadUser = async (user) => {
     if (user === undefined) user = localStorage[USER_ROLE];
@@ -128,29 +133,58 @@ const AuthContextProvider = ({ children }) => {
     }
   };
 
-  const logoutSection = () => {
-    localStorage.removeItem(LOCAL_STORAGE_TOKEN_NAME);
-    localStorage.removeItem(USER_ROLE);
+    const logoutSection = () => {
 
-    dispatch({
-      type: "SET_AUTH",
-      payload: {
-        isAuthenticated: false,
-        user: null,
-        isUser: false,
-        isEmployer: false,
-      },
-    });
-  };
-  //conxtext data
-  const authContextData = {
-    loginAdmin,
-    loginUser,
-    registerUser,
-    loginEmployer,
-    logoutSection,
-    authState,
-  };
+        localStorage.removeItem(LOCAL_STORAGE_TOKEN_NAME)
+        dispatch({ type: 'SET_AUTH', payload: { isAuthenticated: false, user: null, isUser: false, isEmployer: false } })
+    }
+
+    const updateUserProfile = async (profile) => {
+        try {
+            const response = await axios.put(`${apiUrl}/user`, profile, {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                }
+            })
+            if (response.data.success) {
+                dispatch({
+                    type: "PROFILE_LOAD_SUCCESS",
+                    payload: { profile: response.data }
+                })
+            }
+            return response.data
+        } catch (error) {
+            console.log(error.message)
+        }
+    }
+
+    const uploadUserCV = async (CV) => {
+        const recentToken = localStorage[LOCAL_STORAGE_TOKEN_NAME]
+        try {
+            const response = await axios.post(`${apiUrl}/user/cv`, CV, {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                    "Authorization": `Bearer ${recentToken}`
+                }
+            })
+            if (response.data.success) {
+                dispatch({
+                    type: "CV_UPLOAD_SUCCESS",
+                    payload: { profile: response.data }
+                })
+            }
+            return response.data
+        } catch (error) {
+            console.log(error.message)
+        }
+    }
+    //conxtext data
+    const authContextData = {
+        loginUser, registerUser,
+        loginEmployer, logoutSection, updateUserProfile,
+        showToast, setShowToast, uploadUserCV, loginAdmin,
+        authState
+    }
 
   //return
   return (
@@ -161,3 +195,6 @@ const AuthContextProvider = ({ children }) => {
 };
 
 export default AuthContextProvider;
+
+
+
