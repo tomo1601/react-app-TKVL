@@ -17,7 +17,7 @@ const PostContextProvider = ({children}) => {
     // get api post
     const getPosts = async()=>{
         try {
-            const response = await axios.get(`${apiUrl}/post`)
+            const response = await axios.get(`${apiUrl}/post?&page=1&limit=40`)
             if(response.data.success){
                 dispatch({type: POSTS_LOADED_SUCCESS, payload: response.data.data})
             }
