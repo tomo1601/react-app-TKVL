@@ -4,6 +4,7 @@ import {
   POST_ADDED_SUCCESS,
   POST_DELETED_SUCCESS,
   POST_ACCEPTED_SUCCESS,
+  POSTS_FIND_SUCCESS,
 } from "../contexts/constants";
 
 export const PostReducer = (state, action) => {
@@ -35,6 +36,12 @@ export const PostReducer = (state, action) => {
       return {
         ...state,
         posts: state.posts.filter((post) => post.id !== payload),
+      };
+    case POSTS_FIND_SUCCESS:
+      return {
+        ...state,
+        posts: payload,
+        postLoading: false,
       };
     default:
       return state;

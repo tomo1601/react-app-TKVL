@@ -93,7 +93,7 @@ const Profile = () => {
     }
     body = (
       <>
-        <h2 class="ContactInformation_blockTitle__yHeZl">Thông Tin Cá Nhân</h2>
+        <h2 class="ContactInformation_blockTitle__yHeZl">Infomation</h2>
         <div className='ContactInfoView_viewSectionWrapper__SEvGW'>
           <Form className='native-grid' onSubmit={onSubmitUpdateProfile}>
             <AlertMessage info={alert} />
@@ -286,7 +286,7 @@ const Profile = () => {
   else {
     body = (
       <>
-        <h2 class="ContactInformation_blockTitle__yHeZl">Thông Tin Cá Nhân</h2>
+        <h2 class="ContactInformation_blockTitle__yHeZl">Infomation</h2>
         <div className='ContactInfoView_viewSectionWrapper__SEvGW'>
           <Form className='native-grid'>
             <Row className='row'>

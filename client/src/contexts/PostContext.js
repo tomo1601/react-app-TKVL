@@ -27,10 +27,24 @@ const PostContextProvider = ({children}) => {
         }
     }
 
+    const findPostById = async postId => {
+        try {
+            const response = await axios.get(`${apiUrl}/post/${postId}`)
+            if (response.data.success) {
+                dispatch({ type: "POSTS_FIND_SUCCESS", payload: response.data.data })
+            }
+            return response.data.post
+        } catch (error) {
+            console.log(error)
+            return error
+        }
+
+    }
+
     
 
     // postcontextdata
-    const postContextData = {postState, getPosts}
+    const postContextData = {postState, getPosts, findPostById}
     
     return (
         <PostContext.Provider value={postContextData}>

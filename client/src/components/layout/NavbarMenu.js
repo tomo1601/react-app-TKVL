@@ -67,7 +67,7 @@ const NavbarMenu = () => {
             <Nav.Link className='font-weigth-border link-to-dashboard-20' to='/employer/posts' as={Link}>
               Job
             </Nav.Link>
-            <Nav.Link className='font-weigth-border link-to-dashboard-20' to='dashboard' as={Link}>
+            <Nav.Link className='font-weigth-border link-to-dashboard-20' to='/dashboard' as={Link}>
               Company
             </Nav.Link>
             <Nav.Link className='font-weigth-border link-to-dashboard-20' to='/employer/profile' as={Link}>
