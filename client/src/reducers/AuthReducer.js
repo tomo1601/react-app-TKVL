@@ -23,6 +23,12 @@ export const AuthReducer = (state, action) => {
                 ...state,
                 CV: CV
             }
+        case 'CV_SUBMIT_SUCCESS':
+            return {
+                ...state,
+                submited: false
+            }
+
         default:
             return state
     }
