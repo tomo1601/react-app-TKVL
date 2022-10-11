@@ -46,8 +46,8 @@ const AuthContextProvider = ({ children }) => {
             isAdmin: user === "admin" ? true : false,
           },
         });
-      }else
-       throw new Error("Unauthorized !");
+      } else
+        throw new Error("Unauthorized !");
     } catch (error) {
       console.log(error);
       localStorage.removeItem(LOCAL_STORAGE_TOKEN_NAME);
@@ -133,58 +133,77 @@ const AuthContextProvider = ({ children }) => {
     }
   };
 
-    const logoutSection = () => {
+  const logoutSection = () => {
 
-        localStorage.removeItem(LOCAL_STORAGE_TOKEN_NAME)
-        dispatch({ type: 'SET_AUTH', payload: { isAuthenticated: false, user: null, isUser: false, isEmployer: false } })
-    }
+    localStorage.removeItem(LOCAL_STORAGE_TOKEN_NAME)
+    dispatch({ type: 'SET_AUTH', payload: { isAuthenticated: false, user: null, isUser: false, isEmployer: false } })
+  }
 
-    const updateUserProfile = async (profile) => {
-        try {
-            const response = await axios.put(`${apiUrl}/user`, profile, {
-                headers: {
-                    "Content-Type": "multipart/form-data",
-                }
-            })
-            if (response.data.success) {
-                dispatch({
-                    type: "PROFILE_LOAD_SUCCESS",
-                    payload: { profile: response.data }
-                })
-            }
-            return response.data
-        } catch (error) {
-            console.log(error.message)
+  const updateUserProfile = async (profile) => {
+    try {
+      const response = await axios.put(`${apiUrl}/user`, profile, {
+        headers: {
+          "Content-Type": "multipart/form-data",
         }
+      })
+      if (response.data.success) {
+        dispatch({
+          type: "PROFILE_LOAD_SUCCESS",
+          payload: { profile: response.data }
+        })
+      }
+      return response.data
+    } catch (error) {
+      console.log(error.message)
     }
+  }
 
-    const uploadUserCV = async (CV) => {
-        const recentToken = localStorage[LOCAL_STORAGE_TOKEN_NAME]
-        try {
-            const response = await axios.post(`${apiUrl}/user/cv`, CV, {
-                headers: {
-                    "Content-Type": "multipart/form-data",
-                    "Authorization": `Bearer ${recentToken}`
-                }
-            })
-            if (response.data.success) {
-                dispatch({
-                    type: "CV_UPLOAD_SUCCESS",
-                    payload: { profile: response.data }
-                })
-            }
-            return response.data
-        } catch (error) {
-            console.log(error.message)
+  const uploadUserCV = async (CV) => {
+    const recentToken = localStorage[LOCAL_STORAGE_TOKEN_NAME]
+    try {
+      const response = await axios.post(`${apiUrl}/user/cv`, CV, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          "Authorization": `Bearer ${recentToken}`
         }
+      })
+      if (response.data.success) {
+        dispatch({
+          type: "CV_UPLOAD_SUCCESS",
+          payload: { profile: response.data }
+        })
+      }
+      return response.data
+    } catch (error) {
+      console.log(error.message)
     }
-    //conxtext data
-    const authContextData = {
-        loginUser, registerUser,
-        loginEmployer, logoutSection, updateUserProfile,
-        showToast, setShowToast, uploadUserCV, loginAdmin,
-        authState
+  }
+
+  const submitUserCV = async (submitForm) => {
+    try {
+      console.log(submitForm.postId)
+      console.log(submitForm.mediaId)
+      const response = await axios.post(`${apiUrl}/user/submitcv?postId=${submitForm.postId}&mediaId=${submitForm.mediaId}`)
+      if (response.data.success) {
+        dispatch({
+          type: "CV_SUBMIT_SUCCESS",
+          payload: { submited: true }
+        })
+      }
+      return response.data
+    } catch (error) {
+      console.log(error.message)
     }
+  }
+
+  //conxtext data
+  const authContextData = {
+    loginUser, registerUser,
+    loginEmployer, logoutSection, updateUserProfile,
+    showToast, setShowToast, uploadUserCV, loginAdmin,
+    submitUserCV,
+    authState
+  }
 
   //return
   return (

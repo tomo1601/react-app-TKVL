@@ -30,8 +30,13 @@ const Profile = () => {
     birth: user ? user.birth : '',
     gender: user ? user.gender : '',
     cityId: '',
-    avata:''
+    avata: ''
   })
+
+  let cvName = 'There are no profiles yet'
+  if (user.profiles.length !== 0) {
+    cvName = user.profiles[0].name
+  }
 
   const [userCV, setUserCV] = useState({
     CV: '',
@@ -93,7 +98,7 @@ const Profile = () => {
     }
     body = (
       <>
-        <h2 class="ContactInformation_blockTitle__yHeZl">Infomation</h2>
+        <h2 className="ContactInformation_blockTitle__yHeZl">Infomation</h2>
         <div className='ContactInfoView_viewSectionWrapper__SEvGW'>
           <Form className='native-grid' onSubmit={onSubmitUpdateProfile}>
             <AlertMessage info={alert} />
@@ -239,7 +244,7 @@ const Profile = () => {
     }
     body = (
       <>
-        <h2 class="ContactInformation_blockTitle__yHeZl">Upload Your Resume</h2>
+        <h2 className="ContactInformation_blockTitle__yHeZl">Upload Your Resume</h2>
         <div className='ContactInfoView_viewSectionWrapper__SEvGW'>
           <Form className='native-grid' onSubmit={onSubmitCV}>
             <AlertMessage info={alert} />
@@ -286,60 +291,57 @@ const Profile = () => {
   else {
     body = (
       <>
-        <h2 class="ContactInformation_blockTitle__yHeZl">Infomation</h2>
+        <h2 className="ContactInformation_blockTitle__yHeZl">Infomation</h2>
         <div className='ContactInfoView_viewSectionWrapper__SEvGW'>
           <Form className='native-grid'>
             <Row className='row'>
               <Col className='col-12 col-lg-6'>
                 <div className='undefined row'>
                   <span className='undefined col-4'>Email:</span>
-                  <div className='col-8 text-truncate fw-6'>{user.email}</div>
+                  <div className='col-8 text-truncate fw-6'  style={{width:'100%'}}>{user.email}</div>
                 </div>
               </Col>
               <Col className='col-12 col-lg-6'>
                 <div className='undefined row'>
                   <span className='undefined col-4'>Phone:</span>
-                  <div className='col-8 text-truncate fw-6'>{user.phone}</div>
+                  <div className='col-8 text-truncate fw-6' style={{width:'100%'}}>{user.phone}</div>
                 </div>
               </Col>
               <Col className='col-12 col-lg-6'>
                 <div className='undefined row'>
                   <span className='undefined col-4' >Name:</span>
-                  <div className='col-8 text-truncate fw-6' >{user.name}</div>
+                  <div className='col-8 text-truncate fw-6'style={{width:'100%'}} >{user.name}</div>
                 </div>
               </Col>
               <Col className='col-12 col-lg-6'>
                 <div className='undefined row'>
                   <span className='undefined col-4'>Gender:</span>
-                  <div className='col-8 text-truncate fw-6'>{user.gender}</div>
+                  <div className='col-8 text-truncate fw-6'style={{width:'100%'}}>{user.gender}</div>
                 </div>
               </Col>
               <Col className='col-12 col-lg-6'>
                 <div className='undefined row'>
                   <span className='undefined col-4'>Birth:</span>
-                  <div className='col-8 text-truncate fw-6'>{user.birth}</div>
+                  <div className='col-8 text-truncate fw-6'style={{width:'100%'}}>{user.birth}</div>
                 </div>
               </Col>
               <Col className='col-12 col-lg-6'>
                 <div className='undefined row'>
                   <span className='undefined col-4'>Addess:</span>
-                  <div className='col-8 text-truncate fw-6'>{user.address}</div>
+                  <div className='col-8 text-truncate fw-6'style={{width:'100%'}}>{user.address}</div>
                 </div>
               </Col>
               <Col className='col-12 col-lg-6'>
                 <div className='undefined row'>
                   <span className='undefined col-4'>City:</span>
-                  <div className='col-8 text-truncate fw-6'>{user.city}</div>
+                  <div className='col-8 text-truncate fw-6'style={{width:'100%'}}>{user.city}</div>
                 </div>
               </Col>
               <Col className='col-12 col-lg-6'>
                 <div className='undefined row'>
                   <span className='undefined col-4'>Resume:</span>
-                  <div className='col-8 text-truncate fw-6'>
-                    {
-                      user.profiles[0].name
-                    }
-
+                  <div className='col-8 text-truncate fw-6'style={{width:'100%'}}>
+                    {cvName} .pdf
                   </div>
                 </div>
               </Col>
@@ -368,25 +370,25 @@ const Profile = () => {
             <p className='title borderBottom'> Career Managerment</p>
             <ul className='sidebarMenu'>
               <li className='sidebarMenuItem'>
-                <Link classname='profile-link' to='/profile'>
+                <Link className='profile-link' to='/profile'>
                   <img src={peopleIcon} alt='img' width='30' height='30' className='mr-2' />
                   <span className='textLabel' onClick={() => { setUpload(false); setUpdate(false); }}> My profile</span>
                 </Link>
               </li>
               <li className='sidebarMenuItem'>
-                <Link classname='profile-link' to='/profile'>
+                <Link className='profile-link' to='/profile'>
                   <img src={userSeting} alt='img' width='30' height='30' className='mr-2' />
                   <span className='textLabel' onClick={() => { setUpload(true); setUpdate(false); }}> Upload CV</span>
                 </Link>
               </li>
               <li className='sidebarMenuItem'>
-                <Link classname='profile-link' to='/profile'>
+                <Link className='profile-link' to='/profile'>
                   <img src={userResumeIcon} alt='img' width='30' height='30' className='mr-2' />
                   <span className='textLabel' onClick={() => { setUpload(false); setUpdate(false); }}>Account seting</span>
                 </Link>
               </li>
               <li className='sidebarMenuItem'>
-                <Link classname='profile-link' to='/profile'>
+                <Link className='profile-link' to='/profile'>
                   <img src={passIcon} alt='img' width='30' height='30' className='mr-2' />
                   <span className='textLabel' onClick={() => { setUpload(false); setUpdate(false); }}>Change Password</span>
                 </Link>
@@ -397,7 +399,7 @@ const Profile = () => {
 
         <div className='MasterLayout_vCol__Raypp MasterLayout_vColLg6__Repj5'>
           <div className='vnwBox vnwBoxSmall'>
-            <span class="headerTitle">My Profile</span>
+            <span className="headerTitle">My Profile</span>
           </div>
 
           <div className='Block_Block___z99z '>
