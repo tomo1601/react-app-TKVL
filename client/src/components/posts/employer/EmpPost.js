@@ -1,7 +1,5 @@
-import React from "react";
 import { useContext, useEffect, useState } from "react";
 import { EmployerPostContext } from "../../../contexts/EmployerPostContext";
-import Card from "react-bootstrap/Card";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Spiner from "react-bootstrap/Spinner";
@@ -14,22 +12,36 @@ import Toast from "react-bootstrap/Toast";
 import { MDBRadio, MDBBtnGroup } from "mdb-react-ui-kit";
 import EmployerSinglePost from "./EmployerSinglePost";
 import CVSubmitModal from "../../CVSubmitModal";
+import PostPaging from "../../PostPaging";
+import NoPostFound from "../../NoPostFound";
 
 const EmpPost = () => {
   const {
-    postState: { posts, postLoading },
+    postState: { posts, postLoading, currentPage, totalPage },
     getEmployerPosts,
     setShowAddPostModal,
     setShowCVSubmitModal,
     showToast: { show, message, type },
     setShowToast,
     deletePost,
-    cvSubmit
+    cvSubmit,
   } = useContext(EmployerPostContext);
 
+  const [accepted, setAccepted] = useState(true);
+
   useEffect(() => {
-    getEmployerPosts(true);
+    getEmployerPosts("page=" + 1 + "&limit=" + 9, true);
   }, []);
+
+  const handlePageChange = (pageNumber, acc) => {
+    if (acc === undefined) acc = accepted;
+    let key = "page=" + pageNumber + "&limit=" + 9;
+
+    console.log(key);
+
+    getEmployerPosts(key, acc);
+  };
+
   let body = null;
 
   if (postLoading) {
@@ -38,18 +50,8 @@ const EmpPost = () => {
         <Spiner animation="border" variant="info" />
       </div>
     );
-  } else if (posts.lenght === 0) {
-    body = (
-      <>
-        <Card className="text-center mx-5 my-5">
-          <Card.Header as="h1">Hi</Card.Header>
-          <Card.Body>
-            <Card.Title> Wellcome</Card.Title>
-            <Card.Text>You have no post !</Card.Text>
-          </Card.Body>
-        </Card>
-      </>
-    );
+  } else if (posts.length === 0) {
+    body = <NoPostFound/>
   } else {
     body = (
       <>
@@ -66,7 +68,8 @@ const EmpPost = () => {
               wrapperTag="span"
               label="Accepted"
               onClick={() => {
-                getEmployerPosts(true);
+                setAccepted(true);
+                handlePageChange(1, true);
               }}
             />
             <MDBRadio
@@ -78,7 +81,8 @@ const EmpPost = () => {
               wrapperTag="span"
               label="Unaccepted"
               onClick={() => {
-                getEmployerPosts(false);
+                setAccepted(false);
+                handlePageChange(1, false);
               }}
             />
           </MDBBtnGroup>
@@ -86,15 +90,22 @@ const EmpPost = () => {
         <Row className="row-cols-1 row-cols-md-3 g-4 mx-auto mt-3 container main-row">
           {posts.map((post) => (
             <Col key={post.id} className="my-2 ">
-              <EmployerSinglePost post={post} deletePost={deletePost} cvSubmit={cvSubmit} setShowCVSubmitModal={setShowCVSubmitModal}/>
+              <EmployerSinglePost
+                post={post}
+                deletePost={deletePost}
+                cvSubmit={cvSubmit}
+                setShowCVSubmitModal={setShowCVSubmitModal}
+              />
             </Col>
           ))}
         </Row>
+        <PostPaging handlePageChange={handlePageChange} currentPage={currentPage} totalPage={totalPage}/>
+
         <AddPostModal />
-        <CVSubmitModal/>
+        <CVSubmitModal />
         <OverlayTrigger
           placement="left"
-          overlay={<Tooltip>Add category</Tooltip>}
+          overlay={<Tooltip>Add New Job</Tooltip>}
         >
           <Button
             className="btn-floating"

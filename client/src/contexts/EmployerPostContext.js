@@ -5,7 +5,6 @@ import {
   apiUrl,
   POSTS_LOADED_FAIL,
   POSTS_LOADED_SUCCESS,
-  LOCAL_STORAGE_TOKEN_NAME,
   POST_ADDED_SUCCESS,
   POST_DELETED_SUCCESS,
   POST_ACCEPTED_SUCCESS,
@@ -33,14 +32,16 @@ const EmployerPostContextProvider = ({ children }) => {
   });
 
   // get employer post
-  const getEmployerPosts = async (value) => {
+  const getEmployerPosts = async (key, accepted) => {
+    let str = "";
+    if (key !== null) str = key;
     try {
       const response = await axios.get(
-        `${apiUrl}/employer/post?expirationDate=2001-01-01&page=1&limit=100&accepted=${value}`
+        `${apiUrl}/employer/post?${str}&accepted=${accepted}`
       );
 
       if (response.data.success) {
-        dispatch({ type: POSTS_LOADED_SUCCESS, payload: response.data.data });
+        dispatch({ type: POSTS_LOADED_SUCCESS, payload: response.data });
       }
     } catch (error) {
       dispatch({ type: POSTS_LOADED_FAIL });
@@ -48,13 +49,15 @@ const EmployerPostContextProvider = ({ children }) => {
   };
 
   // get admin post
-  const getAdminPosts = async (value) => {
+  const getAdminPosts = async (key, accepted) => {
+    let str = "";
+    if (key !== null) str = key;
     try {
       const response = await axios.get(
-        `${apiUrl}/admin/post?expirationDate=2001-01-01&page=1&limit=100&accepted=${value}`
+        `${apiUrl}/admin/post?${str}&accepted=${accepted}`
       );
       if (response.data.success) {
-        dispatch({ type: POSTS_LOADED_SUCCESS, payload: response.data.data });
+        dispatch({ type: POSTS_LOADED_SUCCESS, payload: response.data });
       }
     } catch (error) {
       dispatch({ type: POSTS_LOADED_FAIL });

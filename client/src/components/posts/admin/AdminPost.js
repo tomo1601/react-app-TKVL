@@ -1,17 +1,17 @@
-import React from "react";
 import { useContext, useEffect, useState } from "react";
 import { EmployerPostContext } from "../../../contexts/EmployerPostContext";
-import Card from "react-bootstrap/Card";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Spiner from "react-bootstrap/Spinner";
 import Toast from "react-bootstrap/Toast";
 import { MDBRadio, MDBBtnGroup } from "mdb-react-ui-kit";
 import AdminSinglePost from "./AdminSinglePost";
+import PostPaging from "../../PostPaging";
+import NoPostFound from "../../NoPostFound";
 
 const AdminPost = () => {
   const {
-    postState: { posts, postLoading },
+    postState: { posts, postLoading, currentPage, totalPage  },
     getAdminPosts,
     showToast: { show, message, type },
     setShowToast,
@@ -19,9 +19,22 @@ const AdminPost = () => {
     acceptPost
   } = useContext(EmployerPostContext);
 
+  const [accepted, setAccepted] = useState(true);
+
   useEffect(() => {
-    getAdminPosts(true);
+    getAdminPosts("page=" + 1 + "&limit=" + 9,true);
   }, []);
+
+
+  const handlePageChange = (pageNumber, acc) => {
+    if (acc === undefined) acc = accepted;
+    let key = "page=" + pageNumber + "&limit=" + 9;
+
+    console.log(key);
+
+    getAdminPosts(key, acc);
+  };
+
   let body = null;
 
   if (postLoading) {
@@ -30,18 +43,8 @@ const AdminPost = () => {
         <Spiner animation="border" variant="info" />
       </div>
     );
-  } else if (posts.lenght === 0) {
-    body = (
-      <>
-        <Card className="text-center mx-5 my-5">
-          <Card.Header as="h1">Hi</Card.Header>
-          <Card.Body>
-            <Card.Title> Wellcome</Card.Title>
-            <Card.Text>You have no post !</Card.Text>
-          </Card.Body>
-        </Card>
-      </>
-    );
+  } else if (posts.length === 0) {
+    body = <NoPostFound/>
   } else {
     body = (
       <>
@@ -58,8 +61,8 @@ const AdminPost = () => {
               wrapperTag="span"
               label="Accepted"
               onClick={() => {
-                getAdminPosts(true);
-              }}
+                setAccepted(true);
+                handlePageChange(1, true);              }}
             />
             <MDBRadio
               btn
@@ -70,8 +73,8 @@ const AdminPost = () => {
               wrapperTag="span"
               label="Unaccepted"
               onClick={() => {
-                getAdminPosts(false);
-              }}
+                setAccepted(false);
+                handlePageChange(1, false);              }}
             />
           </MDBBtnGroup>
         </div>
@@ -82,7 +85,8 @@ const AdminPost = () => {
             </Col>
           ))}
         </Row>
-     
+        <PostPaging handlePageChange={handlePageChange} currentPage={currentPage} totalPage={totalPage}/>
+
         <Toast
           show={show}
           style={{ position: "fixed", top: "20%", right: "10px" }}

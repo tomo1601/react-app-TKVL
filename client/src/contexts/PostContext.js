@@ -11,15 +11,20 @@ const PostContextProvider = ({children}) => {
     // state
     const [postState, dispatch] = useReducer(PostReducer,{
         posts: [],
-        postLoading: true
+        postLoading: true,
+        currentPage: null,
+        totalPage: null,
+        limit: null
     })
 
     // get api post
-    const getPosts = async()=>{
+    const getPosts = async(key)=>{
+        let str = ""
+        if(key !== undefined) str = key
         try {
-            const response = await axios.get(`${apiUrl}/post?&page=1&limit=40`)
+            const response = await axios.get(`${apiUrl}/post?${str}`)
             if(response.data.success){
-                dispatch({type: POSTS_LOADED_SUCCESS, payload: response.data.data})
+                dispatch({type: POSTS_LOADED_SUCCESS, payload: response.data})
             }
             
         } catch (error) {

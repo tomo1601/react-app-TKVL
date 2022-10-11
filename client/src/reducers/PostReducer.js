@@ -13,8 +13,11 @@ export const PostReducer = (state, action) => {
     case POSTS_LOADED_SUCCESS:
       return {
         ...state,
-        posts: payload,
+        posts: payload.data,
         postLoading: false,
+        currentPage: payload.currentPage,
+        totalPage: payload.totalPage,
+        limit: payload.limit
       };
     case POSTS_LOADED_FAIL:
       return {
