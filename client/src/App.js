@@ -8,13 +8,14 @@ import AuthContextProvider from './contexts/AuthContext'
 import PostContextProvider from './contexts/PostContext'
 import DashBoard from './views/DashBoard'
 import ProtectedRoute from './components/routing/ProtectedRoute'
-import Profile from './components/posts/users/UserProfile';
+import Profile from './components/posts/users/UserProfile'
 import EmpProfile from './components/posts/employer/EmpProfile'
-import EmpPost from './components/posts/employer/EmpPost';
-import EmployerPostContextProvider from './contexts/EmployerPostContext';
-import AuthAdmin from './views/AuthAdmin';
-import AdminPost from './components/posts/admin/AdminPost';
+import EmpPost from './components/posts/employer/EmpPost'
+import EmployerPostContextProvider from './contexts/EmployerPostContext'
+import AuthAdmin from './views/AuthAdmin'
+import AdminPost from './components/posts/admin/AdminPost'
 import PostDetail from './components/posts/PostDetail'
+import { UserResume } from './components/posts/users/UserResume';
 
 function App() {
   return (
@@ -36,7 +37,7 @@ function App() {
           <ProtectedRoute exact path='/employer/profile' component={EmpProfile}/>
           <ProtectedRoute exact path='/employer/posts' component={EmpPost}/>
           <ProtectedRoute exact path='/postDetail/:id' component={PostDetail} />
-
+          <ProtectedRoute exact path='/user/resume' component={UserResume} />
 
           <ProtectedRoute exact path='/admin/posts' component={AdminPost}/>
 

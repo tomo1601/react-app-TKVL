@@ -1,121 +1,123 @@
 .landing {
-	position: relative;
-	background: url('./assets/landing.jpg') no-repeat center center/cover;
-	height: 100vh;
+  position: relative;
+  background: url('./assets/landing.jpg') no-repeat center center/cover;
+  height: 100vh;
 }
 
 .dark-overlay {
-	background-color: rgba(0, 0, 0, 0.5);
-	height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  height: 100%;
 }
 
 .landing-inner {
-	height: 100%;
-	margin: auto;
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-	text-align: center;
+  height: 100%;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
 }
 
 .landing-inner form {
-	width: 30%;
+  width: 30%;
 }
 
 .landing-inner h1,
 .landing-inner h4,
 .landing-inner p {
-	color: rgb(0, 0, 0);
+  color: rgb(0, 0, 0);
 }
 
 .spinner-container {
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	-moz-transform: translateX(-50%) translateY(-50%);
-	-webkit-transform: translateX(-50%) translateY(-50%);
-	transform: translateX(-50%) translateY(-50%);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -moz-transform: translateX(-50%) translateY(-50%);
+  -webkit-transform: translateX(-50%) translateY(-50%);
+  transform: translateX(-50%) translateY(-50%);
 }
 
 /* Post button */
 .post-button {
-	padding-top: 0;
-	background: transparent;
-	border: none;
+  padding-top: 0;
+  background: transparent;
+  border: none;
 }
 
 .post-button:hover {
-	background: transparent;
+  background: transparent;
 }
 
 a.post-button.btn:focus,
 a.post-button.btn:active {
-	outline: none;
-	background: transparent;
-	border: none;
-	box-shadow: none;
+  outline: none;
+  background: transparent;
+  border: none;
+  box-shadow: none;
 }
 
 button.post-button.btn:focus,
 button.post-button.btn:active {
-	outline: none;
-	background: transparent;
-	border: none;
-	box-shadow: none;
+  outline: none;
+  background: transparent;
+  border: none;
+  box-shadow: none;
 }
 
 /* Floating add button */
 .btn-floating {
-	position: fixed;
-	right: 3rem;
-	bottom: 3rem;
-	background: transparent;
-	border: none;
+  position: fixed;
+  right: 3rem;
+  bottom: 3rem;
+  background: transparent;
+  border: none;
 }
 
 .btn-floating:hover {
-	background: transparent;
+  background: transparent;
 }
 
 .btn-floating:focus,
 .btn-floating:active {
-	outline: none;
-	background: transparent;
-	border: none;
-	box-shadow: none;
+  outline: none;
+  background: transparent;
+  border: none;
+  box-shadow: none;
 }
 
 /* Add new post tooltip */
 .tooltip {
-	background: transparent;
+  background: transparent;
 }
 
 .tooltip .arrow::before {
-	border-left-color: #78c2ad;
+  border-left-color: #78c2ad;
 }
 
 .tooltip-inner {
-	background: #78c2ad;
+  background: #78c2ad;
 }
 
 /* Post border thicker */
 .border-success,
 .border-warning,
 .border-danger {
-	border-width: 2px;
+  border-width: 2px;
 }
 
 /* Post title */
 .post-title {
-	margin-bottom: 0.5rem;
+  margin-bottom: 0.5rem;
 }
+
 .utew-login-top-header {
   width: 100vw;
   min-height: 188px;
   background-image: -webkit-gradient(linear, left top, left bottom, color-stop(2%, #2DCEFF), to(#00B9F2));
   background-image: linear-gradient(-180deg, #2DCEFF 2%, #00B9F2 100%);
 }
+
 .grid {
   margin-left: auto;
   margin-right: auto;
@@ -124,9 +126,11 @@ button.post-button.btn:active {
   padding: 40px 70px;
   margin-top: -90px;
 }
+
 .grid.main {
   padding: 40px 70px 20px 70px;
 }
+
 .main {
   -ms-flex-negative: 0;
   flex-shrink: 0;
@@ -151,44 +155,51 @@ button.post-button.btn:active {
   align-items: center;
   margin-top: -90px;
 }
+
 .login-grid {
   background-color: #fff;
   background-image: none;
   -webkit-box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 12%), 0 1px 5px 0 rgb(0 0 0 / 20%);
   box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 12%), 0 1px 5px 0 rgb(0 0 0 / 20%);
 }
+
 .grid.main .ute-title {
   font-size: 32px;
   color: #555555;
   text-align: center;
   max-width: 100%;
-  width:100%;
+  width: 100%;
 }
+
 .ute-login-sml-text {
   font-size: 20px;
   color: #555555;
   text-align: center;
 }
+
 #form-login {
-	width: 100%;
+  width: 100%;
 }
+
 .form-field {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-pack: center;
-    -ms-flex-pack: center;
-    justify-content: center;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
 }
+
 .cOCOrx.menu-homepage {
   padding: 0px 25px;
   height: 60px;
   -webkit-box-pack: start;
   justify-content: flex-start;
 }
+
 .cOCOrx {
   height: 34px;
   background: linear-gradient(270deg, rgb(114, 249, 249) 0%, rgb(49, 167, 246) 100%);
@@ -200,11 +211,12 @@ button.post-button.btn:active {
   -webkit-box-pack: justify;
   justify-content: space-between;
 }
+
 .link-to-dashboard-24 {
   text-decoration: none;
   color: #fff;
   font-size: 24px;
-   
+
 }
 
 .link-to-dashboard-24:hover {
@@ -220,23 +232,28 @@ button.post-button.btn:active {
 .link-to-dashboard-20:hover {
   color: rgb(240, 236, 165);
 }
+
 .kiDCaC.listMenu-homepage {
   margin-left: 74px;
 }
+
 .kiDCaC {
   display: grid;
   gap: 0px 50px;
   grid-template-columns: repeat(7, auto);
 }
+
 .cpxZcn.rightNavigation-homepage {
   margin-left: auto;
 }
+
 .cpxZcn {
   display: flex;
   -webkit-box-align: center;
   align-items: center;
   position: relative;
 }
+
 .iikcZg::after {
   position: absolute;
   content: "";
@@ -247,6 +264,7 @@ button.post-button.btn:active {
   background: rgb(252, 252, 253);
   margin-left: 2px;
 }
+
 .icRRfA.div-login-homepage {
   margin: 0px;
 }
@@ -261,18 +279,22 @@ button.post-button.btn:active {
   margin-left: auto;
   margin-right: 25px;
 }
+
 .icRRfA.div-login-homepage .wrapper-user-btn {
   margin-left: 20px;
 }
+
 .icRRfA.div-login-homepage .wrapper-user-btn {
   border: 2px solid rgb(205, 247, 247);
   color: rgb(255, 255, 255);
   background: rgb(117, 210, 250);
 }
+
 .icRRfA .wrapper-user-btn {
   min-width: 140px;
   max-width: 155px;
 }
+
 .icRRfA .wrapper-user-btn {
   display: flex;
   -webkit-box-pack: start;
@@ -289,11 +311,12 @@ button.post-button.btn:active {
   cursor: pointer;
   transition: all 0.3s ease 0s;
   width: max-content;
-  
+
 }
+
 .icRRfA.div-login-homepage .wrapper-user-btn .login-text {
   color: rgb(255, 255, 255);
-  
+
 }
 
 .icRRfA .wrapper-user-btn .login-text .user-text-noLogin {
@@ -304,22 +327,23 @@ button.post-button.btn:active {
 }
 
 .img-main {
-	display: flex;
-	position: relative;
-	align-items: center;
-	padding: 0;
+  display: flex;
+  position: relative;
+  align-items: center;
+  padding: 0;
 }
 
 .form-tim-kiem {
-	background: rgba(220, 217, 212, 0.1);
-	padding: 10px 10px 10px 10px;
-	position: absolute;
-	right: 100px;
-  bottom: 100px;
+  background: rgba(220, 217, 212, 0.1);
+  padding: 10px 10px 10px 10px;
+  position: absolute;
+  right: 100px;
+  bottom: 65px;
+  width: 40%;
 }
 
 .format-row {
-	margin: 15px 0 15px 0;
+  margin: 15px 0 15px 0;
   height: 38px;
 }
 
@@ -328,7 +352,7 @@ button.post-button.btn:active {
   padding-left: 5%;
   text-decoration: none;
   color: #fff;
-  
+
 }
 
 .link-to-dashboard-36:hover {
@@ -394,12 +418,15 @@ button.post-button.btn:active {
   margin-bottom: 0;
 }
 
-dl, ol, ul {
+dl,
+ol,
+ul {
   margin-top: 0;
   margin-bottom: 1rem;
 }
 
-ol, ul {
+ol,
+ul {
   padding-left: 2rem;
 }
 
@@ -431,6 +458,7 @@ ul {
 .profile-link:hover {
   color: #6fd9f9;
 }
+
 .vnwBox.vnwBoxSmall {
   padding: 12px 24px;
 }
@@ -470,7 +498,8 @@ svg {
   overflow: hidden;
 }
 
-img, svg {
+img,
+svg {
   vertical-align: middle;
 }
 
@@ -496,7 +525,7 @@ h2.ContactInformation_blockTitle__yHeZl {
   display: grid;
   grid-gap: 0 24px;
   gap: 0 24px;
-  grid-template-columns: repeat(12,1fr);
+  grid-template-columns: repeat(12, 1fr);
 }
 
 .native-grid .row .col-lg-6 {
@@ -516,7 +545,7 @@ h2.ContactInformation_blockTitle__yHeZl {
   display: grid;
   grid-gap: 0 24px;
   gap: 0 24px;
-  grid-template-columns: repeat(12,1fr);
+  grid-template-columns: repeat(12, 1fr);
 }
 
 .native-grid .row .col-4 {
@@ -550,7 +579,7 @@ h2.ContactInformation_blockTitle__yHeZl {
 .footer {
   padding-left: 100px;
   padding-right: 100px;
-  
+
 }
 
 .utew .footer {
@@ -604,7 +633,9 @@ h2.ContactInformation_blockTitle__yHeZl {
   color: #999;
 }
 
-dl, ol, ul {
+dl,
+ol,
+ul {
   margin-top: 0;
   margin-bottom: 1rem;
 }
@@ -620,6 +651,7 @@ li.footer__link-head {
   padding-bottom: 8px;
   line-height: 20px;
 }
+
 li {
   font-size: 18px;
 }
@@ -635,7 +667,7 @@ li {
 }
 
 .bg-blue {
-  background: #00b9f2!important;
+  background: #00b9f2 !important;
 }
 
 .collapse {
@@ -670,7 +702,7 @@ body.has-app-shell .main-wrapper .container {
   position: relative;
   margin-top: 10px;
   background-color: #f5f5f5;
-  font-family: Inter,Arial,Nunito,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+  font-family: Inter, Arial, Nunito, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
 
 .page-job-detail.page-job-detail_no-background .page-job-detail__header {
@@ -706,13 +738,15 @@ body.has-app-shell .main-wrapper .container {
   position: relative;
   margin-top: 10px;
   background-color: #f5f5f5;
-  font-family: Inter,Arial,Nunito,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+  font-family: Inter, Arial, Nunito, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
 
 .page-job-detail .job-header-info h1.job-title {
   margin-top: 0;
 }
-.company-name, .page-job-detail__header .salary {
+
+.company-name,
+.page-job-detail__header .salary {
   display: block;
   text-transform: capitalize;
   font-weight: 500;
@@ -727,7 +761,8 @@ body.has-app-shell .main-wrapper .container {
   margin-top: 12px;
 }
 
-.page-job-detail__header .col-xs-6.col-xs-pull-6, .page-job-detail__header .col-xs-6.col-xs-push-6 {
+.page-job-detail__header .col-xs-6.col-xs-pull-6,
+.page-job-detail__header .col-xs-6.col-xs-push-6 {
   opacity: 1;
   transition: all .3s;
 }
@@ -787,7 +822,7 @@ body.has-app-shell .main-wrapper .container {
   margin-bottom: 15px;
 }
 
-.page-job-detail .box :last-of-type{
+.page-job-detail .box :last-of-type {
   border-radius: 6px;
 }
 
@@ -797,7 +832,7 @@ body.has-app-shell .main-wrapper .container {
 
 .page-job-detail__detail .box-summary .summary-item {
   padding: 12px 0;
-  border-bottom: 1px solid rgba(206,211,213,.5);
+  border-bottom: 1px solid rgba(206, 211, 213, .5);
 }
 
 .summary-icon {
@@ -845,7 +880,7 @@ body.has-app-shell .main-wrapper .container {
 }
 
 .row {
-  --bs-gutter-x: -1,5rem;
+  --bs-gutter-x: -1, 5rem;
 }
 
 .job-description {
@@ -859,4 +894,29 @@ body.has-app-shell .main-wrapper .container {
 
 .mg-right-10 {
   margin-right: 10px;
+}
+
+.page-size-select {
+  margin-left: 10px;
+  border-radius: 5px;
+  margin-top: 5px;
+}
+
+.page-size-label {
+  margin-left: 3%;
+}
+
+.select-city {
+  margin-left: 5px;
+}
+
+.btn-search-form {
+  margin-left: 5px;
+  width: 90%;
+}
+
+.row-cols-md-3>* {
+  flex: 0 0 auto;
+  width: 33.3333333333%;
+  padding-right: 3px;
 }

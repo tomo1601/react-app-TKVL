@@ -382,9 +382,9 @@ const Profile = () => {
                 </Link>
               </li>
               <li className='sidebarMenuItem'>
-                <Link className='profile-link' to='/profile'>
+                <Link className='profile-link' to='/user/resume'>
                   <img src={userResumeIcon} alt='img' width='30' height='30' className='mr-2' />
-                  <span className='textLabel' onClick={() => { setUpload(false); setUpdate(false); }}>Account seting</span>
+                  <span className='textLabel' onClick={() => { setUpload(false); setUpdate(false); }}>CV Managerment </span>
                 </Link>
               </li>
               <li className='sidebarMenuItem'>

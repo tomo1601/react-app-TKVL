@@ -71,8 +71,9 @@ const DashBoard = () => {
   } else {
     body = (
       <>
-        <label forhtml="limitSelect">Change Limit Page Size</label>
+        <label forhtml="limitSelect" className='page-size-label'>Change Limit Page Size:</label>
         <select
+          className='page-size-select'
           id="limitSelect"
           onChange={(e) => {
             setChangeLimit(e.target.value);
@@ -85,7 +86,7 @@ const DashBoard = () => {
           <option value={20}>20</option>
           <option value={50}>50</option>
         </select>
-        <Row className="row-cols-1 row-cols-md-3 g-4 mx-auto mt-3 container main-row">
+        <Row className="row-cols-1 row-cols-md-3 g-4 mx-auto mt-3 container main-row post-padding">
           {posts.map((post) => (
             <Col key={post.id} className="my-2 ">
               <SinglePost post={post} />
@@ -122,6 +123,7 @@ const DashBoard = () => {
             </Col>
             <Col className="col-4">
               <Select
+                className='select-city'
                 placeholder="City"
                 options={CITYLOCATION}
                 onChange={selectedCityValue}
@@ -129,6 +131,7 @@ const DashBoard = () => {
             </Col>
             <Col className="col-3">
               <Button
+                className="btn-search-form"
                 variant="primary"
                 onClick={() => {
                   let key = "";
