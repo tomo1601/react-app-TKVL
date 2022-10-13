@@ -6,13 +6,13 @@ import Col from "react-bootstrap/Col";
 import SinglePost from "../components/posts/SinglePost";
 import mainimage from "../assets/banner-top.png";
 import iconsearch from "../assets/search-icon.png";
-import Select from "react-select";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import { JOBFIELD, CITYLOCATION } from "../contexts/constants";
+import { apiUrl } from "../contexts/constants";
 import "../components/css/Pager.css";
 import PostPaging from "../components/PostPaging";
 import NoPostFound from "../components/NoPostFound";
+import axios from "axios";
 
 const DashBoard = () => {
   const {
@@ -20,31 +20,28 @@ const DashBoard = () => {
     getPosts,
   } = useContext(PostContext);
   //const {authState:{isUser, isEmployer}} =useContext(AuthContext)
-  const [searchForm, setSearchForm] = useState({ title: "" });
+  const [searchForm, setSearchForm] = useState({
+    title: "",
+    field: "",
+    city: "",
+  });
 
   const [changeLimit, setChangeLimit] = useState(6);
 
-  const { title } = searchForm;
+  const { title, field, city } = searchForm;
+
   const onChangeSearchForm = (event) =>
     setSearchForm({ ...searchForm, [event.target.name]: event.target.value });
 
-  const [field, setField] = useState();
-  const [city, setCity] = useState();
+  const [fields, setFields] = useState([]);
+  const [cities, setCities] = useState([]);
 
-  const selectedFieldValue = (e) => {
-    setField(e.value);
-  };
-
-  const selectedCityValue = (e) => {
-    setCity(e.value);
-  };
   const handlePageChange = (pageNumber) => {
     let key = "page=" + pageNumber + "&limit=" + changeLimit + "&";
 
     if (title) key += `keyword=${title}&`;
     if (field) key += `fieldId=${field}&`;
     if (city) key += `cityId=${city}`;
-    console.log(key);
 
     getPosts(key);
   };
@@ -56,8 +53,26 @@ const DashBoard = () => {
   };
 
   useEffect(() => {
+    const getFields = async () => {
+      const response = await axios.get(
+        `${apiUrl}/field?page_number=1&limit=100`
+      );
+      if (response.data.success) {
+        setFields(response.data.data);
+      }
+    };
+    const getCities = async () => {
+      const response = await axios.get(`${apiUrl}/city`);
+      if (response.data.success) {
+        setCities(response.data.data);
+      }
+    };
+
+    getFields();
+    getCities();
     getPosts();
   }, []);
+
   let body = null;
 
   if (postLoading) {
@@ -107,7 +122,7 @@ const DashBoard = () => {
       <div className="img-main">
         <img
           src={mainimage}
-          style={{ width: "100%", height: "450px", padding: "0 0 0 0 " }}
+          style={{ width: "100%", height: "300px", padding: "0 0 0 0 " }}
           alt="banner-img"
         />
         <Form className="form-tim-kiem">
@@ -122,23 +137,26 @@ const DashBoard = () => {
               />
             </Col>
             <Col className="col-4">
-              <Select
-                className='select-city'
-                placeholder="City"
-                options={CITYLOCATION}
-                onChange={selectedCityValue}
-              />
+              <select name="city" onChange={onChangeSearchForm}>
+                <option key={""} value="" defaultChecked>
+                  Select City Location
+                </option>
+                {cities.map((city) => (
+                  <option key={city.id} value={city.id}>
+                    {city.name}
+                  </option>
+                ))}
+              </select>
             </Col>
             <Col className="col-3">
               <Button
                 className="btn-search-form"
                 variant="primary"
                 onClick={() => {
-                  let key = "";
+                  let key = "page=" + 1 + "&limit=" + changeLimit + "&";
                   if (title) key += `keyword=${title}&`;
                   if (field) key += `fieldId=${field}&`;
                   if (city) key += `cityId=${city}`;
-                  console.log(key);
                   getPosts(key);
                 }}
               >
@@ -155,11 +173,16 @@ const DashBoard = () => {
           </Row>
           <Row className="format-row">
             <Col className="col-5">
-              <Select
-                placeholder="Field"
-                options={JOBFIELD}
-                onChange={selectedFieldValue}
-              />
+              <select name="field" onChange={onChangeSearchForm}>
+                <option value="" defaultChecked>
+                  Select Field
+                </option>
+                {fields.map((field) => (
+                  <option key={field.id} value={field.id}>
+                    {field.name}
+                  </option>
+                ))}
+              </select>
             </Col>
           </Row>
         </Form>
