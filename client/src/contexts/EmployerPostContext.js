@@ -8,6 +8,7 @@ import {
   POST_ADDED_SUCCESS,
   POST_DELETED_SUCCESS,
   POST_ACCEPTED_SUCCESS,
+  BEFORE_GET_PREPARE,
 } from "./constants";
 
 export const EmployerPostContext = createContext();
@@ -33,6 +34,7 @@ const EmployerPostContextProvider = ({ children }) => {
 
   // get employer post
   const getEmployerPosts = async (key, accepted) => {
+    dispatch({type: BEFORE_GET_PREPARE})
     let str = "";
     if (key !== null) str = key;
     try {
@@ -50,6 +52,7 @@ const EmployerPostContextProvider = ({ children }) => {
 
   // get admin post
   const getAdminPosts = async (key, accepted) => {
+    dispatch({type: BEFORE_GET_PREPARE})
     let str = "";
     if (key !== null) str = key;
     try {

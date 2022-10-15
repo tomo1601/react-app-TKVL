@@ -8,7 +8,9 @@ import AlertMessage from '../layout/AlertMessage'
 const EmployLoginForm =() =>{
 
     const {loginEmployer} = useContext(AuthContext)
-  
+
+    const [authloading, setAuthLoading] = useState(false)
+
     //local state
     const [employerLoginForm, setUserLoginForm] = useState({
         username: '',
@@ -23,6 +25,7 @@ const EmployLoginForm =() =>{
     })
 
     const employerLogin = async event =>{
+        setAuthLoading(true)
         event.preventDefault()
         try {
             const userLoginData = await loginEmployer(employerLoginForm)
@@ -34,6 +37,7 @@ const EmployLoginForm =() =>{
         catch (error){
             console.log(error)
         }
+        setAuthLoading(false)
     }
 
     let body
@@ -70,7 +74,12 @@ const EmployLoginForm =() =>{
                         onChange = {onChangeEmployerLoginForm}
                     />
                 </Form.Group>
-                <Button className='mt-2' variant='success' type='submit'>Login</Button>
+                <Button disabled={authloading} 
+                variant='success' type='submit' className="mt-2">
+                        {authloading && <span className="spinner-border spinner-border-sm mr-1"></span>}
+                        Login
+                    </Button>
+                {/* <Button className='mt-2' variant='success' type='submit'>Login</Button> */}
 
             </Form>
             <p> Don't have an account?  

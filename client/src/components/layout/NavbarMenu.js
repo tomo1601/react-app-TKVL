@@ -19,16 +19,16 @@ const NavbarMenu = () => {
     body = (
       <Navbar expand = 'lg' bg ='primary' variant='dark' className='sc-fjqEFS cOCOrx menu-homepage'>
         <Navbar.Brand className='font-weigth-border text-white'>
-          <Link className='link-to-dashboard-24' to='/dashboard'>
+          <a className='link-to-dashboard-24' to='/dashboard'>
             Predictive Resume
-          </Link>
+          </a>
         </Navbar.Brand>
         <Navbar.Toggle aria-controls='basic-navbar-nar' />
         <Navbar.Collapse id='basic-navbar-nar'>
           <Nav className='mr-auto'>
-            <Nav.Link className='font-weigth-border link-to-dashboard-20' to='/dashboard' as={Link}>
+            {/* <Nav.Link className='font-weigth-border link-to-dashboard-20' to='/dashboard' as={Link}>
               Home
-            </Nav.Link>
+            </Nav.Link> */}
             <Nav.Link className='font-weigth-border link-to-dashboard-20' to='/dashboard' as={Link}>
               Job
             </Nav.Link>
@@ -54,16 +54,16 @@ const NavbarMenu = () => {
     body = (
       <Navbar expand = 'lg' bg ='primary' variant='dark' className='sc-fjqEFS cOCOrx menu-homepage'>
         <Navbar.Brand className='font-weigth-border text-white'>
-          <Link className='link-to-dashboard-24' to='/dashboard'>
+          <a className='link-to-dashboard-24' href='/dashboard'>
             Predictive Resume
-          </Link>
+          </a>
         </Navbar.Brand>
         <Navbar.Toggle aria-controls='basic-navbar-nar' />
         <Navbar.Collapse id='basic-navbar-nar'>
           <Nav className='mr-auto'>
-            <Nav.Link className='font-weigth-border link-to-dashboard-20' to='/dashboard' as={Link}>
+            {/* <Nav.Link className='font-weigth-border link-to-dashboard-20' to='/dashboard' as={Link}>
               Home
-            </Nav.Link>
+            </Nav.Link> */}
             <Nav.Link className='font-weigth-border link-to-dashboard-20' to='/employer/posts' as={Link}>
               Job
             </Nav.Link>
@@ -91,16 +91,16 @@ const NavbarMenu = () => {
     body = (
       <Navbar expand = 'lg' bg ='primary' variant='dark' className='sc-fjqEFS cOCOrx menu-homepage'>
         <Navbar.Brand className='font-weigth-border text-white'>
-          <Link className='link-to-dashboard-24' to='/dashboard'>
+          <a className='link-to-dashboard-24' to='/dashboard'>
             Predictive Resume
-          </Link>
+          </a>
         </Navbar.Brand>
         <Navbar.Toggle aria-controls='basic-navbar-nar' />
         <Navbar.Collapse id='basic-navbar-nar'>
           <Nav className='mr-auto'>
-            <Nav.Link className='font-weigth-border link-to-dashboard-20' to='/dashboard' as={Link}>
+            {/* <Nav.Link className='font-weigth-border link-to-dashboard-20' to='/dashboard' as={Link}>
               Home
-            </Nav.Link>
+            </Nav.Link> */}
             <Nav.Link className='font-weigth-border link-to-dashboard-20' to='/admin/posts' as={Link}>
               Accept Job
             </Nav.Link>

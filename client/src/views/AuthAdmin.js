@@ -19,7 +19,7 @@ const AuthAdmin = ({authRoute}) =>{
         </div>
     )
     else if(isAuthenticated && isAdmin) 
-        return <Redirect to ='/dashboard'/>
+        return <Redirect to ='/admin/posts'/>
     else  
     body = (
         <>

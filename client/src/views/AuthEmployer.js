@@ -20,7 +20,7 @@ const AuthEmployer = ({authRoute}) =>{
         </div>
     )
     else if(isAuthenticated && isEmployer) 
-        return <Redirect to ='/dashboard'/>
+        return <Redirect to ='/employer/posts'/>
     else  
     body = (
         <>

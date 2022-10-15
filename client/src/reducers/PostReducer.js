@@ -5,6 +5,7 @@ import {
   POST_DELETED_SUCCESS,
   POST_ACCEPTED_SUCCESS,
   POSTS_FIND_SUCCESS,
+  BEFORE_GET_PREPARE
 } from "../contexts/constants";
 
 export const PostReducer = (state, action) => {
@@ -17,7 +18,7 @@ export const PostReducer = (state, action) => {
         postLoading: false,
         currentPage: payload.currentPage,
         totalPage: payload.totalPage,
-        limit: payload.limit
+        limit: payload.limit,
       };
     case POSTS_LOADED_FAIL:
       return {
@@ -45,6 +46,12 @@ export const PostReducer = (state, action) => {
         ...state,
         posts: payload,
         postLoading: false,
+      };
+    case BEFORE_GET_PREPARE:
+      return {
+        ...state,
+        posts: [],
+        postLoading: true
       };
     default:
       return state;

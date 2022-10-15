@@ -8,7 +8,8 @@ import AlertMessage from '../layout/AlertMessage'
 const AdminLoginForm =() =>{
 
     const {loginAdmin} = useContext(AuthContext)
-  
+    const [authloading, setAuthLoading] = useState(false)
+
     //local state
     const [adminLoginForm, setUserLoginForm] = useState({
         username: '',
@@ -23,6 +24,7 @@ const AdminLoginForm =() =>{
     })
 
     const adminLogin = async event =>{
+        setAuthLoading(true)
         event.preventDefault()
         try {
             const userLoginData = await loginAdmin(adminLoginForm)
@@ -34,6 +36,7 @@ const AdminLoginForm =() =>{
         catch (error){
             console.log(error)
         }
+        setAuthLoading(false)
     }
 
     let body
@@ -70,7 +73,12 @@ const AdminLoginForm =() =>{
                         onChange = {onChangeAdminLoginForm}
                     />
                 </Form.Group>
-                <Button className='mt-2' variant='success' type='submit'>Login</Button>
+                <Button disabled={authloading} 
+                variant='success' type='submit' className="mt-2">
+                        {authloading && <span className="spinner-border spinner-border-sm mr-1"></span>}
+                        Login
+                    </Button>
+                {/* <Button className='mt-2' variant='success' type='submit'>Login</Button> */}
 
             </Form>
         </div>

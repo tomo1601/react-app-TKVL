@@ -3,7 +3,7 @@ import Button from "react-bootstrap/Button";
 import { useParams } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 import { PostContext } from "../../contexts/PostContext";
-import Spinner from "react-bootstrap/esm/Spinner";
+import Spiner from "react-bootstrap/esm/Spinner";
 import Toast from "react-bootstrap/Toast";
 import { AuthContext } from "../../contexts/AuthContext";
 import peopleIcon from "../../assets/date.png";
@@ -21,9 +21,10 @@ const PostDetail = () => {
     findPostById,
   } = useContext(PostContext);
   const {
-    authState: { user },
+    authState: { isUser, user },
     submitUserCV,
   } = useContext(AuthContext);
+  console.log(user);
 
   useEffect(() => {
     findPostById(id);
@@ -38,12 +39,13 @@ const PostDetail = () => {
 
   let listCV = [];
 
-  user.profiles.map((profile) =>
-    listCV.push({
-      label: profile.name,
-      value: profile.mediaId,
-    })
-  );
+  if (isUser)
+    user.profiles.map((profile) =>
+      listCV.push({
+        label: profile.name,
+        value: profile.mediaId,
+      })
+    );
 
   const onChangeSelectMedia = (event) =>
     setCvSubmit({
@@ -89,22 +91,25 @@ const PostDetail = () => {
                 </div>
               </div>
             </div>
-            <div className="col-lg-3 col-md-3 col-btn col-btn-save-section ">
-              <div className="row">
-                <div className="col-xs-6 col-xs-push-6 col-md-12 col-md-push-0">
-                  <AlertMessage info={alert} />
-                  <Button
-                    className="btn btn-primary btn-block btn-apply track-event"
-                    variant="warning"
-                    onClick={onApplyCV}
-                  >
-                    {" "}
-                    Apply now
-                  </Button>
-                  <Select options={listCV} onChange={onChangeSelectMedia} />
+            {isUser ? (
+              <div className="col-lg-3 col-md-3 col-btn col-btn-save-section ">
+                <div className="row">
+                  <div className="col-xs-6 col-xs-push-6 col-md-12 col-md-push-0">
+                    <AlertMessage info={alert} />
+                    <Button
+                      className="btn btn-primary btn-block btn-apply track-event"
+                      variant="warning"
+                      onClick={onApplyCV}
+                    >
+                      Apply now
+                    </Button>
+                    <Select options={listCV} onChange={onChangeSelectMedia} />
+                  </div>
                 </div>
               </div>
-            </div>
+            ) : (
+              ""
+            )}
           </div>
         </div>
       </section>

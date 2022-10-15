@@ -49,7 +49,6 @@ const AuthContextProvider = ({ children }) => {
       } else
         throw new Error("Unauthorized !");
     } catch (error) {
-      console.log(error);
       localStorage.removeItem(LOCAL_STORAGE_TOKEN_NAME);
       localStorage.removeItem(USER_ROLE);
       SetAuthToken(null);
@@ -104,7 +103,6 @@ const AuthContextProvider = ({ children }) => {
   // Register user
   const registerUser = async (userForm) => {
     try {
-      console.log(userForm);
       const response = await axios.post(`${apiUrl}/user/singup`, userForm);
       if (response.data.success)
         localStorage.setItem(LOCAL_STORAGE_TOKEN_NAME, response.data.token);

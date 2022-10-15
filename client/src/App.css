@@ -920,3 +920,7 @@ body.has-app-shell .main-wrapper .container {
   width: 33.3333333333%;
   padding-right: 3px;
 }
+
+.spinner-border{
+  margin-right: 5px
+}

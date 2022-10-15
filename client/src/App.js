@@ -16,6 +16,7 @@ import AuthAdmin from './views/AuthAdmin'
 import AdminPost from './components/posts/admin/AdminPost'
 import PostDetail from './components/posts/PostDetail'
 import { UserResume } from './components/posts/users/UserResume';
+import AdminProfile from './components/posts/admin/AdminProfile';
 
 function App() {
   return (
@@ -40,6 +41,9 @@ function App() {
           <ProtectedRoute exact path='/user/resume' component={UserResume} />
 
           <ProtectedRoute exact path='/admin/posts' component={AdminPost}/>
+          <ProtectedRoute exact path='/admin/profile' component={AdminProfile}/>
+
+          
 
         </Switch>
       </Router>
