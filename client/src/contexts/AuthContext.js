@@ -18,9 +18,9 @@ const AuthContextProvider = ({ children }) => {
 
   const [showToast, setShowToast] = useState({
     show: false,
-    message: '',
-    type: null
-  })
+    message: "",
+    type: null,
+  });
   // auth user
   const loadUser = async (user) => {
     if (user === undefined) user = localStorage[USER_ROLE];
@@ -46,8 +46,7 @@ const AuthContextProvider = ({ children }) => {
             isAdmin: user === "admin" ? true : false,
           },
         });
-      } else
-        throw new Error("Unauthorized !");
+      } else throw new Error("Unauthorized !");
     } catch (error) {
       localStorage.removeItem(LOCAL_STORAGE_TOKEN_NAME);
       localStorage.removeItem(USER_ROLE);
@@ -132,76 +131,108 @@ const AuthContextProvider = ({ children }) => {
   };
 
   const logoutSection = () => {
+    localStorage.removeItem(LOCAL_STORAGE_TOKEN_NAME);
+    dispatch({
+      type: "SET_AUTH",
+      payload: {
+        isAuthenticated: false,
+        user: null,
+        isUser: false,
+        isEmployer: false,
+      },
+    });
+  };
 
-    localStorage.removeItem(LOCAL_STORAGE_TOKEN_NAME)
-    dispatch({ type: 'SET_AUTH', payload: { isAuthenticated: false, user: null, isUser: false, isEmployer: false } })
-  }
-
-  const updateUserProfile = async (profile) => {
+  const updateUserProfile = async (updateType, profile, avatar) => {
     try {
-      const response = await axios.put(`${apiUrl}/user`, profile, {
-        headers: {
-          "Content-Type": "multipart/form-data",
+      var bodyFormData = new FormData();
+      bodyFormData.append("info", JSON.stringify(profile));
+      bodyFormData.append("avatar", avatar);
+
+      const response = await axios.put(
+        `${apiUrl}/${updateType}`,
+        bodyFormData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
         }
-      })
+      );
       if (response.data.success) {
         dispatch({
           type: "PROFILE_LOAD_SUCCESS",
-          payload: { profile: response.data }
-        })
+          payload: { profile: response.data },
+        });
       }
-      return response.data
+      return response.data;
     } catch (error) {
-      console.log(error.message)
+      console.log(error.message);
     }
-  }
+  };
 
   const uploadUserCV = async (CV) => {
-    const recentToken = localStorage[LOCAL_STORAGE_TOKEN_NAME]
+    const recentToken = localStorage[LOCAL_STORAGE_TOKEN_NAME];
     try {
       const response = await axios.post(`${apiUrl}/user/cv`, CV, {
         headers: {
           "Content-Type": "multipart/form-data",
-          "Authorization": `Bearer ${recentToken}`
-        }
-      })
+          Authorization: `Bearer ${recentToken}`,
+        },
+      });
       if (response.data.success) {
         dispatch({
           type: "CV_UPLOAD_SUCCESS",
-          payload: { profile: response.data }
-        })
+          payload: { profile: response.data },
+        });
       }
-      return response.data
+      return response.data;
     } catch (error) {
-      console.log(error.message)
+      console.log(error.message);
     }
-  }
+  };
 
   const submitUserCV = async (submitForm) => {
     try {
-      console.log(submitForm.postId)
-      console.log(submitForm.mediaId)
-      const response = await axios.post(`${apiUrl}/user/submitcv?postId=${submitForm.postId}&mediaId=${submitForm.mediaId}`)
+      console.log(submitForm.postId);
+      console.log(submitForm.mediaId);
+      const response = await axios.post(
+        `${apiUrl}/user/submitcv?postId=${submitForm.postId}&mediaId=${submitForm.mediaId}`
+      );
       if (response.data.success) {
         dispatch({
           type: "CV_SUBMIT_SUCCESS",
-          payload: { submited: true }
-        })
+          payload: { submited: true },
+        });
       }
-      return response.data
+      return response.data;
     } catch (error) {
-      console.log(error.message)
+      console.log(error.message);
     }
-  }
+  };
 
+  const changePassword = async (userType, data) => {
+    try {
+      const response = await axios.put(`${apiUrl}/${userType}/password`, data,);
+      return response.data;
+    } catch (err) {
+      return err.response.data;
+    }
+  };
   //conxtext data
   const authContextData = {
-    loginUser, registerUser,
-    loginEmployer, logoutSection, updateUserProfile,
-    showToast, setShowToast, uploadUserCV, loginAdmin,
+    loginUser,
+    registerUser,
+    loginEmployer,
+    logoutSection,
+    updateUserProfile,
+    showToast,
+    setShowToast,
+    uploadUserCV,
+    loginAdmin,
     submitUserCV,
-    authState
-  }
+    authState,
+    changePassword,
+  };
 
   //return
   return (
@@ -212,6 +243,3 @@ const AuthContextProvider = ({ children }) => {
 };
 
 export default AuthContextProvider;
-
-
-

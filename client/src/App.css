@@ -924,3 +924,11 @@ body.has-app-shell .main-wrapper .container {
 .spinner-border{
   margin-right: 5px
 }
+
+.img-avatar{
+  display: flex;
+  justify-content: right;
+}
+.modal-update-profile .modal-dialog{
+  max-width: 750px;
+}

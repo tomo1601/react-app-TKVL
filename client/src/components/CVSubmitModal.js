@@ -1,9 +1,6 @@
 import Modal from "react-bootstrap/Modal";
-import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
-import Select from "react-select";
 import Table from "react-bootstrap/Table";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { EmployerPostContext } from "../contexts/EmployerPostContext";
 
 const CVSubmitModal = () => {
