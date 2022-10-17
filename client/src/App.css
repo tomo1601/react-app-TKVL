@@ -913,6 +913,7 @@ body.has-app-shell .main-wrapper .container {
 .btn-search-form {
   margin-left: 5px;
   width: 90%;
+  height: 38px;
 }
 
 .row-cols-md-3>* {
@@ -921,6 +922,23 @@ body.has-app-shell .main-wrapper .container {
   padding-right: 3px;
 }
 
-.spinner-border{
+.spinner-border {
   margin-right: 5px
+}
+
+.select-form-search {
+  height: 38px;
+  border-radius: 6px;
+  border-color: #ced4da;
+  width: 100%;
+}
+
+.col-4 {
+  flex: 0 0 auto;
+  width: 31.33333333%;
+  margin-left: 5px;
+}
+
+.box-paging {
+  margin: 0px 1px;
 }

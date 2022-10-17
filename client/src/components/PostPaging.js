@@ -4,7 +4,7 @@ const PostPaging = ({ handlePageChange, currentPage, totalPage }) => {
     <>
       <div>
         <ul className="pagination">
-          <li>
+          <li className="box-paging">
             <p
               className=""
               onClick={() => {
@@ -15,7 +15,7 @@ const PostPaging = ({ handlePageChange, currentPage, totalPage }) => {
               «
             </p>
           </li>
-          <li>
+          <li className="box-paging">
             <p
               className=""
               onClick={() => {
@@ -26,10 +26,10 @@ const PostPaging = ({ handlePageChange, currentPage, totalPage }) => {
               ⟨
             </p>
           </li>
-          <li>
+          <li className="box-paging">
             <p>{currentPage}</p>
           </li>
-          <li>
+          <li className="box-paging">
             <p
               className=""
               onClick={() => {
@@ -40,7 +40,7 @@ const PostPaging = ({ handlePageChange, currentPage, totalPage }) => {
               ⟩
             </p>
           </li>
-          <li>
+          <li className="box-paging">
             <p
               className=""
               onClick={() => {
