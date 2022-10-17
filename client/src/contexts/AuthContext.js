@@ -212,7 +212,7 @@ const AuthContextProvider = ({ children }) => {
 
   const changePassword = async (userType, data) => {
     try {
-      const response = await axios.put(`${apiUrl}/${userType}/password`, data,);
+      const response = await axios.put(`${apiUrl}/${userType}/password`, data);
       return response.data;
     } catch (err) {
       return err.response.data;

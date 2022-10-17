@@ -22,6 +22,12 @@ import AlertMessage from "../../layout/AlertMessage";
 const EmpProfile = () => {
   const { id } = useParams();
 
+  const {
+    authState: { user, isEmployer },
+    updateUserProfile,
+    changePassword,
+  } = useContext(AuthContext);
+
   //Create State
   const [showUpdate, setShowUpdate] = useState(false);
 
@@ -35,7 +41,7 @@ const EmpProfile = () => {
     name: user ? user.name : "",
     phone: user ? user.phone : "",
     address: user ? user.address : "",
-    field: user ? user.field.id : "",
+    fieldId: user ? user.field.id : "",
     employee: user ? user.employee : "",
     cityId: user ? user.city.id : "",
     avatar: "",
@@ -50,12 +56,6 @@ const EmpProfile = () => {
   const [alert, setAlert] = useState(null);
 
   // End create State
-
-  const {
-    authState: { user, isEmployer },
-    updateUserProfile,
-    changePassword,
-  } = useContext(AuthContext);
 
   //Fetch data
   const getEmpInfo = async (id) => {
@@ -75,6 +75,25 @@ const EmpProfile = () => {
     async () => await getEmpInfo(id)
   );
 
+  const getCityAndField = async () => {
+    try {
+      const responseField = await axios.get(
+        `${apiUrl}/field?page_number=1&limit=100`
+      );
+      const responseCity = await axios.get(`${apiUrl}/city`);
+
+      return [responseField.data.data, responseCity.data.data];
+    } catch (err) {
+      console.log(err);
+      return null;
+    }
+  };
+
+  const { data: fieldAndCity, status: fcStatus } = useQuery(
+    ["cityAndField"],
+    async () => await getCityAndField()
+  );
+
   //End fetch data
 
   const closeDialog = () => {
@@ -82,9 +101,9 @@ const EmpProfile = () => {
   };
 
   let body;
-  if (status === "success") {
+  if (status === "success" && fcStatus === "success") {
     //Create variable from state to show on html
-    const { email, name, phone, address, field, employee, cityId, avatar } =
+    const { email, name, phone, address, fieldId, employee, cityId, avatar } =
       userInfo;
 
     const { oldPassword, newPassword, confirmNewPassword } = password;
@@ -147,7 +166,7 @@ const EmpProfile = () => {
         cb(error, null);
       };
     };
-    
+
     const onUploadFileChange = ({ target }) => {
       if (target.files < 1 || !target.validity.valid) {
         return;
@@ -175,7 +194,7 @@ const EmpProfile = () => {
         }
       });
     };
-    
+
     const onSubmitUpdateProfile = async (event) => {
       setUpdateLoading(true);
       event.preventDefault();
@@ -260,13 +279,15 @@ const EmpProfile = () => {
                       </Form.Group>
                       <Form.Group>
                         <Form.Label> Field</Form.Label>
-                        <Form.Control
-                          type="number"
-                          required
-                          name="field"
-                          value={field}
+                        <Form.Select
+                          name="fieldId"
+                          value={fieldId}
                           onChange={onChangeUserInfo}
-                        />
+                        >
+                          {fieldAndCity[0].map((field) => (
+                            <option value={field.id}>{field.name}</option>
+                          ))}
+                        </Form.Select>
                       </Form.Group>
                       <Form.Group>
                         <Form.Label> Employee</Form.Label>
@@ -281,13 +302,15 @@ const EmpProfile = () => {
                       </Form.Group>
                       <Form.Group>
                         <Form.Label> City</Form.Label>
-                        <Form.Control
-                          type="text"
+                        <Form.Select
                           name="cityId"
-                          placeholder="choose a city"
                           value={cityId}
                           onChange={onChangeUserInfo}
-                        />
+                        >
+                          {fieldAndCity[1].map((city) => (
+                            <option value={city.id}>{city.name}</option>
+                          ))}
+                        </Form.Select>
                       </Form.Group>
                       <Form.Group>
                         <Form.Label> Avatar</Form.Label>
@@ -465,11 +488,7 @@ const EmpProfile = () => {
                     ))
                   : ""}
               </div>
-              {/* <p>
-                I'm looking for something that can deliver a 50-pound payload of
-                snow on a small feminine target. Can you suggest something?
-                Hello...?
-              </p> */}
+
               <h3>Field of Work</h3>
               <p>{data[0].field.name}</p>
               <h3>Location</h3>

@@ -11,10 +11,14 @@ import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import AlertMessage from "../../layout/AlertMessage";
 import Modal from "react-bootstrap/Modal";
+import { apiUrl } from "../../../contexts/constants";
+import axios from "axios";
+import { useQuery } from "react-query";
+import Spinner from "react-bootstrap/esm/Spinner";
 
 const Profile = () => {
   let body;
-  
+
   const [update, setUpdate] = useState(false);
   const [upload, setUpload] = useState(false);
   const [updateLoading, setUpdateLoading] = useState(false);
@@ -24,8 +28,24 @@ const Profile = () => {
     authState: { user },
     updateUserProfile,
     uploadUserCV,
-    changePassword
+    changePassword,
   } = useContext(AuthContext);
+
+  //Fetch data (field and city)
+  const getCity = async () => {
+    try {
+      const responseCity = await axios.get(`${apiUrl}/city`);
+
+      return responseCity.data.data;
+    } catch (err) {
+      console.log(err);
+      return null;
+    }
+  };
+
+  const { data, status } = useQuery(["city"], async () => await getCity());
+
+  //End fetch data
 
   const [userInfo, setUserInfo] = useState({
     id: user.id,
@@ -33,10 +53,10 @@ const Profile = () => {
     name: user ? user.name : "",
     phone: user ? user.phone : "",
     address: user ? user.address : "",
-    birth: user ? user.birth : "",
+    birth: user ? user.birth ? user.birth.split(" ")[0]: "": "",
     gender: user ? user.gender : "",
     cityId: "",
-    avata: "",
+    avatar: "",
   });
 
   const [password, setPassword] = useState({
@@ -79,7 +99,6 @@ const Profile = () => {
           message: response.message,
         });
         setTimeout(() => setAlert(null), 10000);
-
       } catch (error) {
         console.log(error);
       }
@@ -100,7 +119,7 @@ const Profile = () => {
   const [alert, setAlert] = useState(null);
 
   if (update) {
-    const { email, name, phone, address, birth, gender, cityId, avata } =
+    const { email, name, phone, address, birth, gender, cityId, avatar } =
       userInfo;
 
     const onChangeUserInfo = (event) =>
@@ -141,7 +160,7 @@ const Profile = () => {
         if (result) {
           setUserInfo({
             ...userInfo,
-            avata: file,
+            avatar: file,
           });
         }
       });
@@ -150,7 +169,7 @@ const Profile = () => {
       setUpdateLoading(true);
       event.preventDefault();
       try {
-        const profileUpdate = await updateUserProfile("user", userInfo, avata);
+        const profileUpdate = await updateUserProfile("user", userInfo, avatar);
         if (profileUpdate.success) {
           setAlert({ type: "success", message: "Update successfull" });
           setTimeout(() => setAlert(null), 10000);
@@ -163,127 +182,137 @@ const Profile = () => {
       }
       setUpdateLoading(false);
     };
-    body = (
-      <>
-        <h2 className="ContactInformation_blockTitle__yHeZl">Infomation</h2>
-        <div className="ContactInfoView_viewSectionWrapper__SEvGW">
-          <Row>
-            <Col className="col-6">
-              <Form className="native-grid" onSubmit={onSubmitUpdateProfile}>
-                <AlertMessage info={alert} />
-                <Form.Group>
-                  <Form.Label> Email</Form.Label>
-                  <Form.Control
-                    type="text"
-                    name="email"
-                    readOnly={true}
-                    value={email}
-                    onChange={onChangeUserInfo}
-                  />
-                </Form.Group>
-                <Form.Group>
-                  <Form.Label> Name</Form.Label>
-                  <Form.Control
-                    type="text"
-                    name="name"
-                    required
-                    value={name}
-                    onChange={onChangeUserInfo}
-                  />
-                </Form.Group>
-                <Form.Group>
-                  <Form.Label> Phone</Form.Label>
-                  <Form.Control
-                    type="text"
-                    name="phone"
-                    required
-                    value={phone}
-                    onChange={onChangeUserInfo}
-                  />
-                </Form.Group>
-                <Form.Group>
-                  <Form.Label> Addess</Form.Label>
-                  <Form.Control
-                    type="text"
-                    name="address"
-                    required
-                    value={address}
-                    onChange={onChangeUserInfo}
-                  />
-                </Form.Group>
-                <Form.Group>
-                  <Form.Label> Birth</Form.Label>
-                  <Form.Control
-                    type="date"
-                    name="birth"
-                    value={birth}
-                    onChange={onChangeUserInfo}
-                  />
-                </Form.Group>
-                <Form.Group>
-                  <Form.Label> Gender</Form.Label>
-                  <Form.Control
-                    type="text"
-                    name="gender"
-                    placeholder="Ex: Male/Female/Orther"
-                    required
-                    value={gender}
-                    onChange={onChangeUserInfo}
-                  />
-                </Form.Group>
-                <Form.Group>
-                  <Form.Label> City</Form.Label>
-                  <Form.Control
-                    type="text"
-                    name="cityId"
-                    placeholder="choose a city"
-                    value={cityId}
-                    onChange={onChangeUserInfo}
-                  />
-                </Form.Group>
-                <Form.Group>
-                  <Form.Label> Avata</Form.Label>
-                  <Form.Control
-                    name="avata"
-                    type="file"
-                    onChange={onUploadFileChange}
-                  />
-                </Form.Group>
+    if (status === "success") {
+      body = (
+        <>
+          <h2 className="ContactInformation_blockTitle__yHeZl">Infomation</h2>
+          <div className="ContactInfoView_viewSectionWrapper__SEvGW">
+            <Row>
+              <Col className="col-6">
+                <Form className="native-grid" onSubmit={onSubmitUpdateProfile}>
+                  <AlertMessage info={alert} />
+                  <Form.Group>
+                    <Form.Label> Email</Form.Label>
+                    <Form.Control
+                      type="text"
+                      name="email"
+                      readOnly={true}
+                      value={email}
+                      onChange={onChangeUserInfo}
+                    />
+                  </Form.Group>
+                  <Form.Group>
+                    <Form.Label> Name</Form.Label>
+                    <Form.Control
+                      type="text"
+                      name="name"
+                      required
+                      value={name}
+                      onChange={onChangeUserInfo}
+                    />
+                  </Form.Group>
+                  <Form.Group>
+                    <Form.Label> Phone</Form.Label>
+                    <Form.Control
+                      type="text"
+                      name="phone"
+                      required
+                      value={phone}
+                      onChange={onChangeUserInfo}
+                    />
+                  </Form.Group>
+                  <Form.Group>
+                    <Form.Label> Addess</Form.Label>
+                    <Form.Control
+                      type="text"
+                      name="address"
+                      required
+                      value={address}
+                      onChange={onChangeUserInfo}
+                    />
+                  </Form.Group>
+                  <Form.Group>
+                    <Form.Label> Birth</Form.Label>
+                    <Form.Control
+                      type="date"
+                      name="birth"
+                      value={birth}
+                      onChange={onChangeUserInfo}
+                    />
+                  </Form.Group>
+                  <Form.Group>
+                    <Form.Label> Gender</Form.Label>
+                    <Form.Control
+                      type="text"
+                      name="gender"
+                      placeholder="Ex: Male/Female/Orther"
+                      required
+                      value={gender}
+                      onChange={onChangeUserInfo}
+                    />
+                  </Form.Group>
+                  <Form.Group>
+                    <Form.Label> City</Form.Label>
+                    <Form.Select
+                      name="cityId"
+                      value={cityId}
+                      onChange={onChangeUserInfo}
+                    >
+                      {data.map((city) => (
+                        <option value={city.id}>{city.name}</option>
+                      ))}
+                    </Form.Select>
+                  </Form.Group>
+                  <Form.Group>
+                    <Form.Label> Avatar</Form.Label>
+                    <Form.Control
+                      name="avatar"
+                      type="file"
+                      onChange={onUploadFileChange}
+                    />
+                  </Form.Group>
 
-                <Button
-                  className="update-change-info-button"
-                  variant="warning"
-                  onClick={() => {
-                    setUpdate(false);
-                  }}
-                >
-                  {" "}
-                  Cancel
-                </Button>
-                <Button
-                  disabled={updateLoading}
-                  className="update-change-info-button"
-                  variant="success"
-                  type="submit"
-                >
-                  {updateLoading && (
-                    <span className="spinner-border spinner-border-sm mr-1"></span>
-                  )}
-                  Update
-                </Button>
-              </Form>
-            </Col>
-            <Col className="col-6 img-avatar">
-              <img
-                src={user.avatar}
-                style={{ width: "80%", height: "40%" }}
-                id="img-review"
-              />
-            </Col>
-          </Row>
+                  <Button
+                    className="update-change-info-button"
+                    variant="warning"
+                    onClick={() => {
+                      setUpdate(false);
+                    }}
+                  >
+                    {" "}
+                    Cancel
+                  </Button>
+                  <Button
+                    disabled={updateLoading}
+                    className="update-change-info-button"
+                    variant="success"
+                    type="submit"
+                  >
+                    {updateLoading && (
+                      <span className="spinner-border spinner-border-sm mr-1"></span>
+                    )}
+                    Update
+                  </Button>
+                </Form>
+              </Col>
+              <Col className="col-6 img-avatar">
+                <img
+                  src={user.avatar}
+                  style={{ width: "80%", height: "40%" }}
+                  id="img-review"
+                />
+              </Col>
+            </Row>
+          </div>
+        </>
+      );
+    } else {
+      body = (
+        <div className="d-flex justify-content-center mt-2">
+          <Spinner animation="border" variant="info" />
         </div>
-      </>
-    );
+      );
+    }
   } else if (upload) {
     const { CV, name, isDefault } = userCV;
 
@@ -648,8 +677,13 @@ const Profile = () => {
                 </Link>
               </li>
               <li className="sidebarMenuItem">
-                <Link className="profile-link" to="#"
-                onClick={()=>{setShowChangePassword(true)}}>
+                <Link
+                  className="profile-link"
+                  to="#"
+                  onClick={() => {
+                    setShowChangePassword(true);
+                  }}
+                >
                   <img
                     src={passIcon}
                     alt="img"
