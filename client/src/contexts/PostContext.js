@@ -26,7 +26,9 @@ const PostContextProvider = ({children}) => {
             if(response.data.success){
                 dispatch({type: POSTS_LOADED_SUCCESS, payload: response.data})
             }
-            
+            else{
+                dispatch({type: POSTS_LOADED_FAIL })
+            }
         } catch (error) {
             dispatch({type: POSTS_LOADED_FAIL })
         }
@@ -41,6 +43,7 @@ const PostContextProvider = ({children}) => {
             return response.data.post
         } catch (error) {
             console.log(error)
+            dispatch({type: POSTS_LOADED_FAIL })
             return error
         }
 

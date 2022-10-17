@@ -926,6 +926,14 @@ body.has-app-shell .main-wrapper .container {
   margin-right: 5px
 }
 
+.img-avatar{
+  display: flex;
+  justify-content: right;
+}
+.modal-update-profile .modal-dialog{
+  max-width: 750px;
+}
+
 .select-form-search {
   height: 38px;
   border-radius: 6px;

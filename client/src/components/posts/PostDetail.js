@@ -12,19 +12,19 @@ import skillIcon from "../../assets/skill-icon.png";
 import salaryIcon from "../../assets/salary-icon.png";
 import employeeIcon from "../../assets/employee-icon.png";
 import AlertMessage from "../layout/AlertMessage";
+import NoPostFound from "../NoPostFound";
 
 const PostDetail = () => {
   let { id } = useParams();
 
   const {
-    postState: { posts },
+    postState: { posts, postLoading },
     findPostById,
   } = useContext(PostContext);
   const {
     authState: { isUser, user },
     submitUserCV,
   } = useContext(AuthContext);
-  console.log(user);
 
   useEffect(() => {
     findPostById(id);
@@ -71,146 +71,174 @@ const PostDetail = () => {
   };
 
   let postHeader, postDetail;
-
-  postHeader = (
-    <div className="wrapper-job-detail-header">
-      <section className="page-job-detail__header ">
-        <div className="box box-md">
-          <div className="absolute-right premium-popover-trigger"></div>
-          <div className="row">
-            <div className="col-lg-9 col-md-9 col-content">
-              <div className="job-header-info">
-                <h1 className="job-title">{posts.title}</h1>
-                <div className="row">
-                  <div className="col-sm-12 company-name">
-                    <span className="name"> {posts.employer}</span>
+  if (postLoading) {
+    postDetail = (
+      <div className="d-flex justify-content-center mt-2">
+        <Spiner animation="border" variant="info" />
+      </div>
+    );
+  } if(posts.length === 0)
+  {
+    postDetail = <NoPostFound/>
+  }
+  else {
+    postHeader = (
+      <div className="wrapper-job-detail-header">
+        <section className="page-job-detail__header ">
+          <div className="box box-md">
+            <div className="absolute-right premium-popover-trigger"></div>
+            <div className="row">
+              <div className="col-lg-9 col-md-9 col-content">
+                <div className="job-header-info">
+                  <h1 className="job-title">{posts.title}</h1>
+                  <div className="row">
+                    <div className="col-sm-12 company-name">
+                      <span className="name">
+                        <a
+                          href={"/employer/profile/" + posts.employer.id}
+                          title="View Employer Profile !"
+                          target="_blank"
+                        >
+                          {posts.employer.name}
+                        </a>
+                      </span>
+                    </div>
+                    <div className="col-sm-12 location-name">
+                      <span className="company-location">{posts.location}</span>
+                    </div>
                   </div>
-                  <div className="col-sm-12 location-name">
-                    <span className="company-location"> {posts.location}</span>
+                </div>
+              </div>
+              {isUser ? (
+                <div className="col-lg-3 col-md-3 col-btn col-btn-save-section ">
+                  <div className="row">
+                    <div className="col-xs-6 col-xs-push-6 col-md-12 col-md-push-0">
+                      <AlertMessage info={alert} />
+                      <Button
+                        className="btn btn-primary btn-block btn-apply track-event"
+                        variant="warning"
+                        onClick={onApplyCV}
+                      >
+                        Apply now
+                      </Button>
+                      <Select options={listCV} onChange={onChangeSelectMedia} />
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                ""
+              )}
+            </div>
+          </div>
+        </section>
+      </div>
+    );
+
+    postDetail = (
+      <section className="page-job-detail__detail">
+        <div className="tab-content">
+          <div
+            className="tab-pane tab-pane-job-info box box-md animated fadeIn active"
+            id="job-info"
+          >
+            <div className="row">
+              <div className="col-md-4 col-sm-12 tab-sidebar">
+                <div className="mobile-box mg-right-10">
+                  <div className="box-summary link-list">
+                    <div className="row summary-item">
+                      <div className="col-xs-2 summary-icon">
+                        <img
+                          src={peopleIcon}
+                          alt="img"
+                          className="icon icon-date-posted"
+                        />
+                      </div>
+                      <div className="col-xs-10 summary-content">
+                        <span className="content-label"> Expiration Date</span>
+                        <span className="content"> {posts.expirationDate}</span>
+                      </div>
+                    </div>
+                    <div className="row summary-item">
+                      <div className="col-xs-2 summary-icon">
+                        <img
+                          src={companyIcon}
+                          alt="img"
+                          className="icon icon-date-posted"
+                        />
+                      </div>
+                      <div className="col-xs-10 summary-content">
+                        <span className="content-label"> Company</span>
+                        <span className="content">{posts.employer.name}</span>
+                      </div>
+                    </div>
+                    <div className="row summary-item">
+                      <div className="col-xs-2 summary-icon">
+                        <img
+                          src={skillIcon}
+                          alt="img"
+                          className="icon icon-date-posted"
+                        />
+                      </div>
+                      <div className="col-xs-10 summary-content">
+                        <span className="content-label"> Major</span>
+                        <span className="content"> {posts.field}</span>
+                      </div>
+                    </div>
+                    <div className="row summary-item">
+                      <div className="col-xs-2 summary-icon">
+                        <img
+                          src={salaryIcon}
+                          alt="img"
+                          className="icon icon-date-posted"
+                        />
+                      </div>
+                      <div className="col-xs-10 summary-content">
+                        <span className="content-label">
+                          {" "}
+                          What we can offer
+                        </span>
+                        <span className="content">
+                          {" "}
+                          {posts.salary} {posts.salaryType}
+                        </span>
+                      </div>
+                    </div>
+                    <div className="row summary-item">
+                      <div className="col-xs-2 summary-icon">
+                        <img
+                          src={employeeIcon}
+                          alt="img"
+                          className="icon icon-date-posted"
+                        />
+                      </div>
+                      <div className="col-xs-10 summary-content">
+                        <span className="content-label"> Recruit</span>
+                        <span className="content">
+                          {" "}
+                          {posts.recruit} Peoples
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="col-md-8  col-sm-12 tab-main-content">
+                <div className="job-description mobile-box">
+                  <h2 style={{ width: "50%" }}>Job Description</h2>
+                  <div className="description" style={{ width: "100%" }}>
+                    <p>{posts.description}</p>
+                    {posts.description.split("\n").map(line =>(
+                      <p>{line}</p>
+                    ))}
                   </div>
                 </div>
               </div>
             </div>
-            {isUser ? (
-              <div className="col-lg-3 col-md-3 col-btn col-btn-save-section ">
-                <div className="row">
-                  <div className="col-xs-6 col-xs-push-6 col-md-12 col-md-push-0">
-                    <AlertMessage info={alert} />
-                    <Button
-                      className="btn btn-primary btn-block btn-apply track-event"
-                      variant="warning"
-                      onClick={onApplyCV}
-                    >
-                      Apply now
-                    </Button>
-                    <Select options={listCV} onChange={onChangeSelectMedia} />
-                  </div>
-                </div>
-              </div>
-            ) : (
-              ""
-            )}
           </div>
         </div>
       </section>
-    </div>
-  );
-
-  postDetail = (
-    <section className="page-job-detail__detail">
-      <div className="tab-content">
-        <div
-          className="tab-pane tab-pane-job-info box box-md animated fadeIn active"
-          id="job-info"
-        >
-          <div className="row">
-            <div className="col-md-4 col-sm-12 tab-sidebar">
-              <div className="mobile-box mg-right-10">
-                <div className="box-summary link-list">
-                  <div className="row summary-item">
-                    <div className="col-xs-2 summary-icon">
-                      <img
-                        src={peopleIcon}
-                        alt="img"
-                        className="icon icon-date-posted"
-                      />
-                    </div>
-                    <div className="col-xs-10 summary-content">
-                      <span className="content-label"> Expiration Date</span>
-                      <span className="content"> {posts.expirationDate}</span>
-                    </div>
-                  </div>
-                  <div className="row summary-item">
-                    <div className="col-xs-2 summary-icon">
-                      <img
-                        src={companyIcon}
-                        alt="img"
-                        className="icon icon-date-posted"
-                      />
-                    </div>
-                    <div className="col-xs-10 summary-content">
-                      <span className="content-label"> Company</span>
-                      <span className="content"> {posts.employer}</span>
-                    </div>
-                  </div>
-                  <div className="row summary-item">
-                    <div className="col-xs-2 summary-icon">
-                      <img
-                        src={skillIcon}
-                        alt="img"
-                        className="icon icon-date-posted"
-                      />
-                    </div>
-                    <div className="col-xs-10 summary-content">
-                      <span className="content-label"> Major</span>
-                      <span className="content"> {posts.field}</span>
-                    </div>
-                  </div>
-                  <div className="row summary-item">
-                    <div className="col-xs-2 summary-icon">
-                      <img
-                        src={salaryIcon}
-                        alt="img"
-                        className="icon icon-date-posted"
-                      />
-                    </div>
-                    <div className="col-xs-10 summary-content">
-                      <span className="content-label"> What we can offer</span>
-                      <span className="content">
-                        {" "}
-                        {posts.salary} {posts.salaryType}
-                      </span>
-                    </div>
-                  </div>
-                  <div className="row summary-item">
-                    <div className="col-xs-2 summary-icon">
-                      <img
-                        src={employeeIcon}
-                        alt="img"
-                        className="icon icon-date-posted"
-                      />
-                    </div>
-                    <div className="col-xs-10 summary-content">
-                      <span className="content-label"> Recruit</span>
-                      <span className="content"> {posts.recruit} Peoples</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="col-md-8  col-sm-12 tab-main-content">
-              <div className="job-description mobile-box">
-                <h2 style={{ width: "50%" }}>Job Description</h2>
-                <div className="description" style={{ width: "100%" }}>
-                  {posts.description}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
+    );
+  }
 
   return (
     <>

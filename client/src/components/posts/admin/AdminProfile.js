@@ -52,7 +52,7 @@ const AdminProfile = () => {
           <Col className='col-12 col-lg-6'>
             <div className='undefined row'>
               <span className='undefined col-4'>City:</span>
-              <div className='col-8 text-truncate fw-6'>{city}</div>
+              <div className='col-8 text-truncate fw-6'>{city.name}</div>
             </div>
           </Col>
         </Row>
