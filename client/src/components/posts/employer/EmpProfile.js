@@ -580,9 +580,7 @@ const EmpProfile = () => {
                 xmlnsXlink={"http://www.w3.org/1999/xlink"}
               ></svg>
 
-              <h2 className="ContactInformation_blockTitle__yHeZl">
-                Thông Tin Cá Nhân
-              </h2>
+              <h2 className="ContactInformation_blockTitle__yHeZl">Infomation</h2>
               {body}
             </div>
           </div>

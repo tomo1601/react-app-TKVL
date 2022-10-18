@@ -137,7 +137,7 @@ const DashBoard = () => {
               />
             </Col>
             <Col className="col-4">
-              <select name="city" onChange={onChangeSearchForm}>
+              <select className='select-form-search' name="city" onChange={onChangeSearchForm}>
                 <option key={""} value="" defaultChecked>
                   Select City Location
                 </option>
@@ -173,7 +173,7 @@ const DashBoard = () => {
           </Row>
           <Row className="format-row">
             <Col className="col-5">
-              <select name="field" onChange={onChangeSearchForm}>
+              <select className='select-form-search' name="field" onChange={onChangeSearchForm}>
                 <option value="" defaultChecked>
                   Select Field
                 </option>
