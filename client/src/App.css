@@ -1,6 +1,6 @@
 .landing {
   position: relative;
-  background: url('./assets/landing.jpg') no-repeat center center/cover;
+  background: url("./assets/landing.jpg") no-repeat center center/cover;
   height: 100vh;
 }
 
@@ -70,7 +70,6 @@ button.post-button.btn:active {
   position: fixed;
   right: 3rem;
   bottom: 3rem;
-  background: transparent;
   border: none;
 }
 
@@ -114,8 +113,14 @@ button.post-button.btn:active {
 .utew-login-top-header {
   width: 100vw;
   min-height: 188px;
-  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(2%, #2DCEFF), to(#00B9F2));
-  background-image: linear-gradient(-180deg, #2DCEFF 2%, #00B9F2 100%);
+  background-image: -webkit-gradient(
+    linear,
+    left top,
+    left bottom,
+    color-stop(2%, #2dceff),
+    to(#00b9f2)
+  );
+  background-image: linear-gradient(-180deg, #2dceff 2%, #00b9f2 100%);
 }
 
 .grid {
@@ -159,8 +164,10 @@ button.post-button.btn:active {
 .login-grid {
   background-color: #fff;
   background-image: none;
-  -webkit-box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 12%), 0 1px 5px 0 rgb(0 0 0 / 20%);
-  box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 12%), 0 1px 5px 0 rgb(0 0 0 / 20%);
+  -webkit-box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%),
+    0 3px 1px -2px rgb(0 0 0 / 12%), 0 1px 5px 0 rgb(0 0 0 / 20%);
+  box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 12%),
+    0 1px 5px 0 rgb(0 0 0 / 20%);
 }
 
 .grid.main .ute-title {
@@ -202,7 +209,11 @@ button.post-button.btn:active {
 
 .cOCOrx {
   height: 34px;
-  background: linear-gradient(270deg, rgb(114, 249, 249) 0%, rgb(49, 167, 246) 100%);
+  background: linear-gradient(
+    270deg,
+    rgb(114, 249, 249) 0%,
+    rgb(49, 167, 246) 100%
+  );
   color: rgb(255, 255, 255);
   padding: 0px 25px;
   display: flex;
@@ -216,7 +227,6 @@ button.post-button.btn:active {
   text-decoration: none;
   color: #fff;
   font-size: 24px;
-
 }
 
 .link-to-dashboard-24:hover {
@@ -311,12 +321,10 @@ button.post-button.btn:active {
   cursor: pointer;
   transition: all 0.3s ease 0s;
   width: max-content;
-
 }
 
 .icRRfA.div-login-homepage .wrapper-user-btn .login-text {
   color: rgb(255, 255, 255);
-
 }
 
 .icRRfA .wrapper-user-btn .login-text .user-text-noLogin {
@@ -352,7 +360,6 @@ button.post-button.btn:active {
   padding-left: 5%;
   text-decoration: none;
   color: #fff;
-
 }
 
 .link-to-dashboard-36:hover {
@@ -380,7 +387,9 @@ button.post-button.btn:active {
   margin-right: -12px;
 }
 
-.MasterLayout_vContainer__0VU77 .MasterLayout_vRow__eF7VB .MasterLayout_vColLg3__rsAKf {
+.MasterLayout_vContainer__0VU77
+  .MasterLayout_vRow__eF7VB
+  .MasterLayout_vColLg3__rsAKf {
   flex: 0 0 25%;
   max-width: 25%;
 }
@@ -392,7 +401,9 @@ button.post-button.btn:active {
   padding: 0 8px;
 }
 
-.MasterLayout_vContainer__0VU77 .MasterLayout_vRow__eF7VB .MasterLayout_vColLg6__Repj5 {
+.MasterLayout_vContainer__0VU77
+  .MasterLayout_vRow__eF7VB
+  .MasterLayout_vColLg6__Repj5 {
   flex: 0 0 50%;
   max-width: 50%;
 }
@@ -476,7 +487,7 @@ ul {
   padding: 0;
   border-radius: 6px;
   margin-top: 8px;
-  transition: .3s;
+  transition: 0.3s;
   position: relative;
 }
 
@@ -490,7 +501,7 @@ ul {
   position: absolute;
   top: 24px;
   right: 20px;
-  transition: opacity .3s;
+  transition: opacity 0.3s;
   cursor: pointer;
 }
 
@@ -579,7 +590,6 @@ h2.ContactInformation_blockTitle__yHeZl {
 .footer {
   padding-left: 100px;
   padding-right: 100px;
-
 }
 
 .utew .footer {
@@ -593,8 +603,8 @@ h2.ContactInformation_blockTitle__yHeZl {
 }
 
 .animated {
-  -webkit-animation-duration: .3s;
-  animation-duration: .3s;
+  -webkit-animation-duration: 0.3s;
+  animation-duration: 0.3s;
 }
 
 .utew .footer__container {
@@ -702,7 +712,9 @@ body.has-app-shell .main-wrapper .container {
   position: relative;
   margin-top: 10px;
   background-color: #f5f5f5;
-  font-family: Inter, Arial, Nunito, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  font-family: Inter, Arial, Nunito, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Roboto, "Noto Sans", sans-serif, "Apple Color Emoji",
+    "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
 
 .page-job-detail.page-job-detail_no-background .page-job-detail__header {
@@ -732,13 +744,16 @@ body.has-app-shell .main-wrapper .container {
   padding: 18px 0;
   text-align: center;
   padding-top: 0;
+  padding: 0 8.5%;
 }
 
 .page-job-detail {
   position: relative;
   margin-top: 10px;
   background-color: #f5f5f5;
-  font-family: Inter, Arial, Nunito, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  font-family: Inter, Arial, Nunito, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Roboto, "Noto Sans", sans-serif, "Apple Color Emoji",
+    "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
 
 .page-job-detail .job-header-info h1.job-title {
@@ -764,7 +779,7 @@ body.has-app-shell .main-wrapper .container {
 .page-job-detail__header .col-xs-6.col-xs-pull-6,
 .page-job-detail__header .col-xs-6.col-xs-push-6 {
   opacity: 1;
-  transition: all .3s;
+  transition: all 0.3s;
 }
 
 .col-xs-push-6 {
@@ -803,7 +818,7 @@ body.has-app-shell .main-wrapper .container {
 
 .page-job-detail__detail {
   font-size: 14px;
-  padding: 0 12.5%;
+  padding: 0 8.5%;
   position: relative;
 }
 
@@ -832,7 +847,7 @@ body.has-app-shell .main-wrapper .container {
 
 .page-job-detail__detail .box-summary .summary-item {
   padding: 12px 0;
-  border-bottom: 1px solid rgba(206, 211, 213, .5);
+  border-bottom: 1px solid rgba(206, 211, 213, 0.5);
 }
 
 .summary-icon {
@@ -892,6 +907,10 @@ body.has-app-shell .main-wrapper .container {
   word-wrap: break-word;
 }
 
+.job-description .description p {
+  text-align: justify;
+}
+
 .mg-right-10 {
   margin-right: 10px;
 }
@@ -915,20 +934,73 @@ body.has-app-shell .main-wrapper .container {
   width: 90%;
 }
 
-.row-cols-md-3>* {
+.row-cols-md-3 > * {
   flex: 0 0 auto;
   width: 33.3333333333%;
   padding-right: 3px;
 }
 
-.spinner-border{
-  margin-right: 5px
+.spinner-border {
+  margin-right: 5px;
 }
 
-.img-avatar{
+.img-avatar {
   display: flex;
   justify-content: right;
 }
-.modal-update-profile .modal-dialog{
+.modal-update-profile .modal-dialog {
   max-width: 750px;
+}
+
+.modal-add-post .modal-dialog {
+  max-width: 60%;
+}
+
+.img-center {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 100%;
+  max-height: 100%;
+}
+.img-add-post {
+  width: 80%;
+  height: 400px;
+  margin: auto;
+  display: block;
+}
+
+.card-body {
+  padding: 4px;
+}
+
+.card-text {
+  text-align: justify;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* number of lines to show */
+  -webkit-box-orient: vertical;
+}
+
+.post-title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1; /* number of lines to show */
+  -webkit-box-orient: vertical;
+}
+.card {
+  padding: 4px;
+}
+
+.center-block{
+  display: flex;
+  margin: auto;
+}
+
+.img-input-decorate{
+  margin-top: 10px;
+  padding: 2px 2px 2px 2px;
+  border: 1px solid black;
+  border-radius: 5px;
 }

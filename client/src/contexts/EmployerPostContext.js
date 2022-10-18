@@ -104,11 +104,20 @@ const EmployerPostContextProvider = ({ children }) => {
       return false;
     }
   };
-  const addPost = async (newPost) => {
+  const addPost = async (newPost, avatar) => {
     try {
+      var bodyFormData = new FormData();
+      bodyFormData.append("info", JSON.stringify(newPost));
+      bodyFormData.append("avatar", avatar);
+
       const response = await axios.post(
-        `${apiUrl}/employer/post/tool`,
-        newPost
+        `${apiUrl}/employer/post`,
+        bodyFormData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
       );
       if (response.data.success) {
         dispatch({ type: POST_ADDED_SUCCESS, payload: response.data.data });

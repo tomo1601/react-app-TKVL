@@ -12,13 +12,13 @@ const SinglePost = ({
         <Row>
           <Col className="col-12">
             <Link className="post-title" to={`/postDetail/${id}`} target="_blank">
-              {`${title.substring(0, 30)}...`}
+              {title}
             </Link>
           </Col>
         </Row>
       </Card.Title>
       <Card.Text className="card-text">
-        {`${description.substring(0, 60)}...`}
+        {description}
       </Card.Text>
       <Card.Text className="card-text">
         <img

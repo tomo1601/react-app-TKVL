@@ -13,6 +13,8 @@ import salaryIcon from "../../assets/salary-icon.png";
 import employeeIcon from "../../assets/employee-icon.png";
 import AlertMessage from "../layout/AlertMessage";
 import NoPostFound from "../NoPostFound";
+import Col from "react-bootstrap/esm/Col";
+import Row from "react-bootstrap/esm/Row";
 
 const PostDetail = () => {
   let { id } = useParams();
@@ -77,11 +79,10 @@ const PostDetail = () => {
         <Spiner animation="border" variant="info" />
       </div>
     );
-  } if(posts.length === 0)
-  {
-    postDetail = <NoPostFound/>
   }
-  else {
+  if (posts.length === 0) {
+    postDetail = <NoPostFound />;
+  } else {
     postHeader = (
       <div className="wrapper-job-detail-header">
         <section className="page-job-detail__header ">
@@ -142,7 +143,7 @@ const PostDetail = () => {
             id="job-info"
           >
             <div className="row">
-              <div className="col-md-4 col-sm-12 tab-sidebar">
+              <div className="col-md-3 col-sm-12 tab-sidebar">
                 <div className="mobile-box mg-right-10">
                   <div className="box-summary link-list">
                     <div className="row summary-item">
@@ -222,16 +223,26 @@ const PostDetail = () => {
                   </div>
                 </div>
               </div>
-              <div className="col-md-8  col-sm-12 tab-main-content">
-                <div className="job-description mobile-box">
-                  <h2 style={{ width: "50%" }}>Job Description</h2>
-                  <div className="description" style={{ width: "100%" }}>
-                    <p>{posts.description}</p>
-                    {posts.description.split("\n").map(line =>(
-                      <p>{line}</p>
-                    ))}
-                  </div>
-                </div>
+              <div className="col-md-9  col-sm-12 tab-main-content">
+                <Row>
+                  <Col className="col-7">
+                    <div className="job-description mobile-box">
+                      <h2 style={{ width: "50%" }}>Job Description</h2>
+                      <div className="description" style={{ width: "100%" }}>
+                        {/* <p>{posts.description}</p> */}
+                        {posts.description.split("\n").map((line) => (
+                          <p>{line}</p>
+                        ))}
+                      </div>
+                    </div>
+                  </Col>
+                  <Col className="col-1">
+
+                  </Col>
+                  <Col className="col-4">
+                    <img src={posts.avatar} alt="" className="img-center mt-5"/>
+                  </Col>
+                </Row>
               </div>
             </div>
           </div>

@@ -51,7 +51,7 @@ const EmpPost = () => {
       </div>
     );
   } else if (posts.length === 0) {
-    body = <NoPostFound/>
+    body = <NoPostFound />;
   } else {
     body = (
       <>
@@ -99,7 +99,11 @@ const EmpPost = () => {
             </Col>
           ))}
         </Row>
-        <PostPaging handlePageChange={handlePageChange} currentPage={currentPage} totalPage={totalPage}/>
+        <PostPaging
+          handlePageChange={handlePageChange}
+          currentPage={currentPage}
+          totalPage={totalPage}
+        />
 
         <AddPostModal />
         <CVSubmitModal />
@@ -108,7 +112,8 @@ const EmpPost = () => {
           overlay={<Tooltip>Add New Job</Tooltip>}
         >
           <Button
-            className="btn-floating"
+            className="btn-floating btn"
+            style={{ background: "transparent", borderColor: "none" }}
             onClick={setShowAddPostModal.bind(this, true)}
           >
             <img src={addIcon} alt="add post" width="60" height="60" />

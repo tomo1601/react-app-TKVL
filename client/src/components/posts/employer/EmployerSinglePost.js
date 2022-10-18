@@ -25,15 +25,13 @@ const EmployerSinglePost = ({
                 to={`/postDetail/${id}`}
                 target="_blank"
               >
-                {`${title.substring(0, 30)}...`}
+                {title}
               </Link>
             </Col>
           </Row>
         </Card.Title>
-        <Card.Text className="card-text">
-          {`${description.substring(0, 60)}...`}
-        </Card.Text>
-        <Card.Text className="card-text">
+        <Card.Text>{description}</Card.Text>
+        <Card.Text>
           <img
             src="https://www.pngitem.com/pimgs/m/90-907567_transparent-cash-cow-png-money-icon-png-image.png"
             width="40px"
