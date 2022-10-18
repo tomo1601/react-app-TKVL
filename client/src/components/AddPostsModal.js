@@ -6,15 +6,11 @@ import Col from "react-bootstrap/Col";
 import addImage from "../assets/add-image.png";
 import { useContext, useState } from "react";
 import { EmployerPostContext } from "../contexts/EmployerPostContext";
-import { apiUrl } from "../contexts/constants";
-import { useQuery } from "react-query";
-import Spinner from "react-bootstrap/esm/Spinner";
-import axios from "axios";
 
 const AddPostModal = () => {
   // Contexts
 
-  const { showAddPostModal, setShowAddPostModal, addPost, setShowToast } =
+  const { showAddPostModal, setShowAddPostModal, addPost, setShowToast, fieldAndCity } =
     useContext(EmployerPostContext);
 
   // State
@@ -26,28 +22,10 @@ const AddPostModal = () => {
     location: "",
     recruit: "",
     expirationDate: "",
-    fieldCode: "",
-    cityCode: "",
+    fieldCode: fieldAndCity[0][0].code,
+    cityCode: fieldAndCity[1][0].code,
   });
-
-  const getCityAndField = async () => {
-    try {
-      const responseField = await axios.get(
-        `${apiUrl}/field?page_number=1&limit=100`
-      );
-      const responseCity = await axios.get(`${apiUrl}/city`);
-
-      return [responseField.data.data, responseCity.data.data];
-    } catch (err) {
-      console.log(err);
-      return null;
-    }
-  };
-
-  const { data: fieldAndCity, status: fcStatus } = useQuery(
-    ["cityAndField"],
-    async () => await getCityAndField()
-  );
+  const [updateLoading, setUpdateLoading] = useState(false);
 
   const {
     title,
@@ -59,7 +37,7 @@ const AddPostModal = () => {
     expirationDate,
     avatar,
     fieldCode,
-    cityCode
+    cityCode,
   } = newPost;
 
   const onChangeNewPostForm = (event) =>
@@ -92,29 +70,49 @@ const AddPostModal = () => {
     };
   };
 
-  const onUploadFileChange = ({ target }) => {
+  const compressImage = (imageFile, quality) => {
+    return new Promise((resolve, reject) => {
+      const $canvas = document.createElement("canvas");
+      const image = new Image();
+      image.onload = () => {
+        $canvas.width = image.width;
+        $canvas.height = image.height;
+        $canvas.getContext("2d").drawImage(image, 0, 0);
+        $canvas.toBlob(
+          (blob) => {
+            if (blob === null) {
+              return reject(blob);
+            } else {
+              resolve(blob);
+            }
+          },
+          "image/jpeg",
+          quality / 100
+        );
+      };
+      image.src = URL.createObjectURL(imageFile);
+    });
+  };
+  const onUploadFileChange = async ({ target }) => {
     if (target.files < 1 || !target.validity.valid) {
       return;
     }
     var preview = document.getElementById("img-review");
 
-    var reader = new FileReader();
-
-    reader.onloadend = function () {
-      preview.src = reader.result;
-    };
     const file = target.files[0];
+    let blob = null;
     if (file) {
-      reader.readAsDataURL(file);
-    } else {
-      preview.src = "";
+      blob = await compressImage(file, 50);
+      preview.src = URL.createObjectURL(blob);
     }
 
-    fileToBase64(file, (err, result) => {
+    console.log({ blob });
+
+    fileToBase64(blob, (err, result) => {
       if (result) {
         setNewPost({
           ...newPost,
-          avatar: file,
+          avatar: blob,
         });
       }
     });
@@ -122,206 +120,198 @@ const AddPostModal = () => {
 
   const onSubmit = async (event) => {
     event.preventDefault();
+    setUpdateLoading(true);
     const { success, message } = await addPost(newPost, avatar);
     setShowToast({
       show: true,
       message: message,
       type: success ? "success" : "danger",
     });
-    // setNewPost({
-    //   title: "",
-    //   description: "",
-    //   salary: "",
-    //   salaryType: "",
-    //   location: "",
-    //   recruit: "",
-    //   expirationDate: "",
-    //   cityCode: "",
-    //   fieldCode: "",
-    // });
-    // setShowAddPostModal(false);
+    if (success) {
+      setNewPost({
+        title: "",
+        description: "",
+        salary: "",
+        salaryType: "",
+        location: "",
+        recruit: "",
+        expirationDate: "",
+        cityCode: "",
+        fieldCode: "",
+      });
+      setShowAddPostModal(false);
+    }
+    setUpdateLoading(false);
   };
   let body;
-  if (fcStatus === "success") {
-    body = (
-      <Modal
-        className="modal-add-post"
-        show={showAddPostModal}
-        onHide={closeDialog}
-      >
-        <Modal.Header closeButton>
-          <Modal.Title>Add New Post</Modal.Title>
-        </Modal.Header>
-        <Form onSubmit={onSubmit}>
-          <Modal.Body>
-            <Row>
-              <Col className="col-6">
-                <Form.Group className="mb-3">
-                  <Form.Text id="title-help" muted>
-                    Title
-                  </Form.Text>
-                  <Form.Control
-                    type="text"
-                    placeholder="Title"
-                    name="title"
-                    required
-                    aria-describedby="title-help"
-                    value={title}
-                    onChange={onChangeNewPostForm}
-                  />
-                </Form.Group>
+  body = (
+    <Modal
+      className="modal-add-post"
+      show={showAddPostModal}
+      onHide={closeDialog}
+    >
+      <Modal.Header closeButton>
+        <Modal.Title>Add New Post</Modal.Title>
+      </Modal.Header>
+      <Form onSubmit={onSubmit}>
+        <Modal.Body>
+          <Row>
+            <Col className="col-6">
+              <Form.Group className="mb-3">
                 <Form.Text id="title-help" muted>
-                  Description
+                  Title
                 </Form.Text>
+                <Form.Control
+                  type="text"
+                  placeholder="Title"
+                  name="title"
+                  required
+                  aria-describedby="title-help"
+                  value={title}
+                  onChange={onChangeNewPostForm}
+                />
+              </Form.Group>
+              <Form.Text id="title-help" muted>
+                Description
+              </Form.Text>
 
-                <Form.Group className="mb-3">
-                  <Form.Control
-                    as="textarea"
-                    rows={3}
-                    placeholder="Description"
-                    name="description"
-                    value={description}
-                    onChange={onChangeNewPostForm}
-                  />
-                </Form.Group>
-                <Form.Group className="mb-3">
-                  <Form.Text id="title-help" muted>
-                    Salary
-                  </Form.Text>
-                  <Form.Control
-                    type="number"
-                    placeholder="Salary"
-                    name="salary"
-                    required
-                    value={salary}
-                    onChange={onChangeNewPostForm}
-                  />
-                </Form.Group>
-                <Form.Group className="mb-3">
-                  <Form.Text id="title-help" muted>
-                    Salary Type
-                  </Form.Text>
-                  <Form.Control
-                    type="text"
-                    placeholder="Salary Type"
-                    name="salaryType"
-                    required
-                    value={salaryType}
-                    onChange={onChangeNewPostForm}
-                  />
-                </Form.Group>
-                <Form.Group>
-                  <Form.Label> Field</Form.Label>
-                  <Form.Select
-                    name="fieldCode"
-                    value={fieldCode}
-                    onChange={onChangeNewPostForm}
-                  >
-                    {fieldAndCity[0].map((field) => (
-                      <option value={field.code}>{field.name}</option>
-                    ))}
-                  </Form.Select>
-                </Form.Group>
-                {/* <Select
-                  className="mb-3"
-                  placeholder="Field"
-                  options={JOBFIELD}
-                  onChange={setFieldState}
-                /> */}
-                {/* <Select
-                  className="mb-3"
-                  placeholder="City"
-                  options={CITYLOCATION}
-                  onChange={setCityState}
-                /> */}
-                <Form.Group>
-                  <Form.Label> City</Form.Label>
-                  <Form.Select
-                    name="cityCode"
-                    value={cityCode}
-                    onChange={onChangeNewPostForm}
-                  >
-                    {fieldAndCity[1].map((city) => (
-                      <option value={city.code}>{city.name}</option>
-                    ))}
-                  </Form.Select>
-                </Form.Group>
-                <Form.Group className="mb-3">
-                  <Form.Text id="title-help" muted>
-                    Location
-                  </Form.Text>
-                  <Form.Control
-                    type="text"
-                    placeholder="Location"
-                    name="location"
-                    required
-                    value={location}
-                    onChange={onChangeNewPostForm}
-                  />
-                </Form.Group>
-                <Form.Group className="mb-3">
-                  <Form.Text id="title-help" muted>
-                    Recruit
-                  </Form.Text>
-                  <Form.Control
-                    type="text"
-                    placeholder="Recruit"
-                    name="recruit"
-                    required
-                    value={recruit}
-                    onChange={onChangeNewPostForm}
-                  />
-                </Form.Group>
+              <Form.Group className="mb-3">
+                <Form.Control
+                  as="textarea"
+                  rows={3}
+                  placeholder="Description"
+                  name="description"
+                  value={description}
+                  onChange={onChangeNewPostForm}
+                />
+              </Form.Group>
+              <Form.Group className="mb-3">
                 <Form.Text id="title-help" muted>
-                  Expiration Date
+                  Salary
                 </Form.Text>
+                <Form.Control
+                  type="number"
+                  placeholder="Salary"
+                  name="salary"
+                  required
+                  value={salary}
+                  onChange={onChangeNewPostForm}
+                />
+              </Form.Group>
+              <Form.Group className="mb-3">
+                <Form.Text id="title-help" muted>
+                  Salary Type
+                </Form.Text>
+                <Form.Control
+                  type="text"
+                  placeholder="Salary Type"
+                  name="salaryType"
+                  required
+                  value={salaryType}
+                  onChange={onChangeNewPostForm}
+                />
+              </Form.Group>
+              <Form.Group>
+                <Form.Label> Field</Form.Label>
+                <Form.Select
+                  name="fieldCode"
+                  value={fieldCode}
+                  onChange={onChangeNewPostForm}
+                >
+                  {fieldAndCity[0].map((field) => (
+                    <option key={field.id} value={field.code}>
+                      {field.name}
+                    </option>
+                  ))}
+                </Form.Select>
+              </Form.Group>
+              <Form.Group>
+                <Form.Label> City</Form.Label>
+                <Form.Select
+                  name="cityCode"
+                  value={cityCode}
+                  onChange={onChangeNewPostForm}
+                >
+                  {fieldAndCity[1].map((city) => (
+                    <option key={city.id} value={city.code}>
+                      {city.name}
+                    </option>
+                  ))}
+                </Form.Select>
+              </Form.Group>
+              <Form.Group className="mb-3">
+                <Form.Text id="title-help" muted>
+                  Location
+                </Form.Text>
+                <Form.Control
+                  type="text"
+                  placeholder="Location"
+                  name="location"
+                  required
+                  value={location}
+                  onChange={onChangeNewPostForm}
+                />
+              </Form.Group>
+              <Form.Group className="mb-3">
+                <Form.Text id="title-help" muted>
+                  Recruit
+                </Form.Text>
+                <Form.Control
+                  type="text"
+                  placeholder="Recruit"
+                  name="recruit"
+                  required
+                  value={recruit}
+                  onChange={onChangeNewPostForm}
+                />
+              </Form.Group>
+              <Form.Text id="title-help" muted>
+                Expiration Date
+              </Form.Text>
 
-                <Form.Group className="mb-3">
-                  <Form.Control
-                    type="Date"
-                    placeholder="Expiration Date"
-                    name="expirationDate"
-                    required
-                    aria-describedby="title-help"
-                    value={expirationDate}
-                    onChange={onChangeNewPostForm}
-                  />
-                </Form.Group>
-              </Col>
-              <Col className="col-6">
-                <img
-                  className="img-center img-add-post"
-                  src={addImage}
-                  id="img-review"
+              <Form.Group className="mb-3">
+                <Form.Control
+                  type="Date"
+                  placeholder="Expiration Date"
+                  name="expirationDate"
+                  required
+                  aria-describedby="title-help"
+                  value={expirationDate}
+                  onChange={onChangeNewPostForm}
                 />
-                <input
-                  className="center-block img-input-decorate"
-                  type="file"
-                  name="avatar"
-                  accept="image/*"
-                  onChange={onUploadFileChange}
-                />
-              </Col>
-            </Row>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={closeDialog}>
-              Cancel
-            </Button>
-            <Button variant="primary" type="submit">
-              Confirm
-            </Button>
-          </Modal.Footer>
-        </Form>
-      </Modal>
-    );
-  } else {
-    body = (
-      <div className="d-flex justify-content-center mt-2">
-        <Spinner animation="border" variant="info" />
-      </div>
-    );
-  }
-  return body ;
+              </Form.Group>
+            </Col>
+            <Col className="col-6">
+              <img
+                className="img-center img-add-post"
+                src={addImage}
+                id="img-review"
+              />
+              <input
+                className="center-block img-input-decorate"
+                type="file"
+                name="avatar"
+                accept="image/*"
+                onChange={onUploadFileChange}
+              />
+            </Col>
+          </Row>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={closeDialog}>
+            Cancel
+          </Button>
+          <Button variant="primary" type="submit" disabled={updateLoading}>
+            {updateLoading && (
+              <span className="spinner-border spinner-border-sm mr-1"></span>
+            )}
+            Confirm
+          </Button>
+        </Modal.Footer>
+      </Form>
+    </Modal>
+  );
+
+  return body;
 };
 export default AddPostModal;

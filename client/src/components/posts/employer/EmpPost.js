@@ -14,6 +14,10 @@ import EmployerSinglePost from "./EmployerSinglePost";
 import CVSubmitModal from "../../CVSubmitModal";
 import PostPaging from "../../PostPaging";
 import NoPostFound from "../../NoPostFound";
+import { apiUrl } from "../../../contexts/constants";
+import { useQuery } from "react-query";
+import axios from "axios";
+import UpdatePostModal from "../../UpdatePostsModal";
 
 const EmpPost = () => {
   const {
@@ -25,6 +29,8 @@ const EmpPost = () => {
     setShowToast,
     deletePost,
     cvSubmit,
+    setFieldAndCity,
+    updatingPost
   } = useContext(EmployerPostContext);
 
   const [accepted, setAccepted] = useState(true);
@@ -32,6 +38,29 @@ const EmpPost = () => {
   useEffect(() => {
     getEmployerPosts("page=" + 1 + "&limit=" + 9, true);
   }, []);
+
+  const getCityAndField = async () => {
+    try {
+      const responseField = await axios.get(
+        `${apiUrl}/field?page_number=1&limit=100`
+      );
+      const responseCity = await axios.get(`${apiUrl}/city`);
+
+      return [responseField.data.data, responseCity.data.data];
+    } catch (err) {
+      console.log(err);
+      return null;
+    }
+  };
+
+  const { data: fieldAndCity, status: fcStatus } = useQuery(
+    ["cityAndField"],
+    async () => {
+      const response = await getCityAndField()
+      setFieldAndCity(response);
+      return response;
+    }
+  );
 
   const handlePageChange = (pageNumber, acc) => {
     if (acc === undefined) acc = accepted;
@@ -44,7 +73,7 @@ const EmpPost = () => {
 
   let body = null;
 
-  if (postLoading) {
+  if (postLoading || fcStatus === "loading") {
     body = (
       <div className="d-flex justify-content-center mt-2">
         <Spiner animation="border" variant="info" />
@@ -105,7 +134,11 @@ const EmpPost = () => {
           totalPage={totalPage}
         />
 
-        <AddPostModal />
+        {fcStatus === "success" ? (
+          <AddPostModal/>
+        ) : (
+          ""
+        )}
         <CVSubmitModal />
         <OverlayTrigger
           placement="left"
@@ -135,6 +168,7 @@ const EmpPost = () => {
             <strong>{message}</strong>
           </Toast.Body>
         </Toast>
+        {updatingPost !== null && <UpdatePostModal />}
       </>
     );
   }

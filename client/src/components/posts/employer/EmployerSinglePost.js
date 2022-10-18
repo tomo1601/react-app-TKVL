@@ -3,14 +3,15 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { EmployerPostContext } from "../../../contexts/EmployerPostContext";
 
 const EmployerSinglePost = ({
-  post: { id, title, description, salary, salaryType, adminAceptedEmail },
+  post,
   deletePost,
   cvSubmit,
-  setShowCVSubmitModal,
-}) => {
+  setShowCVSubmitModal}) => {
+  const {setUpdatingPost, setShowUpdatePost} = useContext(EmployerPostContext)
   const [listCVLoading, setListCVLoading] = useState(false);
   const [deleteLoading, setDeleteLoading] = useState(false);
 
@@ -22,15 +23,15 @@ const EmployerSinglePost = ({
             <Col className="col-12">
               <Link
                 className="post-title"
-                to={`/postDetail/${id}`}
+                to={`/postDetail/${post.id}`}
                 target="_blank"
               >
-                {title}
+                {post.title}
               </Link>
             </Col>
           </Row>
         </Card.Title>
-        <Card.Text>{description}</Card.Text>
+        <Card.Text>{post.description}</Card.Text>
         <Card.Text>
           <img
             src="https://www.pngitem.com/pimgs/m/90-907567_transparent-cash-cow-png-money-icon-png-image.png"
@@ -39,10 +40,10 @@ const EmployerSinglePost = ({
             style={{ marginRight: "10px" }}
             alt="img.png"
           />
-          {salary} {salaryType !== "NONE" ? salaryType : ""}
+          {post.salary} {post.salaryType !== "NONE" ? post.salaryType : ""}
         </Card.Text>
         <Row>
-          {adminAceptedEmail ? (
+          {post.adminAceptedEmail ? (
             <Col>
               <Button
                 disabled={listCVLoading}
@@ -52,7 +53,7 @@ const EmployerSinglePost = ({
                   //Load data then show modal
                   setListCVLoading(true);
 
-                  const listCV = (await cvSubmit(id)).data;
+                  const listCV = (await cvSubmit(post.id)).data;
                   setShowCVSubmitModal({
                     show: true,
                     listCV: listCV === undefined ? [] : listCV,
@@ -71,7 +72,10 @@ const EmployerSinglePost = ({
           )}
 
           <Col>
-            <Button className="btn" variant="outline-warning">
+            <Button className="btn" variant="outline-warning" onClick={()=>{
+              setUpdatingPost(post)
+              setShowUpdatePost(true)
+            }}>
               Update
             </Button>
           </Col>
@@ -83,7 +87,7 @@ const EmployerSinglePost = ({
               variant="outline-danger"
               onClick={async () => {
                 setDeleteLoading(true);
-                await deletePost(id);
+                await deletePost(post.id);
                 setDeleteLoading(false);
               }}
             >

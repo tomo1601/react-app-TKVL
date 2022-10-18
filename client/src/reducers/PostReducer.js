@@ -2,10 +2,11 @@ import {
   POSTS_LOADED_SUCCESS,
   POSTS_LOADED_FAIL,
   POST_ADDED_SUCCESS,
+  POST_UPDATED_SUCCESS,
   POST_DELETED_SUCCESS,
   POST_ACCEPTED_SUCCESS,
   POSTS_FIND_SUCCESS,
-  BEFORE_GET_PREPARE
+  BEFORE_GET_PREPARE,
 } from "../contexts/constants";
 
 export const PostReducer = (state, action) => {
@@ -31,6 +32,15 @@ export const PostReducer = (state, action) => {
         ...state,
         posts: [...state.posts, payload],
       };
+    case POST_UPDATED_SUCCESS:
+      const newPosts = state.posts.map((post) => {
+        if (post.id === payload.id) return payload;
+        return post;
+      });
+      return {
+        ...state,
+        posts: newPosts,
+      };
     case POST_DELETED_SUCCESS:
       return {
         ...state,
@@ -51,7 +61,7 @@ export const PostReducer = (state, action) => {
       return {
         ...state,
         posts: [],
-        postLoading: true
+        postLoading: true,
       };
     default:
       return state;

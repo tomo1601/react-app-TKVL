@@ -5,6 +5,7 @@ import {
   apiUrl,
   POSTS_LOADED_FAIL,
   POSTS_LOADED_SUCCESS,
+  POST_UPDATED_SUCCESS,
   POST_ADDED_SUCCESS,
   POST_DELETED_SUCCESS,
   POST_ACCEPTED_SUCCESS,
@@ -32,9 +33,14 @@ const EmployerPostContextProvider = ({ children }) => {
     type: null,
   });
 
+  const [updatingPost, setUpdatingPost] = useState(null);
+
+  const [fieldAndCity, setFieldAndCity] = useState(null);
+  const [showUpdatePost, setShowUpdatePost] = useState(false);
+
   // get employer post
   const getEmployerPosts = async (key, accepted) => {
-    dispatch({type: BEFORE_GET_PREPARE})
+    dispatch({ type: BEFORE_GET_PREPARE });
     let str = "";
     if (key !== null) str = key;
     try {
@@ -52,7 +58,7 @@ const EmployerPostContextProvider = ({ children }) => {
 
   // get admin post
   const getAdminPosts = async (key, accepted) => {
-    dispatch({type: BEFORE_GET_PREPARE})
+    dispatch({ type: BEFORE_GET_PREPARE });
     let str = "";
     if (key !== null) str = key;
     try {
@@ -130,6 +136,32 @@ const EmployerPostContextProvider = ({ children }) => {
     }
   };
 
+  const updatePost = async (newPost, avatar) => {
+    try {
+      var bodyFormData = new FormData();
+      bodyFormData.append("info", JSON.stringify(newPost));
+      bodyFormData.append("avatar", avatar);
+
+      const response = await axios.put(
+        `${apiUrl}/employer/post`,
+        bodyFormData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      if (response.data.success) {
+        dispatch({ type: POST_UPDATED_SUCCESS, payload: response.data.data });
+        return response.data;
+      }
+    } catch (error) {
+      return error.response.data
+        ? error.response.data
+        : { success: false, message: "Server error" };
+    }
+  };
+
   const deletePost = async (id) => {
     try {
       const response = await axios.delete(
@@ -164,6 +196,7 @@ const EmployerPostContextProvider = ({ children }) => {
         : { success: false, message: "Server error" };
     }
   };
+
   // postcontextdata
   const employerPostContextData = {
     postState,
@@ -182,6 +215,13 @@ const EmployerPostContextProvider = ({ children }) => {
     getAdminPosts,
     acceptPost,
     adminDeletePost,
+    updatePost,
+    updatingPost,
+    setUpdatingPost,
+    fieldAndCity,
+    setFieldAndCity,
+    showUpdatePost,
+    setShowUpdatePost,
   };
 
   return (
