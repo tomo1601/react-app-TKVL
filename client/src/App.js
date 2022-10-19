@@ -17,94 +17,106 @@ import AdminPost from "./components/posts/admin/AdminPost";
 import PostDetail from "./components/posts/PostDetail";
 import { UserResume } from "./components/posts/users/UserResume";
 import AdminProfile from "./components/posts/admin/AdminProfile";
-import { QueryClient, QueryClientProvider, useQuery } from "react-query";
-
-const queryClient = new QueryClient();
+import EmpPostDetail from "./components/posts/employer/EmpPostDetail";
+import AdminPostDetail from "./components/posts/admin/AdminPostDetail";
+import AdminRoute from "./components/routing/AdminRoute";
+import EmployerRoute from "./components/routing/EmployerRoute";
+import UserRoute from "./components/routing/UserRoute";
+import PageNotFound from "./components/notfound/PageNotFound";
 
 function App() {
   return (
-    <QueryClientProvider client={queryClient}>
-      <AuthContextProvider>
-        <PostContextProvider>
-          <EmployerPostContextProvider>
-            <Router>
-              <Switch>
-                <Route exact path="/" component={Landing} />
-                <Route
-                  exact
-                  path="/user/login"
-                  render={(props) => (
-                    <AuthUser {...props} authRoute="user-login" />
-                  )}
-                />
-                <Route
-                  exact
-                  path="/user/register"
-                  render={(props) => (
-                    <AuthUser {...props} authRoute="user-register" />
-                  )}
-                />
-                <Route
-                  exact
-                  path="/employer/login"
-                  render={(props) => (
-                    <AuthEmployer {...props} authRoute="employer-login" />
-                  )}
-                />
-                <Route
-                  exact
-                  path="/employer/register"
-                  render={(props) => (
-                    <AuthEmployer {...props} authRoute="employer-register" />
-                  )}
-                />
-                <Route
-                  exact
-                  path="/admin/login"
-                  render={(props) => (
-                    <AuthAdmin {...props} authRoute="admin-login" />
-                  )}
-                />
-                <Route exact path="/admin" component={AdminLanding} />
-                <ProtectedRoute exact path="/dashboard" component={DashBoard} />
-                <ProtectedRoute exact path="/profile" component={Profile} />
-                <ProtectedRoute
-                  exact
-                  path="/employer/profile/:id"
-                  component={EmpProfile}
-                />
-                <ProtectedRoute
-                  exact
-                  path="/employer/posts"
-                  component={EmpPost}
-                />
-                <ProtectedRoute
-                  exact
-                  path="/postDetail/:id"
-                  component={PostDetail}
-                />
-                <ProtectedRoute
-                  exact
-                  path="/user/resume"
-                  component={UserResume}
-                />
+    <AuthContextProvider>
+      <PostContextProvider>
+        <EmployerPostContextProvider>
+          <Router>
+            <Switch>
+              <Route exact path="/" component={Landing} />
+              <Route
+                exact
+                path="/user/login"
+                render={(props) => (
+                  <AuthUser {...props} authRoute="user-login" />
+                )}
+              />
+              <Route
+                exact
+                path="/user/register"
+                render={(props) => (
+                  <AuthUser {...props} authRoute="user-register" />
+                )}
+              />
+              <Route
+                exact
+                path="/employer/login"
+                render={(props) => (
+                  <AuthEmployer {...props} authRoute="employer-login" />
+                )}
+              />
+              <Route
+                exact
+                path="/employer/register"
+                render={(props) => (
+                  <AuthEmployer {...props} authRoute="employer-register" />
+                )}
+              />
+              <Route
+                exact
+                path="/admin/login"
+                render={(props) => (
+                  <AuthAdmin {...props} authRoute="admin-login" />
+                )}
+              />
+              <Route exact path="/admin" component={AdminLanding} />
+              {/* Authenticate to use */}
+              <ProtectedRoute exact path="/dashboard" component={DashBoard} />
+              <ProtectedRoute
+                exact
+                path="/postDetail/:id"
+                component={PostDetail}
+              />
 
-                <ProtectedRoute
-                  exact
-                  path="/admin/posts"
-                  component={AdminPost}
-                />
-                <ProtectedRoute
-                  exact
-                  path="/admin/profile"
-                  component={AdminProfile}
-                />
-              </Switch>
-            </Router>
-          </EmployerPostContextProvider>
-        </PostContextProvider>
-      </AuthContextProvider>
-    </QueryClientProvider>
+              {/*User can use */}
+              <UserRoute exact path="/profile" component={Profile} />
+
+              <ProtectedRoute
+                exact
+                path="/user/resume"
+                component={UserResume}
+              />
+              {/*Employer can use */}
+
+              <ProtectedRoute
+                exact
+                path="/employer/profile/:id"
+                component={EmpProfile}
+              />
+              <EmployerRoute exact path="/employer/posts" component={EmpPost} />
+              <EmployerRoute
+                exact
+                path="/employer/postdetail/:id"
+                component={EmpPostDetail}
+              />
+              {/*Admin can use */}
+
+              <AdminRoute exact path="/admin/posts" component={AdminPost} />
+              <AdminRoute
+                exact
+                path="/admin/profile"
+                component={AdminProfile}
+              />
+              <AdminRoute
+                exact
+                path="/admin/postdetail/:id"
+                component={AdminPostDetail}
+              />
+              <Route path="/" component={PageNotFound} />
+
+            </Switch>
+          </Router>
+        </EmployerPostContextProvider>
+      </PostContextProvider>
+    </AuthContextProvider>
   );
 }
 

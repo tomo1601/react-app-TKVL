@@ -221,7 +221,7 @@ const EmployerPostContextProvider = ({ children }) => {
     fieldAndCity,
     setFieldAndCity,
     showUpdatePost,
-    setShowUpdatePost,
+    setShowUpdatePost
   };
 
   return (

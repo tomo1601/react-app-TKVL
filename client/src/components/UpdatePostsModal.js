@@ -13,6 +13,7 @@ const UpdatePostModal = () => {
   const {
     updatePost,
     updatingPost,
+    setUpdatingPost,
     setShowToast,
     showUpdatePost,
     setShowUpdatePost,
@@ -79,7 +80,7 @@ const UpdatePostModal = () => {
     setNewPost({ ...newPost, [event.target.name]: event.target.value });
 
   const closeDialog = () => {
-    setNewPost({ ...newPost, avatar: "" });
+    setNewPost({ ...newPost, avatar: updatingPost?.avatar });
     setShowUpdatePost(false);
   };
 
@@ -150,15 +151,19 @@ const UpdatePostModal = () => {
   const onSubmit = async (event) => {
     setUpdateLoading(true);
     event.preventDefault();
-    const { success, message } = await updatePost(newPost, avatar);
+    const { success, message, data } = await updatePost(newPost, avatar);
     setShowToast({
       show: true,
       message: message,
       type: success ? "success" : "danger",
     });
+    if (success) {
+      setNewPost({ ...newPost, avatar: updatingPost?.avatar });
+      setShowUpdatePost(false);
+      setUpdatingPost(data);
+    }
 
     setUpdateLoading(false);
-    setShowUpdatePost(false);
   };
   let body;
   body = (
@@ -298,11 +303,7 @@ const UpdatePostModal = () => {
             <img
               className="img-center img-add-post"
               id="update-img-review"
-              src={
-                typeof avatar === "string"
-                  ? avatar
-                  : URL.createObjectURL(avatar)
-              }
+              src={updatingPost.avatar}
             />
             <input
               className="center-block img-input-decorate"

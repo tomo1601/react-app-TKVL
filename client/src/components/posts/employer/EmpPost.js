@@ -15,7 +15,6 @@ import CVSubmitModal from "../../CVSubmitModal";
 import PostPaging from "../../PostPaging";
 import NoPostFound from "../../NoPostFound";
 import { apiUrl } from "../../../contexts/constants";
-import { useQuery } from "react-query";
 import axios from "axios";
 import UpdatePostModal from "../../UpdatePostsModal";
 
@@ -30,37 +29,36 @@ const EmpPost = () => {
     deletePost,
     cvSubmit,
     setFieldAndCity,
-    updatingPost
+    updatingPost,
   } = useContext(EmployerPostContext);
 
   const [accepted, setAccepted] = useState(true);
 
+  const [fcStatus, setfcStatus] = useState("");
+
   useEffect(() => {
+    async function getCityAndField() {
+      setfcStatus("loading");
+
+      try {
+        const responseField = await axios.get(
+          `${apiUrl}/field?page_number=1&limit=100`
+        );
+        const responseCity = await axios.get(`${apiUrl}/city`);
+
+        setfcStatus("success");
+        setFieldAndCity([responseField.data.data, responseCity.data.data]);
+      } catch (err) {
+        console.log(err);
+        setfcStatus("error");
+
+        return null;
+      }
+    }
     getEmployerPosts("page=" + 1 + "&limit=" + 9, true);
+    console.count("Call City And field");
+    getCityAndField();
   }, []);
-
-  const getCityAndField = async () => {
-    try {
-      const responseField = await axios.get(
-        `${apiUrl}/field?page_number=1&limit=100`
-      );
-      const responseCity = await axios.get(`${apiUrl}/city`);
-
-      return [responseField.data.data, responseCity.data.data];
-    } catch (err) {
-      console.log(err);
-      return null;
-    }
-  };
-
-  const { data: fieldAndCity, status: fcStatus } = useQuery(
-    ["cityAndField"],
-    async () => {
-      const response = await getCityAndField()
-      setFieldAndCity(response);
-      return response;
-    }
-  );
 
   const handlePageChange = (pageNumber, acc) => {
     if (acc === undefined) acc = accepted;
@@ -134,11 +132,7 @@ const EmpPost = () => {
           totalPage={totalPage}
         />
 
-        {fcStatus === "success" ? (
-          <AddPostModal/>
-        ) : (
-          ""
-        )}
+        {fcStatus === "success" ? <AddPostModal /> : ""}
         <CVSubmitModal />
         <OverlayTrigger
           placement="left"

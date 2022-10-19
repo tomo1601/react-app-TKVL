@@ -13,8 +13,13 @@ import "../components/css/Pager.css";
 import PostPaging from "../components/PostPaging";
 import NoPostFound from "../components/NoPostFound";
 import axios from "axios";
+import { DEFAULT_PAGE_POSTS } from "../contexts/constants";
+import * as queryString from "query-string";
+import { useHistory } from "react-router-dom";
 
 const DashBoard = () => {
+  let params = queryString.parse(window.location.search);
+
   const {
     postState: { posts, postLoading, currentPage, totalPage },
     getPosts,
@@ -26,7 +31,9 @@ const DashBoard = () => {
     city: "",
   });
 
-  const [changeLimit, setChangeLimit] = useState(6);
+  const [url, setUrl] = useState(window.location);
+
+  const [changeLimit, setChangeLimit] = useState(DEFAULT_PAGE_POSTS);
 
   const { title, field, city } = searchForm;
 
@@ -42,14 +49,16 @@ const DashBoard = () => {
     if (title) key += `keyword=${title}&`;
     if (field) key += `fieldId=${field}&`;
     if (city) key += `cityId=${city}`;
+    setGetParam(key);
 
-    getPosts(key);
+    //getPosts(key);
   };
 
   const reloadPage = (input) => {
     let key = "page=" + 1 + "&limit=" + input;
 
-    getPosts(key);
+    setGetParam(key);
+    //getPosts(key);
   };
 
   useEffect(() => {
@@ -68,11 +77,25 @@ const DashBoard = () => {
       }
     };
 
-    getFields();
-    getCities();
-    getPosts();
-  }, []);
+    if (fields.length === 0) getFields();
+    if (cities.length === 0) getCities();
+    let reqParams = "";
+    if (params && params.keyword) reqParams += `keyword=${params.keyword}&`;
+    if (params && params.page) reqParams += `page=${params.page}&`;
+    if (params && params.limit) reqParams += `limit=${params.limit}&`;
+    if (params && params.fieldId) reqParams += `fieldId=${params.fieldId}&`;
+    if (params && params.cityId) reqParams += `cityId=${params.cityId}&`;
 
+    console.log(reqParams);
+    getPosts(reqParams === "" ? "page=1&limit=12" : reqParams);
+  }, [url]);
+
+  function setGetParam(params) {
+    var newUrl =
+      window.location.origin + window.location.pathname + "?" + params;
+    window.history.pushState({ path: newUrl }, "", newUrl);
+    setUrl(newUrl);
+  }
   let body = null;
 
   if (postLoading) {
@@ -86,20 +109,26 @@ const DashBoard = () => {
   } else {
     body = (
       <>
-        <label forhtml="limitSelect" className='page-size-label'>Change Limit Page Size:</label>
+        <label forhtml="limitSelect" className="page-size-label">
+          Change Limit Page Size:
+        </label>
         <select
-          className='page-size-select'
+          className="page-size-select"
           id="limitSelect"
           onChange={(e) => {
             setChangeLimit(e.target.value);
             reloadPage(e.target.value);
           }}
         >
-          <option value={6} defaultChecked>
-            6
+          <option value={DEFAULT_PAGE_POSTS} defaultChecked>
+            {DEFAULT_PAGE_POSTS}
           </option>
-          <option value={20}>20</option>
-          <option value={50}>50</option>
+          <option value={DEFAULT_PAGE_POSTS * 2}>
+            {DEFAULT_PAGE_POSTS * 2}
+          </option>
+          <option value={DEFAULT_PAGE_POSTS * 4}>
+            {DEFAULT_PAGE_POSTS * 4}
+          </option>
         </select>
         <Row className="row-cols-1 row-cols-md-3 g-4 mx-auto mt-3 container main-row post-padding">
           {posts.map((post) => (
@@ -137,7 +166,11 @@ const DashBoard = () => {
               />
             </Col>
             <Col className="col-4">
-              <select className='select-form-search' name="city" onChange={onChangeSearchForm}>
+              <select
+                className="select-form-search"
+                name="city"
+                onChange={onChangeSearchForm}
+              >
                 <option key={""} value="" defaultChecked>
                   Select City Location
                 </option>
@@ -157,7 +190,9 @@ const DashBoard = () => {
                   if (title) key += `keyword=${title}&`;
                   if (field) key += `fieldId=${field}&`;
                   if (city) key += `cityId=${city}`;
-                  getPosts(key);
+                  setGetParam(key);
+
+                  //                  getPosts(key);
                 }}
               >
                 <img
@@ -173,7 +208,11 @@ const DashBoard = () => {
           </Row>
           <Row className="format-row">
             <Col className="col-5">
-              <select className='select-form-search' name="field" onChange={onChangeSearchForm}>
+              <select
+                className="select-form-search"
+                name="field"
+                onChange={onChangeSearchForm}
+              >
                 <option value="" defaultChecked>
                   Select Field
                 </option>
