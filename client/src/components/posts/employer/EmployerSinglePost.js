@@ -23,7 +23,7 @@ const EmployerSinglePost = ({
             <Col className="col-12">
               <Link
                 className="post-title"
-                to={`/postDetail/${post.id}`}
+                to={`postDetail/${post.id}`}
                 target="_blank"
               >
                 {post.title}

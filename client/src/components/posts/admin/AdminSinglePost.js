@@ -23,7 +23,7 @@ const SinglePost = ({
             <Col className="col-12">
               <Link
                 className="post-title"
-                to={`/postDetail/${id}`}
+                to={`postDetail/${id}`}
                 target="_blank"
               >
                 {title}
