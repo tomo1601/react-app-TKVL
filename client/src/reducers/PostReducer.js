@@ -7,10 +7,12 @@ import {
   POST_ACCEPTED_SUCCESS,
   POSTS_FIND_SUCCESS,
   BEFORE_GET_PREPARE,
+  POSTS_PREDICT_SUCCESS,
+  POSTS_PREDICT_FAIL,
 } from "../contexts/constants";
 
 export const PostReducer = (state, action) => {
-  const { type, payload } = action;
+  const { type, payload} = action;
   switch (type) {
     case POSTS_LOADED_SUCCESS:
       return {
@@ -63,6 +65,18 @@ export const PostReducer = (state, action) => {
         posts: [],
         postLoading: true,
       };
+      case POSTS_PREDICT_SUCCESS:
+        return {
+          ...state,
+          posts: payload,
+          jobOption: payload.data.jobOptionResponses,
+        };
+      case POSTS_PREDICT_FAIL:
+        return {
+          ...state,
+          posts: [],
+          jobOption: 'Can not predict',
+        };
     default:
       return state;
   }

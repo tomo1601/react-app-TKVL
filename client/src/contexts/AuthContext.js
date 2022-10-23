@@ -218,6 +218,19 @@ const AuthContextProvider = ({ children }) => {
       return err.response.data;
     }
   };
+
+  const postPredict = async (mediaId) => {
+    try {
+      const response = await axios.get(`http://localhost:8081/user/cvpredict?mediaId=${mediaId}`);
+      if (response.data.success) {
+        dispatch({ type: "POSTS_FIND_SUCCESS", payload: response.data.data })
+      }
+      return response.data;
+    } catch (err) {
+      dispatch({ type: "POSTS_FIND_FAIL"})
+      return err.response.data;
+    }
+  }
   //conxtext data
   const authContextData = {
     loginUser,
@@ -232,6 +245,7 @@ const AuthContextProvider = ({ children }) => {
     submitUserCV,
     authState,
     changePassword,
+    postPredict,
   };
 
   //return

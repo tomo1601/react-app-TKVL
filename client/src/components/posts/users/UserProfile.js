@@ -300,6 +300,7 @@ const Profile = () => {
                   src={user.avatar}
                   style={{ width: "80%", height: "40%" }}
                   id="img-review"
+                  alt="img"
                 />
               </Col>
             </Row>
@@ -531,7 +532,7 @@ const Profile = () => {
               </Form>
             </Col>
             <Col className="col-6 img-avatar">
-              <img src={user.avatar} style={{ width: "80%", height: "75%" }} />
+              <img src={user.avatar} style={{ width: "80%", height: "75%" }} alt='img'/>
             </Col>
           </Row>
         </div>

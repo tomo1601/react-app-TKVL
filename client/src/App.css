@@ -471,7 +471,7 @@ ul {
 }
 
 .vnwBox.vnwBoxSmall {
-  padding: 12px 24px;
+  padding: 10px 24px;
 }
 
 .headerTitle {
@@ -744,7 +744,7 @@ body.has-app-shell .main-wrapper .container {
   padding: 18px 0;
   text-align: center;
   padding-top: 0;
-  padding: 0 8.5%;
+  padding: 10px 8.5%;
 }
 
 .page-job-detail {
@@ -1020,4 +1020,12 @@ body.has-app-shell .main-wrapper .container {
 
 .box-paging {
   margin: 0px 1px;
+}
+
+.chose-cv {
+  text-align: right;
+}
+
+.btn-view-job {
+  margin-left: 2px;
 }
