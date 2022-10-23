@@ -6,9 +6,9 @@ import Spinner from 'react-bootstrap/Spinner'
 import NavbarMenu from "../layout/NavbarMenu";
 import Footer from "../layout/Footer";
 
-const ProtectedRoute =({component: Component, ...rest}) => {
+const AdminRoute =({component: Component, ...rest}) => {
 
-    const {authState: {authloading, isAuthenticated}} = useContext(AuthContext)
+    const {authState: {authloading, isAuthenticated, isAdmin}} = useContext(AuthContext)
 
     if(authloading){
         return (
@@ -19,14 +19,17 @@ const ProtectedRoute =({component: Component, ...rest}) => {
     }
 
     return (
-        <Route {...rest}  render = {props => isAuthenticated ? (
+        <Route {...rest}  render = {props => isAuthenticated && isAdmin ? (
             <>
             <NavbarMenu/>
             <Component {...rest} {...props}/>
             <Footer/>
             </>
-            ):(<Redirect to='/user/login'/>) } />
+            ):(<Redirect to={{
+                pathname: '/user/login',
+                state: { message: "You do not have permission to access !" },
+            }}/>) } />
     )
 }
 
-export default ProtectedRoute
+export default AdminRoute

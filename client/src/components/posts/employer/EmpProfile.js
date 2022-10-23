@@ -41,9 +41,9 @@ const EmpProfile = () => {
     name: user ? user.name : "",
     phone: user ? user.phone : "",
     address: user ? user.address : "",
-    fieldId: user ? user.field.id : "",
+    fieldId: user ? user.field?.id : "",
     employee: user ? user.employee : "",
-    cityId: user ? user.city.id : "",
+    cityId: user ? user.city?.id : "",
     avatar: "",
   });
 
@@ -62,7 +62,6 @@ const EmpProfile = () => {
     try {
       const response = await axios.get(`${apiUrl}/employer/infomation/${id}`);
       const responsePost = await axios.get(`${apiUrl}/post?authorId=${id}`);
-
       return [response.data, responsePost.data];
     } catch (err) {
       console.log(err);
@@ -220,140 +219,144 @@ const EmpProfile = () => {
     body = (
       <div>
         <div>
-          <Modal
-            className="modal-update-profile"
-            show={showUpdate}
-            onHide={closeDialog}
-          >
-            <Modal.Header closeButton>
-              <Modal.Title>Update Employer Profile</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-              <div className="ContactInfoView_viewSectionWrapper__SEvGW">
-                <Row>
-                  <Col className="col-6">
-                    <Form
-                      className="native-grid"
-                      onSubmit={onSubmitUpdateProfile}
-                    >
-                      <AlertMessage info={alert} />
-                      <Form.Group>
-                        <Form.Label> Email</Form.Label>
-                        <Form.Control
-                          type="text"
-                          name="email"
-                          readOnly={true}
-                          value={email}
-                          onChange={onChangeUserInfo}
-                        />
-                      </Form.Group>
-                      <Form.Group>
-                        <Form.Label> Name</Form.Label>
-                        <Form.Control
-                          type="text"
-                          name="name"
-                          required
-                          value={name}
-                          onChange={onChangeUserInfo}
-                        />
-                      </Form.Group>
-                      <Form.Group>
-                        <Form.Label> Phone</Form.Label>
-                        <Form.Control
-                          type="text"
-                          name="phone"
-                          required
-                          value={phone}
-                          onChange={onChangeUserInfo}
-                        />
-                      </Form.Group>
-                      <Form.Group>
-                        <Form.Label> Addess</Form.Label>
-                        <Form.Control
-                          type="text"
-                          name="address"
-                          required
-                          value={address}
-                          onChange={onChangeUserInfo}
-                        />
-                      </Form.Group>
-                      <Form.Group>
-                        <Form.Label> Field</Form.Label>
-                        <Form.Select
-                          name="fieldId"
-                          value={fieldId}
-                          onChange={onChangeUserInfo}
-                        >
-                          {fieldAndCity[0].map((field) => (
-                            <option value={field.id}>{field.name}</option>
-                          ))}
-                        </Form.Select>
-                      </Form.Group>
-                      <Form.Group>
-                        <Form.Label> Employee</Form.Label>
-                        <Form.Control
-                          type="number"
-                          name="employee"
-                          min="0"
-                          required
-                          value={employee}
-                          onChange={onChangeUserInfo}
-                        />
-                      </Form.Group>
-                      <Form.Group>
-                        <Form.Label> City</Form.Label>
-                        <Form.Select
-                          name="cityId"
-                          value={cityId}
-                          onChange={onChangeUserInfo}
-                        >
-                          {fieldAndCity[1].map((city) => (
-                            <option value={city.id}>{city.name}</option>
-                          ))}
-                        </Form.Select>
-                      </Form.Group>
-                      <Form.Group>
-                        <Form.Label> Avatar</Form.Label>
-                        <Form.Control
-                          name="avatar"
-                          type="file"
-                          onChange={onUploadFileChange}
-                        />
-                      </Form.Group>
+          {isEmployer && user.id === id ? (
+            <Modal
+              className="modal-update-profile"
+              show={showUpdate}
+              onHide={closeDialog}
+            >
+              <Modal.Header closeButton>
+                <Modal.Title>Update Employer Profile</Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                <div className="ContactInfoView_viewSectionWrapper__SEvGW">
+                  <Row>
+                    <Col className="col-6">
+                      <Form
+                        className="native-grid"
+                        onSubmit={onSubmitUpdateProfile}
+                      >
+                        <AlertMessage info={alert} />
+                        <Form.Group>
+                          <Form.Label> Email</Form.Label>
+                          <Form.Control
+                            type="text"
+                            name="email"
+                            readOnly={true}
+                            value={email}
+                            onChange={onChangeUserInfo}
+                          />
+                        </Form.Group>
+                        <Form.Group>
+                          <Form.Label> Name</Form.Label>
+                          <Form.Control
+                            type="text"
+                            name="name"
+                            required
+                            value={name}
+                            onChange={onChangeUserInfo}
+                          />
+                        </Form.Group>
+                        <Form.Group>
+                          <Form.Label> Phone</Form.Label>
+                          <Form.Control
+                            type="text"
+                            name="phone"
+                            required
+                            value={phone}
+                            onChange={onChangeUserInfo}
+                          />
+                        </Form.Group>
+                        <Form.Group>
+                          <Form.Label> Addess</Form.Label>
+                          <Form.Control
+                            type="text"
+                            name="address"
+                            required
+                            value={address}
+                            onChange={onChangeUserInfo}
+                          />
+                        </Form.Group>
+                        <Form.Group>
+                          <Form.Label> Field</Form.Label>
+                          <Form.Select
+                            name="fieldId"
+                            value={fieldId}
+                            onChange={onChangeUserInfo}
+                          >
+                            {fieldAndCity[0].map((field) => (
+                              <option value={field.id}>{field.name}</option>
+                            ))}
+                          </Form.Select>
+                        </Form.Group>
+                        <Form.Group>
+                          <Form.Label> Employee</Form.Label>
+                          <Form.Control
+                            type="number"
+                            name="employee"
+                            min="0"
+                            required
+                            value={employee}
+                            onChange={onChangeUserInfo}
+                          />
+                        </Form.Group>
+                        <Form.Group>
+                          <Form.Label> City</Form.Label>
+                          <Form.Select
+                            name="cityId"
+                            value={cityId}
+                            onChange={onChangeUserInfo}
+                          >
+                            {fieldAndCity[1].map((city) => (
+                              <option value={city.id}>{city.name}</option>
+                            ))}
+                          </Form.Select>
+                        </Form.Group>
+                        <Form.Group>
+                          <Form.Label> Avatar</Form.Label>
+                          <Form.Control
+                            name="avatar"
+                            type="file"
+                            onChange={onUploadFileChange}
+                          />
+                        </Form.Group>
 
-                      <Button
-                        className="update-change-info-button"
-                        variant="warning"
-                        onClick={() => {
-                          closeDialog();
-                        }}
-                      >
-                        Cancel
-                      </Button>
-                      <Button
-                        disabled={updateLoading}
-                        className="update-change-info-button"
-                        variant="success"
-                        type="submit"
-                      >
-                        {updateLoading && (
-                          <span className="spinner-border spinner-border-sm mr-1"></span>
-                        )}
-                        Update
-                      </Button>
-                    </Form>
-                  </Col>
-                  <Col className="col-6 img-avatar">
-                    <img
-                      src={user.avatar}
-                      style={{ width: "80%", height: "40%" }}
-                      id="img-review"
-                    />
-                  </Col>
-                </Row>
-              </div>
-            </Modal.Body>
-          </Modal>
+                        <Button
+                          className="update-change-info-button"
+                          variant="warning"
+                          onClick={() => {
+                            closeDialog();
+                          }}
+                        >
+                          Cancel
+                        </Button>
+                        <Button
+                          disabled={updateLoading}
+                          className="update-change-info-button"
+                          variant="success"
+                          type="submit"
+                        >
+                          {updateLoading && (
+                            <span className="spinner-border spinner-border-sm mr-1"></span>
+                          )}
+                          Update
+                        </Button>
+                      </Form>
+                    </Col>
+                    <Col className="col-6 img-avatar">
+                      <img
+                        src={user.avatar}
+                        style={{ width: "90%", height: "60%" }}
+                        id="img-review"
+                      />
+                    </Col>
+                  </Row>
+                </div>
+              </Modal.Body>
+            </Modal>
+          ) : (
+            ""
+          )}
         </div>
         <div>
           <Modal show={showChangePassword} onHide={onCloseModalPassword}>
@@ -580,7 +583,9 @@ const EmpProfile = () => {
                 xmlnsXlink={"http://www.w3.org/1999/xlink"}
               ></svg>
 
-              <h2 className="ContactInformation_blockTitle__yHeZl">Infomation</h2>
+              <h2 className="ContactInformation_blockTitle__yHeZl">
+                Infomation
+              </h2>
               {body}
             </div>
           </div>

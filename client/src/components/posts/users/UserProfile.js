@@ -298,7 +298,7 @@ const Profile = () => {
               <Col className="col-6 img-avatar">
                 <img
                   src={user.avatar}
-                  style={{ width: "80%", height: "40%" }}
+                  style={{ width: "90%", height: "60%" }}
                   id="img-review"
                   alt="img"
                 />
