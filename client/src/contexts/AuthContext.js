@@ -223,11 +223,11 @@ const AuthContextProvider = ({ children }) => {
     try {
       const response = await axios.get(`http://localhost:8081/user/cvpredict?mediaId=${mediaId}`);
       if (response.data.success) {
-        dispatch({ type: "POSTS_FIND_SUCCESS", payload: response.data.data })
+        dispatch({ type: "POSTS_PREDICT_SUCCESS", payload: response.data })
       }
       return response.data;
     } catch (err) {
-      dispatch({ type: "POSTS_FIND_FAIL"})
+      dispatch({ type: "POSTS_PREDICT_FAIL"})
       return err.response.data;
     }
   }

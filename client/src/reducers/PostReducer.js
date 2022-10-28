@@ -68,14 +68,16 @@ export const PostReducer = (state, action) => {
       case POSTS_PREDICT_SUCCESS:
         return {
           ...state,
-          posts: payload,
+          posts: payload.data.data,
           jobOption: payload.data.jobOptionResponses,
+          currentView: payload.data.currentView,
         };
       case POSTS_PREDICT_FAIL:
         return {
           ...state,
           posts: [],
           jobOption: 'Can not predict',
+          currentView: 'Can not predict',
         };
     default:
       return state;
