@@ -67,23 +67,23 @@ export const UserResume = () => {
             <div className='job-options'>
               <Row className="row-cols-1 row-cols-md-3 g-4 mx-auto mt-3 container main-row post-padding">
                 <Col key={0} className="my-2">
-                  <h5>{listJobs[0].name}:</h5>
+                  <h5>{listJobs[0].name}: {listJobs[0].percent}</h5>
                   <progress max="100" value={listJobs[0].percent.replace('%', '')}></progress>
                 </Col>
                 <Col key={1} className="my-2 ">
-                  <h5>{listJobs[1].name}:</h5>
+                  <h5>{listJobs[1].name}: {listJobs[1].percent}</h5>
                   <progress max="100" value={listJobs[1].percent.replace('%', '')}></progress>
                 </Col>
                 <Col key={2} className="my-2 ">
-                  <h5>{listJobs[2].name}:</h5>
+                  <h5>{listJobs[2].name}: {listJobs[2].percent}</h5>
                   <progress max="100" value={listJobs[2].percent.replace('%', '')}></progress>
                 </Col>
                 <Col key={3} className="my-2 ">
-                  <h5>{listJobs[3].name}:</h5>
+                  <h5>{listJobs[3].name}: {listJobs[3].percent}</h5>
                   <progress max="100" value={listJobs[3].percent.replace('%', '')}></progress>
                 </Col>
                 <Col key={4} className="my-2 ">
-                  <h5>{listJobs[4].name}:</h5>
+                  <h5>{listJobs[4].name}: {listJobs[4].percent}</h5>
                   <progress max="100" value={listJobs[4].percent.replace('%', '')}></progress>
                 </Col>
               </Row>
