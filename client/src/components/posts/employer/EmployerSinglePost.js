@@ -44,7 +44,7 @@ const EmployerSinglePost = ({
         </Card.Text>
         <Row>
           {post.adminAceptedEmail ? (
-            <Col>
+            <Col className='btn-in-emp-post'>
               <Button
                 disabled={listCVLoading}
                 className="btn"
@@ -71,7 +71,7 @@ const EmployerSinglePost = ({
             ""
           )}
 
-          <Col>
+          <Col className='btn-in-emp-post'>
             <Button className="btn" variant="outline-warning" onClick={()=>{
               setUpdatingPost(post)
               setShowUpdatePost(true)
@@ -80,7 +80,7 @@ const EmployerSinglePost = ({
             </Button>
           </Col>
 
-          <Col>
+          <Col className='btn-in-emp-post'>
             <Button
               disabled={deleteLoading}
               className="btn"

@@ -1030,3 +1030,32 @@ body.has-app-shell .main-wrapper .container {
 .btn-view-job {
   margin-left: 2px;
 }
+
+.chose-cv-title {
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 28px;
+  color: rgb(61, 61, 61);
+}
+
+.predict-detail {
+  text-align: center;
+}
+
+.job-options {
+  padding-top: 20px;
+  margin-left: 20px;
+}
+
+ul {
+  list-style-type: circle;
+}
+
+.btn-in-emp-post {
+  flex: 0 0 0%;
+  margin-right: 5px;
+}
+
+.flex-right {
+  margin: 0 0 0 60%;
+}

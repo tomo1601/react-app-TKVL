@@ -5,7 +5,7 @@ import { AuthContext } from "../../../contexts/AuthContext"
 import axios from "axios";
 import Row from 'react-bootstrap/Row'
 import Col from "react-bootstrap/Col"
-import SinglePost from '../SinglePost';
+import SinglePostPredict from './SinglePostPredict';
 export const UserResume = () => {
 
   const {
@@ -23,7 +23,7 @@ export const UserResume = () => {
       })
     );
 
-  const [currentCvId, setCurrentCvId] = useState(listCV[0].id)
+  const [currentCvId, setCurrentCvId] = useState(-1)
 
   const callbackHandlerCv = (cvId) => {
     setCurrentCvId(cvId);
@@ -34,24 +34,115 @@ export const UserResume = () => {
   const [major, setMajor] = useState({ major: '' })
 
   useEffect(() => {
-    const fetchData = async () => {
-      const result = await axios(
-        `http://localhost:8081/user/cvpredict?mediaId=${currentCvId}`,
-      );
+    if (currentCvId !== -1) {
+      const fetchData = async () => {
+        const result = await axios(
+          `http://localhost:8081/user/cvpredict?mediaId=${currentCvId}`,
+        );
+        console.log(result)
+        setlistPosts(result.data.data);
+        setlistJobs(result.data.jobOptionResponses);
+        setMajor(result.data.currentView)
+      };
 
-      setlistPosts(result.data.data);
-      setlistJobs(result.data.jobOptionResponses);
-      setMajor(result.data.currentView)
-    };
-
-    fetchData();
-  }, []);
-
+      fetchData();
+    }
+  }, [currentCvId]);
 
   console.log(listPosts)
   console.log(listJobs)
   console.log(major)
 
+  let body
+
+  if (major.major !== '') {
+    body = (
+      <div className="MasterLayout_vCol__Raypp MasterLayout_vColLg6__Repj5">
+        <div className="vnwBox vnwBoxSmall">
+          <span className="headerTitle">May be you are suitable as a {major}</span>
+        </div>
+
+        <div className="Block_Block___z99z ">
+          <div className="ContactInformation_contactInformationComponent__XmtOM">
+            <div className='job-options'>
+              <Row className="row-cols-1 row-cols-md-3 g-4 mx-auto mt-3 container main-row post-padding">
+                <Col key={0} className="my-2">
+                  <h5>{listJobs[0].name}:</h5>
+                  <progress max="100" value={listJobs[0].percent.replace('%', '')}></progress>
+                </Col>
+                <Col key={1} className="my-2 ">
+                  <h5>{listJobs[1].name}:</h5>
+                  <progress max="100" value={listJobs[1].percent.replace('%', '')}></progress>
+                </Col>
+                <Col key={2} className="my-2 ">
+                  <h5>{listJobs[2].name}:</h5>
+                  <progress max="100" value={listJobs[2].percent.replace('%', '')}></progress>
+                </Col>
+                <Col key={3} className="my-2 ">
+                  <h5>{listJobs[3].name}:</h5>
+                  <progress max="100" value={listJobs[3].percent.replace('%', '')}></progress>
+                </Col>
+                <Col key={4} className="my-2 ">
+                  <h5>{listJobs[4].name}:</h5>
+                  <progress max="100" value={listJobs[4].percent.replace('%', '')}></progress>
+                </Col>
+              </Row>
+              {/* <ul >
+                <li>
+                  <h5>{listJobs[0].name}:</h5>
+                  <progress max="100" value={listJobs[0].percent.replace('%', '')}></progress>
+                </li>
+                <li>
+                  <h5>{listJobs[1].name}:</h5>
+                  <progress max="100" value={listJobs[1].percent.replace('%', '')}></progress>
+                </li>
+                <li>
+                  <h5>{listJobs[2].name}:</h5>
+                  <progress max="100" value={listJobs[2].percent.replace('%', '')}></progress>
+                </li>
+                <li>
+                  <h5>{listJobs[3].name}:</h5>
+                  <progress max="100" value={listJobs[3].percent.replace('%', '')}></progress>
+                </li>
+                <li>
+                  <h5>{listJobs[4].name}:</h5>
+                  <progress max="100" value={listJobs[4].percent.replace('%', '')}></progress>
+                </li>
+              </ul> */}
+            </div>
+            <div>
+              <Row className="row-cols-1  g-4 mx-auto mt-3 container main-row post-padding">
+                {listPosts.map((post) => (
+                  <Col key={post.id} className="my-2 ">
+                    <SinglePostPredict post={post} />
+                  </Col>
+                ))}
+              </Row>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    )
+  }
+  else {
+    body = (
+      <div className="MasterLayout_vCol__Raypp MasterLayout_vColLg6__Repj5">
+        <div className="vnwBox vnwBoxSmall">
+          <span className="headerTitle">No profile has been selected yet</span>
+        </div>
+
+        <div className="Block_Block___z99z ">
+          <div className="ContactInformation_contactInformationComponent__XmtOM">
+            <div className="predict-detail">
+              <span className="chose-cv-title">  Select a profile to see suitable jobs</span>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div className="MasterLayout_vContainer__0VU77 MasterLayout_vBackground__YBFVn">
@@ -69,52 +160,8 @@ export const UserResume = () => {
             </ul>
           </div>
         </div>
+        {body}
 
-        <div className="MasterLayout_vCol__Raypp MasterLayout_vColLg6__Repj5">
-          <div className="vnwBox vnwBoxSmall">
-            <span className="headerTitle">No profile has been selected yet!</span>
-          </div>
-
-          <div className="Block_Block___z99z ">
-            <div className="ContactInformation_contactInformationComponent__XmtOM">
-              <div> Suitable for {major}</div>
-              <div>
-                <ul>
-                  <li>
-                    <h4>{listJobs[0].name}:</h4>
-                    <progress max="100" value={listJobs[0].percent.replace('%', '')}></progress>
-                  </li>
-                  <li>
-                    <h4>{listJobs[1].name}:</h4>
-                    <progress max="100" value={listJobs[1].percent.replace('%', '')}></progress>
-                  </li>
-                  <li>
-                    <h4>{listJobs[2].name}:</h4>
-                    <progress max="100" value={listJobs[2].percent.replace('%', '')}></progress>
-                  </li>
-                  <li>
-                    <h4>{listJobs[3].name}:</h4>
-                    <progress max="100" value={listJobs[3].percent.replace('%', '')}></progress>
-                  </li>
-                  <li>
-                    <h4>{listJobs[4].name}:</h4>
-                    <progress max="100" value={listJobs[4].percent.replace('%', '')}></progress>
-                  </li>
-                </ul>
-              </div>
-              <div>
-                <Row className="row-cols-1 row-cols-md-3 g-4 mx-auto mt-3 container main-row post-padding">
-                  {listPosts.map((post) => (
-                    <Col key={post.id} className="my-2 ">
-                      <SinglePost post={post} />
-                    </Col>
-                  ))}
-                </Row>
-              </div>
-
-            </div>
-          </div>
-        </div>
       </div>
     </div>
   )
