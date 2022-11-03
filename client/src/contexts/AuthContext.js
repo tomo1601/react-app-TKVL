@@ -102,11 +102,9 @@ const AuthContextProvider = ({ children }) => {
   // Register user
   const registerUser = async (userForm) => {
     try {
-      const response = await axios.post(`${apiUrl}/user/singup`, userForm);
+      const response = await axios.post(`${apiUrl}/user/signup`, userForm);
       if (response.data.success)
-        localStorage.setItem(LOCAL_STORAGE_TOKEN_NAME, response.data.token);
-      localStorage.setItem(USER_ROLE, "user");
-      return response.data;
+        return response.data;
     } catch (error) {
       if (error.response.data) {
         return error.response.data;
@@ -127,6 +125,19 @@ const AuthContextProvider = ({ children }) => {
     } catch (error) {
       if (error.response.data) return error.response.data;
       else return { success: false, message: error.message };
+    }
+  };
+
+  // Register emp
+  const registerEmployer = async (userForm) => {
+    try {
+      const response = await axios.post(`${apiUrl}/employer/signup`, userForm);
+      if (response.data.success)
+        return response.data;
+    } catch (error) {
+      if (error.response.data) {
+        return error.response.data;
+      } else return { success: false, message: error.message };
     }
   };
 
@@ -227,7 +238,7 @@ const AuthContextProvider = ({ children }) => {
       }
       return response.data;
     } catch (err) {
-      dispatch({ type: "POSTS_PREDICT_FAIL"})
+      dispatch({ type: "POSTS_PREDICT_FAIL" })
       return err.response.data;
     }
   }
@@ -236,6 +247,7 @@ const AuthContextProvider = ({ children }) => {
     loginUser,
     registerUser,
     loginEmployer,
+    registerEmployer,
     logoutSection,
     updateUserProfile,
     showToast,

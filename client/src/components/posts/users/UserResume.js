@@ -49,10 +49,6 @@ export const UserResume = () => {
     }
   }, [currentCvId]);
 
-  console.log(listPosts)
-  console.log(listJobs)
-  console.log(major)
-
   let body
 
   if (major.major !== '') {

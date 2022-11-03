@@ -38,7 +38,11 @@ const UserRegisterForm =() =>{
         else {
             try {
                 const userResgisterData = await registerUser(userRegisterForm)
-                if(!userResgisterData.success){
+                if(userResgisterData.success){
+                    setAlert({type: 'success', message: 'Account created successfully!'})
+                    setTimeout(()=> setAlert(null), 10000)
+                }
+                else{
                     setAlert({type: 'danger', message: userResgisterData.message})
                     setTimeout(()=> setAlert(null), 10000)
                 }
@@ -91,7 +95,7 @@ const UserRegisterForm =() =>{
                     />
                 </Form.Group>
                 <Form.Group>
-                    <Form.Label>Addess </Form.Label>
+                    <Form.Label>Address </Form.Label>
                     <Form.Control 
                     type='text' 
                     placeholder='' 
