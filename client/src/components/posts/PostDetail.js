@@ -15,9 +15,12 @@ import AlertMessage from "../layout/AlertMessage";
 import NoPostFound from "../NoPostFound";
 import Col from "react-bootstrap/esm/Col";
 import Row from "react-bootstrap/esm/Row";
+import { useToast } from "../../contexts/Toast";
 
 const PostDetail = () => {
   let { id } = useParams();
+
+  const { warn, error, success } = useToast();
 
   const {
     postState: { posts, postLoading },
@@ -60,12 +63,13 @@ const PostDetail = () => {
     try {
       const response = await submitUserCV(cvSubmit);
       console.log(response);
-      if (response.success) {
-        setAlert({ type: "success", message: "Applied successfull" });
-        setTimeout(() => setAlert(null), 10000);
+      if(response===undefined){
+        warn('You submitted your cv to this post. If you want to change your cv please delete and then submit again. !')
+      }
+      else if (response.success) {
+        success('Applied succesfully')
       } else {
-        setAlert({ type: "danger", message: response.message });
-        setTimeout(() => setAlert(null), 10000);
+        error('Server eror')
       }
     } catch (error) {
       console.log(error);

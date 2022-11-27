@@ -204,8 +204,6 @@ const AuthContextProvider = ({ children }) => {
 
   const submitUserCV = async (submitForm) => {
     try {
-      console.log(submitForm.postId);
-      console.log(submitForm.mediaId);
       const response = await axios.post(
         `${apiUrl}/user/submitcv?postId=${submitForm.postId}&mediaId=${submitForm.mediaId}`
       );

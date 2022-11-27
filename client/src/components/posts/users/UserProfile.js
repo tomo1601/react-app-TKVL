@@ -357,7 +357,7 @@ const Profile = () => {
         if (cvUpload.success) {
           success('Uploaded CV successfully!')
         } else {
-          error('Uploaded CV fail!')
+          error(cvUpload.message)
         }
       } catch (error) {
         console.log(error);
