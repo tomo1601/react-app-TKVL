@@ -15,9 +15,12 @@ import { apiUrl } from "../../../contexts/constants";
 import axios from "axios";
 import { useQuery } from "react-query";
 import Spinner from "react-bootstrap/esm/Spinner";
+import { useToast } from '../../../contexts/Toast';
 
 const Profile = () => {
   let body;
+
+  const { error, success } = useToast();
 
   const [update, setUpdate] = useState(false);
   const [upload, setUpload] = useState(false);
@@ -351,13 +354,10 @@ const Profile = () => {
       event.preventDefault();
       try {
         const cvUpload = await uploadUserCV(userCV);
-        console.log(cvUpload);
-        if (cvUpload.data.success) {
-          setAlert({ type: "success", message: "Upload successfull" });
-          setTimeout(() => setAlert(null), 10000);
+        if (cvUpload.success) {
+          success('Uploaded CV successfully!')
         } else {
-          setAlert({ type: "danger", message: cvUpload.message });
-          setTimeout(() => setAlert(null), 10000);
+          error('Uploaded CV fail!')
         }
       } catch (error) {
         console.log(error);

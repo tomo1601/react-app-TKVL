@@ -23,12 +23,14 @@ import AdminRoute from "./components/routing/AdminRoute";
 import EmployerRoute from "./components/routing/EmployerRoute";
 import UserRoute from "./components/routing/UserRoute";
 import PageNotFound from "./components/notfound/PageNotFound";
+import { ToastProvider } from './contexts/ToastProvider';
 
 function App() {
   return (
     <AuthContextProvider>
       <PostContextProvider>
         <EmployerPostContextProvider>
+          <ToastProvider>
           <Router>
             <Switch>
               <Route exact path="/" component={Landing} />
@@ -114,6 +116,7 @@ function App() {
 
             </Switch>
           </Router>
+          </ToastProvider>
         </EmployerPostContextProvider>
       </PostContextProvider>
     </AuthContextProvider>
